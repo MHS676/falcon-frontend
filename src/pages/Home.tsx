@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Hero from "../components/Hero";
 import { 
@@ -8,91 +9,96 @@ import {
   HomeIcon,
   CalendarDaysIcon 
 } from '@heroicons/react/24/outline';
+import * as api from '../services/api';
+
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+interface GalleryImage {
+  id: string;
+  title: string;
+  description?: string;
+  image: string;
+  category: string;
+  url?: string; // For fallback compatibility
+}
+
+interface Client {
+  id: string;
+  name: string;
+  company?: string;
+  testimonial: string;
+  image?: string;
+  rating?: number;
+  projectType?: string;
+  logo?: string; // For fallback compatibility
+  industry?: string; // For fallback compatibility
+}
 
 const Home = () => {
-  const galleryImages = [
-    {
-      id: 1,
-      url: "https://images.unsplash.com/photo-1582139329536-e7284fece509?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      title: "Corporate Security",
-      category: "Corporate"
-    },
-    {
-      id: 2,
-      url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", 
-      title: "Event Security",
-      category: "Events"
-    },
-    {
-      id: 3,
-      url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      title: "Armed Guards",
-      category: "Armed Security"
-    },
-    {
-      id: 4,
-      url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      title: "Patrol Services",
-      category: "Patrol"
-    },
-    {
-      id: 5,
-      url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      title: "Construction Security",
-      category: "Construction"
-    },
-    {
-      id: 6,
-      url: "https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      title: "Residential Security",
-      category: "Residential"
-    }
-  ];
+  const [services, setServices] = useState<Service[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const clients = [
-    {
-      id: 1,
-      name: "TechCorp Industries",
-      logo: "🏢",
-      testimonial: "SecureGuard has provided excellent security services for our corporate campus for over 3 years.",
-      industry: "Technology"
-    },
-    {
-      id: 2, 
-      name: "Metro Construction",
-      logo: "🏗️",
-      testimonial: "Professional and reliable security for all our construction sites. Highly recommended!",
-      industry: "Construction"
-    },
-    {
-      id: 3,
-      name: "Grand Events Center",
-      logo: "🎭",
-      testimonial: "Outstanding event security services. They handle everything with professionalism.",
-      industry: "Events"
-    },
-    {
-      id: 4,
-      name: "Riverside Shopping Mall",
-      logo: "🛒",
-      testimonial: "24/7 security coverage that gives us peace of mind. Excellent service quality.",
-      industry: "Retail"
-    },
-    {
-      id: 5,
-      name: "Luxury Residences",
-      logo: "🏡",
-      testimonial: "Premium residential security services. Our residents feel safe and secure.",
-      industry: "Residential"
-    },
-    {
-      id: 6,
-      name: "Financial Plaza",
-      logo: "🏦",
-      testimonial: "Top-tier security for our financial district. Professional and dependable.",
-      industry: "Finance"
-    }
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [servicesRes, galleryRes, clientsRes] = await Promise.all([
+          api.getActiveServices(),
+          api.getFeaturedGallery(),
+          api.getFeaturedClients()
+        ]);
+        
+        setServices(servicesRes.data || []);
+        setGalleryImages(galleryRes.data || []);
+        setClients(clientsRes.data || []);
+      } catch (error) {
+        console.error('Error fetching home page data:', error);
+        // Set fallback data if API fails
+        setServices([
+          { id: '1', title: "Armed Security", description: "Highly trained armed guards for maximum protection", icon: "ShieldCheckIcon" },
+          { id: '2', title: "Unarmed Guards", description: "Professional security personnel for general safety", icon: "UserGroupIcon" },
+          { id: '3', title: "Corporate Security", description: "Complete office and campus security solutions", icon: "BuildingOfficeIcon" },
+          { id: '4', title: "Residential Security", description: "Protecting homes and gated communities", icon: "HomeIcon" }
+        ]);
+        setGalleryImages([]);
+        setClients([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Service icon mapping
+  const getServiceIcon = (iconName: string) => {
+    const iconMap: any = {
+      'ShieldCheckIcon': ShieldCheckIcon,
+      'UserGroupIcon': UserGroupIcon, 
+      'BuildingOfficeIcon': BuildingOfficeIcon,
+      'TruckIcon': TruckIcon,
+      'HomeIcon': HomeIcon,
+      'CalendarDaysIcon': CalendarDaysIcon,
+      'EyeIcon': ShieldCheckIcon,
+      'LockClosedIcon': BuildingOfficeIcon,
+      'UsersIcon': UserGroupIcon
+    };
+    return iconMap[iconName] || ShieldCheckIcon;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -117,29 +123,50 @@ const Home = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { icon: ShieldCheckIcon, title: "Armed Security", desc: "Highly trained armed guards for maximum protection" },
-              { icon: UserGroupIcon, title: "Unarmed Guards", desc: "Professional security personnel for general safety" },
-              { icon: BuildingOfficeIcon, title: "Corporate Security", desc: "Complete office and campus security solutions" },
-              { icon: HomeIcon, title: "Residential Security", desc: "Protecting homes and gated communities" },
-              { icon: TruckIcon, title: "Construction Security", desc: "Site protection and equipment security" },
-              { icon: CalendarDaysIcon, title: "Event Security", desc: "Professional event and crowd management" }
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
-                <p className="text-slate-600">{service.desc}</p>
-              </motion.div>
-            ))}
+            {services.length > 0 ? services.map((service, index) => {
+              const IconComponent = getServiceIcon(service.icon || 'ShieldCheckIcon');
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                    <IconComponent className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
+                  <p className="text-slate-600">{service.description}</p>
+                </motion.div>
+              );
+            }) : (
+              // Fallback static services if no data from API
+              [
+                { icon: ShieldCheckIcon, title: "Armed Security", desc: "Highly trained armed guards for maximum protection" },
+                { icon: UserGroupIcon, title: "Unarmed Guards", desc: "Professional security personnel for general safety" },
+                { icon: BuildingOfficeIcon, title: "Corporate Security", desc: "Complete office and campus security solutions" },
+                { icon: HomeIcon, title: "Residential Security", desc: "Protecting homes and gated communities" },
+                { icon: TruckIcon, title: "Construction Security", desc: "Site protection and equipment security" },
+                { icon: CalendarDaysIcon, title: "Event Security", desc: "Professional event and crowd management" }
+              ].map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                    <service.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{service.title}</h3>
+                  <p className="text-slate-600">{service.desc}</p>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -174,7 +201,7 @@ const Home = () => {
               >
                 <div className="aspect-w-16 aspect-h-12 bg-gray-200">
                   <img 
-                    src={image.url} 
+                    src={image.image || image.url} 
                     alt={image.title}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -219,9 +246,17 @@ const Home = () => {
                 className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="text-center mb-4">
-                  <div className="text-4xl mb-3">{client.logo}</div>
+                  {client.logo ? (
+                    <div className="text-4xl mb-3">{client.logo}</div>
+                  ) : client.image ? (
+                    <img src={client.image} alt={client.name} className="w-16 h-16 mx-auto mb-3 rounded-full object-cover" />
+                  ) : (
+                    <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <span className="text-white font-bold text-xl">{client.name.charAt(0)}</span>
+                    </div>
+                  )}
                   <h3 className="text-xl font-bold text-slate-900 mb-1">{client.name}</h3>
-                  <div className="text-sm text-slate-500 mb-4">{client.industry}</div>
+                  <div className="text-sm text-slate-500 mb-4">{client.company || client.industry || client.projectType}</div>
                 </div>
                 <blockquote className="text-slate-600 italic text-center">
                   "{client.testimonial}"

@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { EyeIcon, EyeSlashIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import * as api from '../services/api';
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -25,15 +26,17 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      // Simulate API call - replace with actual authentication
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call the actual API for authentication
+      const response = await api.login({
+        email: credentials.email,
+        password: credentials.password
+      });
       
-      // Simple demo credentials - replace with secure authentication
-      if (credentials.username === 'admin' && credentials.password === 'secureguard123') {
+      if (response.data.access_token) {
         // Set admin token in localStorage
-        localStorage.setItem('adminToken', 'authenticated');
+        localStorage.setItem('adminToken', response.data.access_token);
         localStorage.setItem('adminUser', JSON.stringify({
-          username: credentials.username,
+          email: credentials.email,
           role: 'admin',
           loginTime: new Date().toISOString()
         }));
@@ -43,8 +46,15 @@ const AdminLogin = () => {
       } else {
         toast.error('Invalid credentials. Please try again.');
       }
-    } catch (error) {
-      toast.error('Login failed. Please check your connection.');
+    } catch (error: any) {
+      console.error('Login error:', error);
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else if (error.response?.status === 401) {
+        toast.error('Invalid email or password.');
+      } else {
+        toast.error('Login failed. Please check your connection.');
+      }
     } finally {
       setLoading(false);
     }
@@ -87,20 +97,20 @@ const AdminLogin = () => {
           className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-white/20"
         >
           <div className="space-y-6">
-            {/* Username Field */}
+            {/* Email Field */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-white mb-2">
-                Username
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+                Email
               </label>
               <input
-                id="username"
-                name="username"
-                type="text"
+                id="email"
+                name="email"
+                type="email"
                 required
-                value={credentials.username}
+                value={credentials.email}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-slate-300 focus:ring-2 focus:ring-red-500 focus:border-transparent backdrop-blur-sm transition-all duration-300"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
               />
             </div>
 
