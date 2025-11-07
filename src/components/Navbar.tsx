@@ -1,66 +1,133 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Bars3Icon, XMarkIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import { clsx } from 'clsx';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'About', path: '/about' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contact', path: '/contact' },
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
+    { name: 'About', href: '/about' },
+    { name: 'Careers', href: '/careers' },
+    { name: 'Contact', href: '/contact' },
   ];
 
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
-      }`}
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={clsx(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        scrolled 
+          ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-lg border-b border-slate-200/20 dark:border-slate-700/20' 
+          : 'bg-transparent'
+      )}
     >
-      <div className="container-custom">
-        <div className="flex justify-between items-center h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-heading font-bold text-primary-600">
-            Hasan<span className="text-gray-800">.</span>
-          </Link>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link 
+              to="/" 
+              className="flex items-center space-x-2"
+            >
+              <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">🛡️</span>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">
+                SecureGuard
+              </span>
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
+          <div className="hidden md:flex items-center space-x-1">
+            {navigation.map((item) => (
               <Link
-                key={link.path}
-                to={link.path}
-                className={`font-medium transition-colors ${
-                  location.pathname === link.path
-                    ? 'text-primary-600'
-                    : 'text-gray-700 hover:text-primary-600'
-                }`}
+                key={item.name}
+                to={item.href}
+                className={clsx(
+                  'relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+                  isActive(item.href)
+                    ? 'text-red-600'
+                    : 'text-slate-700 hover:text-red-600'
+                )}
               >
-                {link.name}
+                {item.name}
+                {isActive(item.href) && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-red-100 rounded-full -z-10"
+                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
               </Link>
             ))}
+
+            {/* Theme Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleDarkMode}
+              className="ml-4 p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+            >
+              {isDarkMode ? (
+                <SunIcon className="w-5 h-5" />
+              ) : (
+                <MoonIcon className="w-5 h-5" />
+              )}
+            </motion.button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-2xl text-gray-800"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center space-x-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300"
+            >
+              {isDarkMode ? (
+                <SunIcon className="w-5 h-5" />
+              ) : (
+                <MoonIcon className="w-5 h-5" />
+              )}
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              {isOpen ? (
+                <XMarkIcon className="w-6 h-6" />
+              ) : (
+                <Bars3Icon className="w-6 h-6" />
+              )}
+            </motion.button>
+          </div>
         </div>
       </div>
 
@@ -71,28 +138,29 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white shadow-lg"
+            className="md:hidden bg-white/95 backdrop-blur-md border-t border-slate-200/20"
           >
-            <div className="container-custom py-4 space-y-4">
-              {navLinks.map((link) => (
+            <div className="px-4 py-4 space-y-2">
+              {navigation.map((item) => (
                 <Link
-                  key={link.path}
-                  to={link.path}
+                  key={item.name}
+                  to={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`block py-2 font-medium ${
-                    location.pathname === link.path
-                      ? 'text-primary-600'
-                      : 'text-gray-700'
-                  }`}
+                  className={clsx(
+                    'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
+                    isActive(item.href)
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'text-slate-700 hover:bg-slate-100'
+                  )}
                 >
-                  {link.name}
+                  {item.name}
                 </Link>
               ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };
 
