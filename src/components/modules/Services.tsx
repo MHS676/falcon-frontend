@@ -41,12 +41,12 @@ interface ServicesProps {
   categories?: string[];
 }
 
-const Services = ({ 
-  showFeaturedOnly = false, 
-  showActiveOnly = true, 
-  maxItems, 
+const Services = ({
+  showFeaturedOnly = false,
+  showActiveOnly = true,
+  maxItems,
   layout = 'grid',
-  categories 
+  categories
 }: ServicesProps) => {
   const [services, setServices] = useState<Service[]>([]);
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
@@ -72,16 +72,16 @@ const Services = ({
       } else {
         response = await servicesAPI.getAll();
       }
-      
+
       let servicesList = response.data;
-      
+
       // Apply max items limit if specified
       if (maxItems && servicesList.length > maxItems) {
         servicesList = servicesList.slice(0, maxItems);
       }
-      
+
       setServices(servicesList);
-      
+
       // Extract unique categories
       const uniqueCategories = [...new Set(servicesList.map((service: Service) => service.category))] as string[];
       setAvailableCategories(uniqueCategories);
@@ -109,18 +109,32 @@ const Services = ({
     setFilteredServices(filtered);
   };
 
-  const formatPrice = (price: Service['price']) => {
-    if (!price) return 'Contact for pricing';
-    
-    const symbol = price.currency === 'USD' ? '$' : price.currency;
-    const typeText = price.type === 'hourly' ? '/hr' : price.type === 'project' ? '/project' : '';
-    
-    if (price.max && price.max !== price.min) {
+  const formatPrice = (price?: Service['price']) => {
+    // If price is missing entirely
+    if (!price || typeof price.min !== 'number') {
+      return 'Contact for pricing';
+    }
+
+    const symbol = price.currency === 'USD' ? '$' : price.currency || '';
+    const typeText =
+      price.type === 'hourly'
+        ? '/hr'
+        : price.type === 'project'
+          ? '/project'
+          : '';
+
+    // Handle when both min and max are numbers
+    if (
+      typeof price.max === 'number' &&
+      price.max !== price.min
+    ) {
       return `${symbol}${price.min.toLocaleString()} - ${symbol}${price.max.toLocaleString()}${typeText}`;
     }
-    
+
+    // Single fixed price
     return `${symbol}${price.min.toLocaleString()}${typeText}`;
   };
+
 
   if (loading) {
     const itemCount = maxItems || 6;
@@ -140,11 +154,10 @@ const Services = ({
         <div className="flex flex-wrap gap-3 mb-8 justify-center">
           <button
             onClick={() => setSelectedCategory('All')}
-            className={`px-4 py-2 rounded-full transition-all duration-300 ${
-              selectedCategory === 'All'
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${selectedCategory === 'All'
                 ? 'bg-blue-500 text-white shadow-lg'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-            }`}
+              }`}
           >
             All Services
           </button>
@@ -152,11 +165,10 @@ const Services = ({
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full transition-all duration-300 capitalize ${
-                selectedCategory === category
+              className={`px-4 py-2 rounded-full transition-all duration-300 capitalize ${selectedCategory === category
                   ? 'bg-blue-500 text-white shadow-lg'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-              }`}
+                }`}
             >
               {category}
             </button>
@@ -172,9 +184,8 @@ const Services = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-200 dark:border-gray-700 ${
-              layout === 'list' ? 'flex flex-col md:flex-row' : ''
-            }`}
+            className={`bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-200 dark:border-gray-700 ${layout === 'list' ? 'flex flex-col md:flex-row' : ''
+              }`}
           >
             {/* Service Image */}
             {service.image && (
@@ -182,9 +193,8 @@ const Services = ({
                 <img
                   src={service.image}
                   alt={service.title}
-                  className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 ${
-                    layout === 'list' ? 'h-48 md:h-full' : 'h-48'
-                  }`}
+                  className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 ${layout === 'list' ? 'h-48 md:h-full' : 'h-48'
+                    }`}
                 />
               </div>
             )}

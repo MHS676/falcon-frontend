@@ -206,7 +206,10 @@ export const guardsAPI = {
 };
 
 // Legacy functions for backward compatibility
-export const login = (data: any) => authAPI.login(createFormData(data));
+// The backend expects JSON for authentication routes (email/password).
+// Send a JSON body for login rather than FormData to avoid 400 Bad Request
+// from servers that validate JSON payloads.
+export const login = (data: any) => api.post('/auth/login', data);
 export const register = (data: any) => authAPI.register(createFormData(data));
 export const getBanners = () => bannerAPI.getAll();
 export const getActiveBanners = () => bannerAPI.getActive();

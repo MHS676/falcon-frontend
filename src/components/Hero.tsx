@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { 
+import logo from '../assets/falcon-logo.png';
+import {
   ChevronDownIcon,
   ShieldCheckIcon,
   PhoneIcon,
@@ -12,7 +13,7 @@ const Hero = () => {
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Full Banner Background Image with Overlay */}
       <div className="absolute inset-0">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`
@@ -26,8 +27,8 @@ const Hero = () => {
 
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             rotate: [0, 360],
             scale: [1, 1.1, 1]
           }}
@@ -38,8 +39,8 @@ const Hero = () => {
           }}
           className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-red-400/10 to-blue-600/10 rounded-full blur-3xl"
         />
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             rotate: [360, 0],
             scale: [1.1, 1, 1.1]
           }}
@@ -67,12 +68,8 @@ const Hero = () => {
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-blue-500 to-slate-700 p-2"
               />
-              <div className="relative w-32 h-32 rounded-full bg-white p-4 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-3xl mb-1">🛡️</div>
-                  <div className="text-xs font-bold text-slate-800">SECURE</div>
-                  <div className="text-xs font-bold text-red-600">GUARD</div>
-                </div>
+              <div className="relative w-32 h-32 rounded-full bg-white p-4 flex items-center justify-center overflow-hidden">
+                <img src={logo} alt="Falcon Logo" className="w-full h-full object-contain rounded-full" />
               </div>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
                 <span className="text-xs text-white">✓</span>
@@ -86,7 +83,7 @@ const Hero = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <motion.h1 
+            <motion.h1
               className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -98,7 +95,7 @@ const Hero = () => {
               </span>
             </motion.h1>
 
-            <motion.p 
+            <motion.p
               className="text-xl sm:text-2xl text-slate-200 mb-4 max-w-3xl mx-auto"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -107,18 +104,18 @@ const Hero = () => {
               Protecting What Matters Most - 24/7 Security Solutions
             </motion.p>
 
-            <motion.p 
+            <motion.p
               className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.0 }}
             >
-              Licensed, trained, and professional security guards providing comprehensive protection 
+              Licensed, trained, and professional security guards providing comprehensive protection
               for businesses, events, residential properties, and construction sites.
             </motion.p>
 
             {/* Quick Stats */}
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-8"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -139,13 +136,13 @@ const Hero = () => {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.2 }}
             >
-              <Link 
+              <Link
                 to="/services"
                 className="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-red-500/25 transition-all duration-300"
               >
@@ -155,12 +152,12 @@ const Hero = () => {
                 />
               </Link>
 
-              <Link 
+              <Link
                 to="/contact"
                 className="group px-8 py-4 border-2 border-white/30 text-white rounded-full font-semibold hover:border-red-400 hover:bg-white/10 transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
               >
                 Emergency: (555) 911-HELP
-                <motion.span 
+                <motion.span
                   className="inline-block ml-2"
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
@@ -171,7 +168,7 @@ const Hero = () => {
             </motion.div>
 
             {/* Key Features */}
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center space-x-6"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -199,7 +196,7 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

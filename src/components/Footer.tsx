@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
+import logo from '../../upload/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,11 +11,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-2xl font-heading font-bold mb-4">
-              Hasan<span className="text-primary-500">.</span>
-            </h3>
+            <div className="flex items-center space-x-4 mb-4">
+              <img src={logo} alt="Falcon Logo" className="w-12 h-12 object-contain" />
+              <h3 className="text-2xl font-heading font-bold">Falcon Security Limited</h3>
+            </div>
             <p className="text-gray-400">
-              Full-stack developer passionate about creating beautiful and functional web applications.
+              Professional security services — licensed, trained, and available 24/7.
             </p>
           </div>
 

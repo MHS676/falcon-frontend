@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { getBlogs } from '../services/api';
+import { getBlogPosts } from '../services/api';
 import toast from 'react-hot-toast';
 
 interface BlogPost {
@@ -23,7 +23,7 @@ const Blog = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await getBlogs();
+      const response = await getBlogPosts();
       setBlogs(response.data);
     } catch (error) {
       toast.error('Failed to load blog posts');

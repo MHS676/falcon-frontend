@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { EyeIcon, EyeSlashIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import logo from '../../upload/logo.png';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import * as api from '../services/api';
@@ -31,7 +32,7 @@ const AdminLogin = () => {
         email: credentials.email,
         password: credentials.password
       });
-      
+
       if (response.data.access_token) {
         // Set admin token in localStorage
         localStorage.setItem('adminToken', response.data.access_token);
@@ -40,7 +41,7 @@ const AdminLogin = () => {
           role: 'admin',
           loginTime: new Date().toISOString()
         }));
-        
+
         toast.success('Login successful! Welcome to SecureGuard Admin.');
         navigate('/admin/dashboard');
       } else {
@@ -77,10 +78,10 @@ const AdminLogin = () => {
           className="text-center"
         >
           {/* Logo */}
-          <div className="mx-auto w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-2xl">
-            <ShieldCheckIcon className="w-12 h-12 text-red-600" />
+          <div className="mx-auto w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-2xl overflow-hidden">
+            <img src={logo} alt="Falcon Logo" className="w-full h-full object-contain" />
           </div>
-          
+
           <h2 className="text-3xl font-bold text-white mb-2">
             SecureGuard Admin
           </h2>
@@ -145,11 +146,11 @@ const AdminLogin = () => {
             </div>
 
             {/* Demo Credentials Info */}
-            <div className="bg-blue-500/20 border border-blue-400/30 rounded-lg p-4">
+            {/* <div className="bg-blue-500/20 border border-blue-400/30 rounded-lg p-4">
               <h4 className="text-sm font-semibold text-blue-200 mb-2">Demo Credentials:</h4>
               <p className="text-xs text-blue-300">Username: admin</p>
               <p className="text-xs text-blue-300">Password: secureguard123</p>
-            </div>
+            </div> */}
 
             {/* Login Button */}
             <motion.button
