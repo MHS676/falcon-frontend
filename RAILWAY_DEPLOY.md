@@ -40,8 +40,17 @@ npm run preview
 npm start
 ```
 
+### Docker Deployment:
+
+If using Dockerfile (Railway auto-detects this):
+- Fixed Docker build to install all dependencies including TypeScript
+- Uses `npm ci` (not `--only=production`) to get build tools
+- Builds app with `npm run build` then serves with `npm run preview`
+
 ### Troubleshooting:
 
+- **Build fails with "tsc: not found"**: Fixed in Dockerfile - now installs all deps
 - Ensure PORT environment variable is available (Railway provides this)
 - Make sure VITE_API_BASE_URL points to your deployed backend
 - Check that all environment variables are set in Railway dashboard
+- If nixpacks fails, Railway will automatically try Dockerfile
