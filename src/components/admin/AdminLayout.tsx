@@ -10,10 +10,8 @@ import {
   UserGroupIcon,
   Cog6ToothIcon,
   WrenchScrewdriverIcon,
-  AcademicCapIcon,
   CloudArrowUpIcon,
   BuildingOfficeIcon,
-  ShieldCheckIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
 
@@ -33,15 +31,12 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
     { id: 'projects', name: 'Projects', icon: BriefcaseIcon, count: null },
     { id: 'blog', name: 'Blog', icon: ChatBubbleLeftRightIcon, count: null },
     { id: 'contact', name: 'Contact', icon: EnvelopeIcon, count: null },
-    { id: 'experience', name: 'Experience', icon: AcademicCapIcon, count: null },
     { id: 'social', name: 'Social Links', icon: UserGroupIcon, count: null },
     { id: 'settings', name: 'Settings', icon: Cog6ToothIcon, count: null },
     { id: 'services', name: 'Services', icon: WrenchScrewdriverIcon, count: null },
-    { id: 'skills', name: 'Skills', icon: AcademicCapIcon, count: null },
     { id: 'upload', name: 'Upload', icon: CloudArrowUpIcon, count: null },
     { id: 'clients', name: 'Clients', icon: BuildingOfficeIcon, count: null },
     { id: 'career', name: 'Career', icon: BriefcaseIcon, count: null },
-    { id: 'guards', name: 'Guards', icon: ShieldCheckIcon, count: null },
   ];
 
   return (

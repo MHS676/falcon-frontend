@@ -84,13 +84,6 @@ export const contactAPI = {
   delete: (id: string) => api.delete(`/contact/${id}`),
 };
 
-// Experience API
-export const experienceAPI = {
-  create: (data: FormData) => api.post('/experience', data),
-  getAll: () => api.get('/experience'),
-  delete: (id: string) => api.delete(`/experience/${id}`),
-};
-
 // Social Links API
 export const socialAPI = {
   create: (data: FormData) => api.post('/social', data),
@@ -120,14 +113,6 @@ export const servicesAPI = {
   getById: (id: string) => api.get(`/service/${id}`),
   update: (id: string, data: FormData) => api.patch(`/service/${id}`, data),
   delete: (id: string) => api.delete(`/service/${id}`),
-};
-
-// Skills API
-export const skillsAPI = {
-  create: (data: FormData) => api.post('/skills', data),
-  getAll: () => api.get('/skills'),
-  getByCategory: (category: string) => api.get(`/skills?category=${encodeURIComponent(category)}`),
-  delete: (id: string) => api.delete(`/skills/${id}`),
 };
 
 // Upload API
@@ -238,9 +223,6 @@ export const updateContactStatus = (id: string, status: string) => {
   return contactAPI.updateStatus(id, data);
 };
 export const deleteContact = (id: string) => contactAPI.delete(id);
-export const getExperience = () => experienceAPI.getAll();
-export const createExperience = (data: any) => experienceAPI.create(createFormData(data));
-export const deleteExperience = (id: string) => experienceAPI.delete(id);
 export const getBlogPosts = () => blogAPI.getAll();
 export const getBlogPost = (slug: string) => blogAPI.getBySlug(slug);
 export const createBlogPost = (data: any) => blogAPI.create(createFormData(data));
@@ -276,10 +258,6 @@ export const createGalleryItem = (data: any) => galleryAPI.create(createFormData
 export const updateGalleryItem = (id: string, data: any) => galleryAPI.update(id, createFormData(data));
 export const deleteGalleryItem = (id: string) => galleryAPI.delete(id);
 export const getFeaturedGallery = () => galleryAPI.getFeatured();
-export const getSkills = () => skillsAPI.getAll();
-export const getSkillsByCategory = (category: string) => skillsAPI.getByCategory(category);
-export const createSkill = (data: any) => skillsAPI.create(createFormData(data));
-export const deleteSkill = (id: string) => skillsAPI.delete(id);
 export const getJobs = () => careerAPI.getActive();
 export const getFeaturedJobs = () => careerAPI.getFeatured();
 export const getJob = (id: string) => careerAPI.getPublicById(id);

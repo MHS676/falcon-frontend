@@ -20,13 +20,10 @@ import {
   projectsAPI,
   blogAPI,
   contactAPI,
-  experienceAPI,
   socialAPI,
   servicesAPI,
-  skillsAPI,
   clientsAPI,
-  careerAPI,
-  guardsAPI
+  careerAPI
 } from '../../services/api';
 import toast from 'react-hot-toast';
 
@@ -36,13 +33,10 @@ interface DashboardStats {
   projects: { total: number; featured: number; completed: number };
   blog: { total: number; published: number };
   contacts: { total: number; unread: number };
-  experience: { total: number };
   social: { total: number; active: number };
   services: { total: number; active: number };
-  skills: { total: number };
   clients: { total: number; featured: number };
   career: { total: number; active: number; applications: number };
-  guards: { total: number };
 }
 
 interface RecentActivity {
@@ -73,26 +67,20 @@ const AdminDashboard = () => {
         projectsRes,
         blogRes,
         contactsRes,
-        experienceRes,
         socialRes,
         servicesRes,
-        skillsRes,
         clientsRes,
-        careerRes,
-        guardsRes
+        careerRes
       ] = await Promise.allSettled([
         bannerAPI.getAll(),
         galleryAPI.getAll(),
         projectsAPI.getAll(),
         blogAPI.getAll(),
         contactAPI.getAll(),
-        experienceAPI.getAll(),
         socialAPI.getAll(),
         servicesAPI.getAll(),
-        skillsAPI.getAll(),
         clientsAPI.getAll(),
-        careerAPI.getAll(),
-        guardsAPI.getAll()
+        careerAPI.getAll()
       ]);
 
       // Process stats
@@ -118,9 +106,6 @@ const AdminDashboard = () => {
           total: contactsRes.status === 'fulfilled' ? contactsRes.value.data.length : 0,
           unread: contactsRes.status === 'fulfilled' ? contactsRes.value.data.filter((c: any) => c.status === 'unread').length : 0
         },
-        experience: {
-          total: experienceRes.status === 'fulfilled' ? experienceRes.value.data.length : 0
-        },
         social: {
           total: socialRes.status === 'fulfilled' ? socialRes.value.data.length : 0,
           active: socialRes.status === 'fulfilled' ? socialRes.value.data.filter((s: any) => s.isActive).length : 0
@@ -128,9 +113,6 @@ const AdminDashboard = () => {
         services: {
           total: servicesRes.status === 'fulfilled' ? servicesRes.value.data.length : 0,
           active: servicesRes.status === 'fulfilled' ? servicesRes.value.data.filter((s: any) => s.isActive).length : 0
-        },
-        skills: {
-          total: skillsRes.status === 'fulfilled' ? skillsRes.value.data.length : 0
         },
         clients: {
           total: clientsRes.status === 'fulfilled' ? clientsRes.value.data.length : 0,
@@ -140,9 +122,6 @@ const AdminDashboard = () => {
           total: careerRes.status === 'fulfilled' ? careerRes.value.data.length : 0,
           active: careerRes.status === 'fulfilled' ? careerRes.value.data.filter((c: any) => c.isActive).length : 0,
           applications: 0 // Would need separate API call for applications
-        },
-        guards: {
-          total: guardsRes.status === 'fulfilled' ? guardsRes.value.data.length : 0
         }
       };
 
