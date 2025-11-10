@@ -43,6 +43,7 @@ npm start
 ### Docker Deployment:
 
 If using Dockerfile (Railway auto-detects this):
+
 - Fixed Docker build to install all dependencies including TypeScript
 - Uses `npm ci` (not `--only=production`) to get build tools
 - Builds app with `npm run build` then serves with `npm run preview`
