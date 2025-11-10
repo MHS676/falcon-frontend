@@ -8,20 +8,14 @@ interface Project {
   id: string;
   title: string;
   description: string;
-  shortDescription?: string;
-  image: string;
-  gallery?: string[];
+  image?: string;
   technologies: string[];
-  category: string;
-  status: 'planning' | 'in-progress' | 'completed' | 'maintenance';
-  liveUrl?: string;
   githubUrl?: string;
-  clientName?: string;
-  startDate: string;
-  endDate?: string;
-  isFeatured: boolean;
-  highlights?: string[];
-  challenges?: string[];
+  liveUrl?: string;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
 }
 
 interface ProjectsProps {
@@ -64,19 +58,11 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
     }
   };
 
-  const getStatusColor = (status: Project['status']) => {
-    switch (status) {
-      case 'completed':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'in-progress':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'planning':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'maintenance':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-    }
+  const getProjectDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+    });
   };
 
   const openProjectModal = (project: Project) => {
@@ -122,12 +108,12 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
               <div className="md:w-2/3 p-6">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(project.status)}`}>
-                    {project.status.replace('-', ' ')}
+                  <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {getProjectDate(project.createdAt)}
                   </span>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-                  {project.shortDescription || project.description}
+                  {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.slice(0, 4).map((tech) => (
@@ -198,11 +184,11 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
                 className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute top-3 left-3">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(project.status)}`}>
-                  {project.status.replace('-', ' ')}
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                  {getProjectDate(project.createdAt)}
                 </span>
               </div>
-              {project.isFeatured && (
+              {project.featured && (
                 <div className="absolute top-3 right-3">
                   <span className="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">
                     Featured
@@ -231,7 +217,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
             <div className="p-6">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                {project.shortDescription || project.description}
+                {project.description}
               </p>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.slice(0, 3).map((tech) => (
@@ -278,22 +264,11 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedProject.title}</h3>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusColor(selectedProject.status)}`}>
-                    {selectedProject.status.replace('-', ' ')}
+                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {getProjectDate(selectedProject.createdAt)}
                   </span>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">{selectedProject.description}</p>
-                
-                {selectedProject.highlights && selectedProject.highlights.length > 0 && (
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Key Highlights</h4>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
-                      {selectedProject.highlights.map((highlight, index) => (
-                        <li key={index}>{highlight}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
 
                 <div className="mb-6">
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Technologies Used</h4>

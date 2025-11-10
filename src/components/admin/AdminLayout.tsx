@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import {
   HomeIcon,
   PhotoIcon,
@@ -12,7 +14,8 @@ import {
   WrenchScrewdriverIcon,
   CloudArrowUpIcon,
   BuildingOfficeIcon,
-  EyeIcon
+  ArrowRightOnRectangleIcon,
+
 } from '@heroicons/react/24/outline';
 
 interface AdminLayoutProps {
@@ -23,6 +26,30 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUser');
+    toast.success('Logged out successfully');
+    navigate('/', { replace: true });
+  };
+
+  // Handle browser back button to prevent accidental logout
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to leave? You will be logged out of the admin dashboard.';
+      return event.returnValue;
+    };
+
+    // Add event listener for page unload/refresh
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   const modules = [
     { id: 'dashboard', name: 'Dashboard', icon: HomeIcon, count: null },
@@ -51,11 +78,11 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">P</span>
+              <span className="text-white font-bold">F</span>
             </div>
             {sidebarOpen && (
               <div>
-                <h1 className="text-lg font-bold text-gray-900 dark:text-white">Portfolio</h1>
+                <h1 className="text-lg font-bold text-gray-900 dark:text-white">Falcon Security</h1>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Admin Panel</p>
               </div>
             )}
@@ -124,9 +151,26 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2">
+              {/* <button 
+                onClick={() => window.open('/', '_blank')}
+                className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2"
+              >
                 <EyeIcon className="w-4 h-4" />
-                <span>View Site</span>
+                <span className="hidden sm:inline">View Site</span>
+              </button> */}
+              <button 
+                onClick={() => navigate('/')}
+                className="px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
+              >
+                <HomeIcon className="w-4 h-4" />
+                <span className="hidden sm:inline">Home</span>
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center space-x-2"
+              >
+                <ArrowRightOnRectangleIcon className="w-4 h-4" />
+                <span className="hidden sm:inline">Logout</span>
               </button>
             </div>
           </div>

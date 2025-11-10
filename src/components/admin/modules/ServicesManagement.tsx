@@ -44,9 +44,9 @@ const ServicesManagement: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Services Management</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Falcon Security Services</h2>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
-            Manage your professional service offerings
+            Manage Falcon Security Limited's professional security solutions
           </p>
         </div>
         <button
@@ -80,8 +80,8 @@ const ServicesManagement: React.FC = () => {
 
       {services.length === 0 && (
         <div className="text-center py-12">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No services found</h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-4">Get started by adding your first service.</p>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No security services found</h3>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">Get started by adding your first security service offering.</p>
           <button
             onClick={() => toast('Add service functionality coming soon')}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"

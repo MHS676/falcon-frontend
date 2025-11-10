@@ -76,7 +76,7 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">Contact SecureGuard</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">Contact Falcon Security Limited</h1>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Need immediate security assistance or want to discuss your security needs? 
               We are available 24/7 to protect what matters most to you.
@@ -123,7 +123,7 @@ const Contact = () => {
                 <EnvelopeIcon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Email Support</h3>
-              <p className="text-green-600 font-bold">info@secureguard.com</p>
+              <p className="text-green-600 font-bold">info@Falcon Security Limited.com</p>
               <p className="text-slate-600 text-sm">Response within 2 hours</p>
             </motion.div>
           </div>
@@ -176,7 +176,7 @@ const Contact = () => {
               </div>
 
               <div className="bg-slate-50 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-slate-900 mb-3">Why Choose SecureGuard?</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">Why Choose Falcon Security Limited?</h3>
                 <ul className="space-y-2 text-slate-600">
                   <li className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-red-600 rounded-full"></div>

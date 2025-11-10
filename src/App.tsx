@@ -42,7 +42,15 @@ function AppContent() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route 
-              path="/admin/dashboard" 
+              path="/admin/dashboard/*" 
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin" 
               element={
                 <ProtectedRoute>
                   <AdminDashboard />
@@ -70,8 +78,14 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <Router>
+      <Router 
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true
+        }}
+      >
         <AppContent />
+        <Toaster position="top-right" />
       </Router>
     </ThemeProvider>
   );

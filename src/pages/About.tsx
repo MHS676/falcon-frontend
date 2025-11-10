@@ -50,7 +50,7 @@ const About = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">About SecureGuard</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">About Falcon Security Limited</h1>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Your trusted partner in professional security services, protecting what matters most 
               to you and your business for over a decade.
@@ -91,7 +91,7 @@ const About = () => {
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Our Story</h2>
               <div className="space-y-4 text-slate-600">
                 <p>
-                  Founded over a decade ago, SecureGuard has established itself as a leading 
+                  Founded over a decade ago, Falcon Security Limited has established itself as a leading 
                   provider of professional security services. We started with a simple mission: 
                   to provide reliable, professional security solutions that give our clients 
                   peace of mind.
@@ -189,7 +189,7 @@ const About = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold text-slate-900 mb-8">
-              Why Choose SecureGuard?
+              Why Choose Falcon Security Limited?
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">

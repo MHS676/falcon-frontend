@@ -14,7 +14,7 @@ interface Career {
   id: string;
   title: string;
   description: string;
-  requirements: string[];
+  requirements?: string[];
   location?: string;
   type: string;
   salary?: string;
@@ -211,7 +211,7 @@ const Careers = () => {
                         {career.description}
                       </p>
 
-                      {career.requirements.length > 0 && (
+                      {career.requirements && career.requirements.length > 0 && (
                         <div className="mb-4">
                           <h4 className="font-semibold text-slate-900 mb-2">Requirements:</h4>
                           <ul className="list-disc list-inside text-slate-700 space-y-1">

@@ -16,15 +16,14 @@ interface Project {
   id: string;
   title: string;
   description: string;
-  shortDescription?: string;
-  image: string;
+  image?: string;
   technologies: string[];
-  category: string;
-  status: 'planning' | 'in-progress' | 'completed' | 'maintenance';
   liveUrl?: string;
   githubUrl?: string;
-  isFeatured: boolean;
+  featured: boolean;
   createdAt: string;
+  updatedAt?: string;
+  userId?: string;
 }
 
 const ProjectsManagement = () => {
@@ -36,14 +35,11 @@ const ProjectsManagement = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    shortDescription: '',
     image: null as File | null,
     technologies: '',
-    category: '',
-    status: 'in-progress' as Project['status'],
     liveUrl: '',
     githubUrl: '',
-    isFeatured: false
+    featured: false
   });
 
   useEffect(() => {
@@ -71,13 +67,10 @@ const ProjectsManagement = () => {
       const submitData = new FormData();
       submitData.append('title', formData.title);
       submitData.append('description', formData.description);
-      submitData.append('shortDescription', formData.shortDescription);
       submitData.append('technologies', formData.technologies);
-      submitData.append('category', formData.category);
-      submitData.append('status', formData.status);
       submitData.append('liveUrl', formData.liveUrl);
       submitData.append('githubUrl', formData.githubUrl);
-      submitData.append('isFeatured', formData.isFeatured.toString());
+      submitData.append('featured', formData.featured.toString());
       
       if (formData.image) {
         submitData.append('image', formData.image);
@@ -126,14 +119,11 @@ const ProjectsManagement = () => {
       setFormData({
         title: project.title,
         description: project.description,
-        shortDescription: project.shortDescription || '',
         image: null,
         technologies: Array.isArray(project.technologies) ? project.technologies.join(', ') : '',
-        category: project.category,
-        status: project.status,
         liveUrl: project.liveUrl || '',
         githubUrl: project.githubUrl || '',
-        isFeatured: project.isFeatured
+        featured: project.featured
       });
     } else {
       setSelectedProject(null);
@@ -146,14 +136,11 @@ const ProjectsManagement = () => {
     setFormData({
       title: '',
       description: '',
-      shortDescription: '',
       image: null,
       technologies: '',
-      category: '',
-      status: 'in-progress',
       liveUrl: '',
       githubUrl: '',
-      isFeatured: false
+      featured: false
     });
   };
 
@@ -170,20 +157,7 @@ const ProjectsManagement = () => {
     setFormData(prev => ({ ...prev, image: file }));
   };
 
-  const getStatusColor = (status: Project['status']) => {
-    switch (status) {
-      case 'completed':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'in-progress':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'planning':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'maintenance':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-    }
-  };
+
 
   if (loading && projects.length === 0) {
     return (
@@ -226,12 +200,7 @@ const ProjectsManagement = () => {
                 alt={project.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-2 left-2">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(project.status)}`}>
-                  {project.status.replace('-', ' ')}
-                </span>
-              </div>
-              {project.isFeatured && (
+              {project.featured && (
                 <div className="absolute top-2 right-2">
                   <span className="px-2 py-1 bg-yellow-500 text-white rounded text-xs font-medium">
                     Featured
@@ -245,7 +214,7 @@ const ProjectsManagement = () => {
                 {project.title}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
-                {project.shortDescription || project.description}
+                {project.description}
               </p>
               
               <div className="flex flex-wrap gap-1 mb-3">
@@ -362,31 +331,6 @@ const ProjectsManagement = () => {
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Category
-                    </label>
-                    <input
-                      type="text"
-                      name="category"
-                      value={formData.category}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Short Description
-                  </label>
-                  <input
-                    type="text"
-                    name="shortDescription"
-                    value={formData.shortDescription}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  />
                 </div>
 
                 <div>
@@ -430,35 +374,17 @@ const ProjectsManagement = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Status
-                    </label>
-                    <select
-                      name="status"
-                      value={formData.status}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    >
-                      <option value="planning">Planning</option>
-                      <option value="in-progress">In Progress</option>
-                      <option value="completed">Completed</option>
-                      <option value="maintenance">Maintenance</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center mt-7">
-                    <input
-                      type="checkbox"
-                      name="isFeatured"
-                      checked={formData.isFeatured}
-                      onChange={handleInputChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                    <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Featured Project
-                    </label>
-                  </div>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="featured"
+                    checked={formData.featured}
+                    onChange={handleInputChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Featured Project
+                  </label>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

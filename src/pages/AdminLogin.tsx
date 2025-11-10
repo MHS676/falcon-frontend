@@ -42,7 +42,7 @@ const AdminLogin = () => {
           loginTime: new Date().toISOString()
         }));
 
-        toast.success('Login successful! Welcome to SecureGuard Admin.');
+        toast.success('Login successful! Welcome to Falcon Security Limited Admin.');
         navigate('/admin/dashboard');
       } else {
         toast.error('Invalid credentials. Please try again.');
@@ -83,7 +83,7 @@ const AdminLogin = () => {
           </div>
 
           <h2 className="text-3xl font-bold text-white mb-2">
-            SecureGuard Admin
+            Falcon Security Limited Admin
           </h2>
           <p className="text-slate-300">
             Secure access to administration panel
@@ -149,7 +149,7 @@ const AdminLogin = () => {
             {/* <div className="bg-blue-500/20 border border-blue-400/30 rounded-lg p-4">
               <h4 className="text-sm font-semibold text-blue-200 mb-2">Demo Credentials:</h4>
               <p className="text-xs text-blue-300">Username: admin</p>
-              <p className="text-xs text-blue-300">Password: secureguard123</p>
+              <p className="text-xs text-blue-300">Password: Falcon Security Limited123</p>
             </div> */}
 
             {/* Login Button */}
@@ -186,7 +186,7 @@ const AdminLogin = () => {
           transition={{ delay: 0.6 }}
           className="text-center text-slate-400 text-sm"
         >
-          <p>© 2024 SecureGuard. All rights reserved.</p>
+          <p>© 2024 Falcon Security Limited. All rights reserved.</p>
         </motion.div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { ReactNode, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ReactNode, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 interface ProtectedRouteProps {
@@ -9,6 +9,8 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children, requireAuth = true }: ProtectedRouteProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isInitialCheck = useRef(true);
 
   useEffect(() => {
     if (requireAuth) {
@@ -16,8 +18,11 @@ const ProtectedRoute = ({ children, requireAuth = true }: ProtectedRouteProps) =
       const adminUser = localStorage.getItem('adminUser');
 
       if (!adminToken || !adminUser) {
-        toast.error('Access denied. Please log in as administrator.');
-        navigate('/admin/login');
+        // Only show error message on initial load or direct access, not on navigation
+        if (isInitialCheck.current) {
+          toast.error('Access denied. Please log in as administrator.');
+        }
+        navigate('/admin/login', { replace: true });
         return;
       }
 
@@ -33,18 +38,21 @@ const ProtectedRoute = ({ children, requireAuth = true }: ProtectedRouteProps) =
           localStorage.removeItem('adminToken');
           localStorage.removeItem('adminUser');
           toast.error('Session expired. Please log in again.');
-          navigate('/admin/login');
+          navigate('/admin/login', { replace: true });
           return;
         }
       } catch (error) {
         console.error('Error parsing admin user data:', error);
         localStorage.removeItem('adminToken');
         localStorage.removeItem('adminUser');
-        navigate('/admin/login');
+        navigate('/admin/login', { replace: true });
         return;
       }
     }
-  }, [requireAuth, navigate]);
+    
+    // Mark that initial check is complete
+    isInitialCheck.current = false;
+  }, [requireAuth, navigate, location.pathname]);
 
   return <>{children}</>;
 };

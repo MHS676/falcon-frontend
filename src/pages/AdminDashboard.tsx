@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import AdminLayout from '../components/admin/AdminLayout';
 import DashboardOverview from '../components/admin/AdminDashboard';
 import BannerManagement from '../components/admin/modules/BannerManagement';
@@ -14,11 +15,22 @@ import ClientsManagement from '../components/admin/modules/ClientsManagement';
 import UploadManagement from '../components/admin/modules/UploadManagement';
 
 const AdminDashboard = () => {
-  const [currentModule, setCurrentModule] = useState('dashboard');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentModule, setCurrentModule] = useState(() => {
+    return searchParams.get('module') || 'dashboard';
+  });
 
   const handleModuleChange = (module: string) => {
     setCurrentModule(module);
+    // Update URL without full page reload
+    setSearchParams({ module });
   };
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const module = searchParams.get('module') || 'dashboard';
+    setCurrentModule(module);
+  }, [searchParams]);
 
   const renderModuleContent = () => {
     switch (currentModule) {
