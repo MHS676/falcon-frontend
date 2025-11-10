@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import AdminLayout from '../components/admin/AdminLayout';
 import DashboardOverview from '../components/admin/AdminDashboard';
+import BannerManagement from '../components/admin/modules/BannerManagement';
+import GalleryManagement from '../components/admin/modules/GalleryManagement';
+import ProjectsManagement from '../components/admin/modules/ProjectsManagement';
+import BlogManagement from '../components/admin/modules/BlogManagement';
+import ServicesManagement from '../components/admin/modules/ServicesManagement';
+import ContactManagement from '../components/admin/modules/ContactManagement';
 
 const AdminDashboard = () => {
   const [currentModule, setCurrentModule] = useState('dashboard');
@@ -14,15 +20,15 @@ const AdminDashboard = () => {
       case 'dashboard':
         return <DashboardOverview />;
       case 'banner':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Banner Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Banner management interface coming soon</p></div>;
+        return <BannerManagement />;
       case 'gallery':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Gallery Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Gallery management interface coming soon</p></div>;
+        return <GalleryManagement />;
       case 'projects':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Projects Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Projects management interface coming soon</p></div>;
+        return <ProjectsManagement />;
       case 'blog':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Blog Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Blog management interface coming soon</p></div>;
+        return <BlogManagement />;
       case 'contact':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contact Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Contact management interface coming soon</p></div>;
+        return <ContactManagement />;
       case 'experience':
         return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Experience Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Experience management interface coming soon</p></div>;
       case 'social':
@@ -30,7 +36,7 @@ const AdminDashboard = () => {
       case 'settings':
         return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Settings Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Settings management interface coming soon</p></div>;
       case 'services':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Services Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Services management interface coming soon</p></div>;
+        return <ServicesManagement />;
       case 'skills':
         return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Skills Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Skills management interface coming soon</p></div>;
       case 'upload':

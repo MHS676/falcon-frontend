@@ -71,6 +71,7 @@ export const blogAPI = {
   create: (data: FormData) => api.post('/blog', data),
   getAll: () => api.get('/blog'),
   getBySlug: (slug: string) => api.get(`/blog/${slug}`),
+  update: (id: string, data: FormData) => api.patch(`/blog/${id}`, data),
   delete: (id: string) => api.delete(`/blog/${id}`),
 };
 
@@ -310,5 +311,37 @@ export const uploadDocument = (file: File, folder = 'documents') => {
 
 export const deleteFile = (publicId: string) => uploadAPI.deleteFile(publicId);
 export const getOptimizedUrl = (publicId: string, options: any = {}) => uploadAPI.getOptimized({ publicId, ...options });
+
+// Jobs API
+export const jobsAPI = {
+  // Job endpoints
+  create: (data: FormData) => api.post('/jobs', data),
+  getAll: () => api.get('/jobs'),
+  getActive: () => api.get('/jobs/active'),
+  getById: (id: string) => api.get(`/jobs/${id}`),
+  update: (id: string, data: FormData) => api.patch(`/jobs/${id}`, data),
+  delete: (id: string) => api.delete(`/jobs/${id}`),
+  getStats: () => api.get('/jobs/stats'),
+  
+  // Job Application endpoints
+  apply: (data: FormData) => api.post('/jobs/apply', data),
+  applyWithPortfolio: (data: FormData) => api.post('/jobs/apply-with-portfolio', data),
+  getAllApplications: () => api.get('/jobs/applications/all'),
+  getApplicationsByJob: (jobId: string) => api.get(`/jobs/applications/job/${jobId}`),
+  getApplication: (id: string) => api.get(`/jobs/applications/${id}`),
+  updateApplication: (id: string, data: FormData) => api.patch(`/jobs/applications/${id}`, data),
+  deleteApplication: (id: string) => api.delete(`/jobs/applications/${id}`),
+};
+
+// Convenience functions for jobs
+export const getAllJobs = () => jobsAPI.getAll();
+export const getActiveJobListings = () => jobsAPI.getActive();
+export const getJobListing = (id: string) => jobsAPI.getById(id);
+export const createJobListing = (data: any) => jobsAPI.create(createFormData(data));
+export const updateJobListing = (id: string, data: any) => jobsAPI.update(id, createFormData(data));
+export const deleteJobListing = (id: string) => jobsAPI.delete(id);
+
+export const submitJobApplication = (data: any) => jobsAPI.apply(createFormData(data));
+export const getAllJobApplications = () => jobsAPI.getAllApplications();
 
 export default api;
