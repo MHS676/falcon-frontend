@@ -48,6 +48,12 @@ const Gallery = ({ showFeaturedOnly = false, maxItems, categories }: GalleryProp
       
       let galleryItems = response.data;
       
+      // Ensure galleryItems is an array
+      if (!Array.isArray(galleryItems)) {
+        console.warn('API returned non-array data:', galleryItems);
+        galleryItems = [];
+      }
+      
       // Apply max items limit if specified
       if (maxItems && galleryItems.length > maxItems) {
         galleryItems = galleryItems.slice(0, maxItems);
@@ -62,6 +68,8 @@ const Gallery = ({ showFeaturedOnly = false, maxItems, categories }: GalleryProp
     } catch (error) {
       console.error('Error fetching gallery:', error);
       toast.error('Failed to load gallery');
+      setItems([]); // Set empty array on error
+      setAvailableCategories(['All']);
       setLoading(false);
     }
   };

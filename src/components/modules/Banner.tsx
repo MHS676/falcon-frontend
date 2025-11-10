@@ -28,12 +28,21 @@ const Banner = () => {
   const fetchActiveBanners = async () => {
     try {
       const response = await bannerAPI.getActive();
-      const sortedBanners = response.data.sort((a: BannerItem, b: BannerItem) => a.order - b.order);
+      let bannerData = response.data;
+      
+      // Ensure bannerData is an array
+      if (!Array.isArray(bannerData)) {
+        console.warn('API returned non-array data:', bannerData);
+        bannerData = [];
+      }
+      
+      const sortedBanners = bannerData.sort((a: BannerItem, b: BannerItem) => a.order - b.order);
       setBanners(sortedBanners);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching banners:', error);
       toast.error('Failed to load banners');
+      setBanners([]); // Set empty array on error
       setLoading(false);
     }
   };

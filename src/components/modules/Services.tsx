@@ -75,6 +75,12 @@ const Services = ({
 
       let servicesList = response.data;
 
+      // Ensure servicesList is an array
+      if (!Array.isArray(servicesList)) {
+        console.warn('API returned non-array data:', servicesList);
+        servicesList = [];
+      }
+
       // Apply max items limit if specified
       if (maxItems && servicesList.length > maxItems) {
         servicesList = servicesList.slice(0, maxItems);
@@ -89,6 +95,8 @@ const Services = ({
     } catch (error) {
       console.error('Error fetching services:', error);
       toast.error('Failed to load services');
+      setServices([]); // Set empty array on error
+      setAvailableCategories(['All']);
       setLoading(false);
     }
   };

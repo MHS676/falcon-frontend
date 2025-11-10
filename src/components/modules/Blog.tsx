@@ -59,6 +59,12 @@ const Blog = ({ maxItems, showExcerpt = true, layout = 'grid', categories }: Blo
       const response = await blogAPI.getAll();
       let blogPosts = response.data;
       
+      // Ensure blogPosts is an array
+      if (!Array.isArray(blogPosts)) {
+        console.warn('API returned non-array data:', blogPosts);
+        blogPosts = [];
+      }
+      
       // Filter only published posts
       blogPosts = blogPosts.filter((post: BlogPost) => post.status === 'published');
       
@@ -81,6 +87,8 @@ const Blog = ({ maxItems, showExcerpt = true, layout = 'grid', categories }: Blo
     } catch (error) {
       console.error('Error fetching blog posts:', error);
       toast.error('Failed to load blog posts');
+      setPosts([]); // Set empty array on error
+      setAvailableCategories(['All']);
       setLoading(false);
     }
   };

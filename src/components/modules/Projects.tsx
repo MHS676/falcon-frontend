@@ -44,6 +44,12 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
       
       let projectList = response.data;
       
+      // Ensure projectList is an array
+      if (!Array.isArray(projectList)) {
+        console.warn('API returned non-array data:', projectList);
+        projectList = [];
+      }
+      
       // Apply max items limit if specified
       if (maxItems && projectList.length > maxItems) {
         projectList = projectList.slice(0, maxItems);
@@ -54,6 +60,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
     } catch (error) {
       console.error('Error fetching projects:', error);
       toast.error('Failed to load projects');
+      setProjects([]); // Set empty array on error
       setLoading(false);
     }
   };
