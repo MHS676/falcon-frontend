@@ -7,6 +7,11 @@ import ProjectsManagement from '../components/admin/modules/ProjectsManagement';
 import BlogManagement from '../components/admin/modules/BlogManagement';
 import ServicesManagement from '../components/admin/modules/ServicesManagement';
 import ContactManagement from '../components/admin/modules/ContactManagement';
+import JobsManagement from '../components/admin/modules/JobsManagement';
+import SocialManagement from '../components/admin/modules/SocialManagement';
+import SettingsManagement from '../components/admin/modules/SettingsManagement';
+import ClientsManagement from '../components/admin/modules/ClientsManagement';
+import UploadManagement from '../components/admin/modules/UploadManagement';
 
 const AdminDashboard = () => {
   const [currentModule, setCurrentModule] = useState('dashboard');
@@ -30,17 +35,19 @@ const AdminDashboard = () => {
       case 'contact':
         return <ContactManagement />;
       case 'social':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Social Links Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Social links management interface coming soon</p></div>;
+        return <SocialManagement />;
       case 'settings':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Settings Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Settings management interface coming soon</p></div>;
+        return <SettingsManagement />;
       case 'services':
         return <ServicesManagement />;
       case 'upload':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">File Upload Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">File upload interface coming soon</p></div>;
+        return <UploadManagement />;
       case 'clients':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Clients Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Clients management interface coming soon</p></div>;
+        return <ClientsManagement />;
       case 'career':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900 dark:text-white">Career Management</h2><p className="text-gray-600 dark:text-gray-400 mt-2">Career management interface coming soon</p></div>;
+        return <JobsManagement />;
+      case 'jobs':
+        return <JobsManagement />;
       default:
         return <DashboardOverview />;
     }
