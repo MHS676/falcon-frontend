@@ -15,7 +15,6 @@ import {
   CloudArrowUpIcon,
   BuildingOfficeIcon,
   ArrowRightOnRectangleIcon,
-
 } from '@heroicons/react/24/outline';
 
 interface AdminLayoutProps {
@@ -53,10 +52,11 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
 
   const modules = [
     { id: 'dashboard', name: 'Dashboard', icon: HomeIcon, count: null },
+    { id: 'messaging', name: 'Messages', icon: ChatBubbleLeftRightIcon, count: null },
     { id: 'banner', name: 'Banner', icon: PhotoIcon, count: null },
     { id: 'gallery', name: 'Gallery', icon: FolderIcon, count: null },
     { id: 'projects', name: 'Projects', icon: BriefcaseIcon, count: null },
-    { id: 'blog', name: 'Blog', icon: ChatBubbleLeftRightIcon, count: null },
+    { id: 'blog', name: 'Blog', icon: EnvelopeIcon, count: null },
     { id: 'contact', name: 'Contact', icon: EnvelopeIcon, count: null },
     { id: 'social', name: 'Social Links', icon: UserGroupIcon, count: null },
     { id: 'settings', name: 'Settings', icon: Cog6ToothIcon, count: null },

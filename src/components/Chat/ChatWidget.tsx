@@ -7,9 +7,6 @@ const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [guestName, setGuestName] = useState('');
-  const [guestEmail, setGuestEmail] = useState('');
-  const [showGuestForm, setShowGuestForm] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -18,7 +15,6 @@ const ChatWidget: React.FC = () => {
     // Check if we have an existing session
     const sessionToken = chatService.getSessionToken();
     if (sessionToken) {
-      setShowGuestForm(false);
       loadSessionHistory(sessionToken);
     }
   }, []);
@@ -54,8 +50,6 @@ const ChatWidget: React.FC = () => {
       const { session, messages: sessionMessages } = await chatService.getSessionHistory(sessionToken);
       if (session && sessionMessages) {
         setMessages(sessionMessages);
-        setGuestName(session.guestName || '');
-        setGuestEmail(session.guestEmail || '');
       }
     } catch (error) {
       console.error('Error loading session history:', error);
@@ -69,22 +63,10 @@ const ChatWidget: React.FC = () => {
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
-    // If first message, require guest info
-    if (showGuestForm && (!guestName.trim() || !guestEmail.trim())) {
-      alert('Please enter your name and email to start chatting.');
-      return;
-    }
-
     setIsSending(true);
     try {
-      await chatService.sendMessage(
-        newMessage,
-        guestName || 'Guest',
-        guestEmail
-      );
-      
+      await chatService.sendMessage(newMessage);
       setNewMessage('');
-      setShowGuestForm(false);
     } catch (error) {
       console.error('Error sending message:', error);
       alert('Failed to send message. Please try again.');
@@ -150,9 +132,10 @@ const ChatWidget: React.FC = () => {
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {messages.length === 0 && !showGuestForm && (
+              {messages.length === 0 && (
                 <div className="text-center text-gray-500 text-sm">
-                  No messages yet. Start a conversation!
+                  <div className="mb-2">👋 Hello! How can we help you today?</div>
+                  <div className="text-xs">Start typing your message below...</div>
                 </div>
               )}
 
@@ -172,38 +155,13 @@ const ChatWidget: React.FC = () => {
                     <div className={`text-xs ${
                       message.senderType === 'guest' ? 'text-blue-100' : 'text-gray-500'
                     }`}>
-                      {formatTime(message.createdAt)}
+                      {message.senderType === 'admin' ? 'Support Team' : 'You'} • {formatTime(message.createdAt)}
                     </div>
                   </div>
                 </div>
               ))}
               <div ref={messagesEndRef} />
             </div>
-
-            {/* Guest Info Form (shown on first message) */}
-            {showGuestForm && (
-              <div className="p-4 border-t border-gray-200 bg-gray-50">
-                <div className="text-sm text-gray-600 mb-2">
-                  Please introduce yourself:
-                </div>
-                <div className="space-y-2">
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
-                    className="w-full px-3 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    value={guestEmail}
-                    onChange={(e) => setGuestEmail(e.target.value)}
-                    className="w-full px-3 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-            )}
 
             {/* Message Input */}
             <div className="p-4 border-t border-gray-200">

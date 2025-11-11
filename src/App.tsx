@@ -14,6 +14,7 @@ import Careers from './pages/Careers';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ChatWidget from './components/Chat/ChatWidget';
+import AdminChat from './components/Chat/AdminChat';
 
 function AppContent() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function AppContent() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/chat" element={<AdminChat />} />
             <Route 
               path="/admin/dashboard/*" 
               element={

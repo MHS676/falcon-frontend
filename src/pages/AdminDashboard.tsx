@@ -13,6 +13,7 @@ import SocialManagement from '../components/admin/modules/SocialManagement';
 import SettingsManagement from '../components/admin/modules/SettingsManagement';
 import ClientsManagement from '../components/admin/modules/ClientsManagement';
 import UploadManagement from '../components/admin/modules/UploadManagement';
+import AdminMessaging from './AdminMessaging';
 
 const AdminDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,6 +61,8 @@ const AdminDashboard = () => {
         return <JobsManagement />;
       case 'jobs':
         return <JobsManagement />;
+      case 'messaging':
+        return <AdminMessaging />;
       default:
         return <DashboardOverview />;
     }
