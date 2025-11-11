@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Users, MessageSquare, Clock, User, Mail, Calendar } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
@@ -35,7 +35,6 @@ const AdminMessaging: React.FC = () => {
   const [newMessage, setNewMessage] = useState('');
   const [adminName] = useState('Falcon Security Support');
   const [isConnected, setIsConnected] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     connectToChat();
@@ -46,9 +45,7 @@ const AdminMessaging: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // Auto-scroll removed as requested
 
   const connectToChat = () => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
@@ -118,9 +115,7 @@ const AdminMessaging: React.FC = () => {
     }
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Scroll functionality removed as requested
 
   const selectSession = async (session: ChatSession) => {
     setSelectedSession(session);
@@ -212,9 +207,9 @@ const AdminMessaging: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex bg-gray-50 -m-6" style={{ height: 'calc(100vh - 80px)' }}>
       {/* Sessions Sidebar */}
-      <div className="w-1/3 bg-white border-r border-gray-200 overflow-y-auto">
+      <div className="w-1/3 bg-white border-r border-gray-200 h-full">
         <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
@@ -359,7 +354,7 @@ const AdminMessaging: React.FC = () => {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col h-full">
         {selectedSession ? (
           <>
             {/* Chat Header */}
@@ -407,7 +402,7 @@ const AdminMessaging: React.FC = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+            <div className="flex-1 p-4 space-y-4 bg-gray-50 min-h-0">
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 py-8">
                   <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -437,7 +432,6 @@ const AdminMessaging: React.FC = () => {
                   </div>
                 </div>
               ))}
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Message Input */}
