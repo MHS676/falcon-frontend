@@ -48,8 +48,7 @@ const SEO: React.FC<SEOProps> = ({
   url = 'https://falcon-frontend-six.vercel.app',
   type = 'website',
   article,
-  service,
-  organization
+  service
 }) => {
   const siteName = 'Falcon Security Limited';
   const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;

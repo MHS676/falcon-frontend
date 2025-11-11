@@ -41,7 +41,7 @@ const sendToAnalytics = (metric: WebVitalsMetric) => {
   }
 
   // Send to console in development
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.log('Web Vital:', metric);
   }
 

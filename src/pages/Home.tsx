@@ -6,7 +6,7 @@ import Services from "../components/modules/Services";
 import Blog from "../components/modules/Blog";
 import ContactForm from "../components/forms/ContactForm";
 import SEO from "../components/SEO";
-import Breadcrumb from "../components/Breadcrumb";
+// import Breadcrumb from "../components/Breadcrumb";
 import OptimizedImage from "../components/OptimizedImage";
 import { useSEO } from "../hooks/useSEO";
 import { useWebVitals } from "../hooks/useWebVitals";

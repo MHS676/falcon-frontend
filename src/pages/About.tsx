@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
-import OptimizedImage from '../components/OptimizedImage';
+// import OptimizedImage from '../components/OptimizedImage';
 import { useSEO } from '../hooks/useSEO';
 
 const About = () => {
