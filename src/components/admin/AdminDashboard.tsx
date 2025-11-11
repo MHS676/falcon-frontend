@@ -259,23 +259,23 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Welcome Section */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white p-10 rounded-2xl shadow-2xl relative overflow-hidden"
+        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white p-6 sm:p-10 rounded-2xl shadow-2xl relative overflow-hidden"
       >
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
         </div>
         <div className="relative z-10">
           <motion.h1 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl font-bold mb-3 drop-shadow-md"
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3 drop-shadow-md"
           >
             Welcome back, Admin! 👋
           </motion.h1>
@@ -283,7 +283,7 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-blue-100 text-lg"
+            className="text-blue-100 text-base sm:text-lg"
           >
             Here's what's happening with your Falcon Security portfolio today.
           </motion.p>

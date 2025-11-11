@@ -290,24 +290,24 @@ const AdminMessaging: React.FC = () => {
   };
 
   return (
-    <div className="flex bg-gray-50 -m-6" style={{ height: 'calc(100vh - 80px)' }}>
+    <div className="flex flex-col lg:flex-row bg-gray-50 -m-4 sm:-m-6 lg:-m-6" style={{ height: 'calc(100vh - 80px)' }}>
       {/* Sessions Sidebar */}
-      <div className="w-1/3 bg-white border-r border-gray-200 h-full flex flex-col">
-        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white flex-shrink-0">
-          <div className="flex items-center justify-between mb-4">
+      <div className="w-full lg:w-1/3 bg-white border-b lg:border-b-0 lg:border-r border-gray-200 h-64 lg:h-full flex flex-col">
+        <div className="p-4 sm:p-6 border-b border-gray-200 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white flex-shrink-0">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 space-y-3 sm:space-y-0">
             <div className="flex items-center space-x-3">
-              <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
-                <MessageSquare className="w-6 h-6" />
+              <div className="bg-white/20 p-2 sm:p-3 rounded-xl backdrop-blur-sm">
+                <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <h2 className="text-xl font-bold">Falcon Security Support</h2>
-                <p className="text-blue-100 text-sm">Real-time Customer Messaging</p>
+                <h2 className="text-lg sm:text-xl font-bold">Falcon Security Support</h2>
+                <p className="text-blue-100 text-xs sm:text-sm">Real-time Customer Messaging</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 bg-white/10 px-3 py-2 rounded-lg backdrop-blur-sm">
-                <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
-                <span className="text-sm font-medium">
+            <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center space-x-2 bg-white/10 px-2 sm:px-3 py-1 sm:py-2 rounded-lg backdrop-blur-sm">
+                <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
+                <span className="text-xs sm:text-sm font-medium">
                   {isConnected ? 'Online' : 'Connecting...'}
                 </span>
               </div>
@@ -340,7 +340,7 @@ const AdminMessaging: React.FC = () => {
             <motion.div
               key={session.id}
               onClick={() => selectSession(session)}
-              className={`p-5 cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 border-b border-gray-100 ${
+              className={`p-3 sm:p-5 cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 border-b border-gray-100 ${
                 selectedSession?.id === session.id
                   ? 'bg-gradient-to-r from-blue-100 to-indigo-100 border-r-4 border-blue-500 shadow-lg'
                   : ''
@@ -348,27 +348,27 @@ const AdminMessaging: React.FC = () => {
               whileHover={{ scale: 1.02, x: 6 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="flex justify-between items-start mb-3">
+              <div className="flex justify-between items-start mb-2 sm:mb-3">
                 <div className="flex items-center">
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-xl p-3 mr-4 shadow-lg">
-                      <User className="w-5 h-5 text-white" />
+                    <div className="bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-xl p-2 sm:p-3 mr-2 sm:mr-4 shadow-lg">
+                      <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     {session._count.messages > 0 && (
-                      <div className="absolute -top-2 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-bounce border-2 border-white">
+                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-bounce border-2 border-white">
                         {session._count.messages}
                       </div>
                     )}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 text-base">
+                    <h3 className="font-semibold text-gray-800 text-sm sm:text-base">
                       {session.guestName || 'Anonymous User'}
                     </h3>
-                    <div className="flex items-center space-x-3 mt-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mt-1 space-y-1 sm:space-y-0">
                       {session.guestEmail && (
                         <div className="flex items-center text-xs text-gray-600">
                           <Mail className="w-3 h-3 mr-1" />
-                          {session.guestEmail}
+                          <span className="truncate max-w-[120px] sm:max-w-none">{session.guestEmail}</span>
                         </div>
                       )}
                       <div className="flex items-center text-xs text-green-600">
@@ -381,9 +381,9 @@ const AdminMessaging: React.FC = () => {
               </div>
               
               {session.messages.length > 0 && (
-                <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-3 rounded-xl mb-3 border border-gray-200">
+                <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-2 sm:p-3 rounded-xl mb-2 sm:mb-3 border border-gray-200">
                   <div className="text-xs text-gray-500 mb-1 font-medium">Latest message:</div>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                     "{session.messages[0].content.length > 60 
                       ? session.messages[0].content.substring(0, 60) + '...' 
                       : session.messages[0].content}"
@@ -391,8 +391,8 @@ const AdminMessaging: React.FC = () => {
                 </div>
               )}
               
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 text-xs text-gray-500">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+                <div className="flex items-center space-x-2 sm:space-x-4 text-xs text-gray-500 flex-wrap gap-1">
                   <div className="flex items-center bg-gray-100 px-2 py-1 rounded-full">
                     <Clock className="w-3 h-3 mr-1" />
                     {formatDate(session.lastActivity)}
@@ -441,40 +441,40 @@ const AdminMessaging: React.FC = () => {
         {selectedSession ? (
           <>
             {/* Chat Header */}
-            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-white to-blue-50 shadow-sm">
-              <div className="flex items-center justify-between">
+            <div className="p-4 sm:p-6 border-b border-gray-200 bg-gradient-to-r from-white to-blue-50 shadow-sm">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
                 <div className="flex items-center">
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-2xl p-4 mr-5 shadow-lg">
-                      <User className="w-8 h-8 text-white" />
+                    <div className="bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-2xl p-3 sm:p-4 mr-3 sm:mr-5 shadow-lg">
+                      <User className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-800 text-xl mb-1">
+                    <h3 className="font-bold text-gray-800 text-base sm:text-xl mb-1">
                       {selectedSession.guestName || 'Anonymous User'}
                     </h3>
-                    <div className="flex items-center space-x-6 text-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 lg:space-x-6 text-xs sm:text-sm space-y-1 sm:space-y-0">
                       {selectedSession.guestEmail && (
-                        <div className="flex items-center text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-                          <Mail className="w-4 h-4 mr-2" />
-                          {selectedSession.guestEmail}
+                        <div className="flex items-center text-gray-600 bg-gray-100 px-2 sm:px-3 py-1 rounded-full">
+                          <Mail className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                          <span className="truncate max-w-[150px] sm:max-w-none">{selectedSession.guestEmail}</span>
                         </div>
                       )}
-                      <div className="flex items-center text-blue-700 bg-blue-100 px-3 py-1 rounded-full">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        Started: {formatDate(selectedSession.createdAt)}
+                      <div className="flex items-center text-blue-700 bg-blue-100 px-2 sm:px-3 py-1 rounded-full">
+                        <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <span className="hidden sm:inline">Started: </span>{formatDate(selectedSession.createdAt)}
                       </div>
-                      <div className="flex items-center text-green-700 bg-green-100 px-3 py-1 rounded-full">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                      <div className="flex items-center text-green-700 bg-green-100 px-2 sm:px-3 py-1 rounded-full">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-1 sm:mr-2 animate-pulse"></div>
                         Active Chat
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="text-right bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                  <div className="text-sm font-semibold text-gray-700 mb-1">Session Details</div>
-                  <div className="text-xs text-gray-500 font-mono mb-2">
+                <div className="bg-white p-3 sm:p-4 rounded-xl border border-gray-200 shadow-sm">
+                  <div className="text-xs sm:text-sm font-semibold text-gray-700 mb-1">Session Details</div>
+                  <div className="text-xs text-gray-500 font-mono mb-2 truncate">
                     ID: {selectedSession.sessionToken.substring(0, 12)}...
                   </div>
                   <div className="text-xs text-blue-600 font-medium">
@@ -485,11 +485,11 @@ const AdminMessaging: React.FC = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 space-y-4 bg-gray-50 min-h-0 overflow-y-auto messaging-scrollbar">
+            <div className="flex-1 p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gray-50 min-h-0 overflow-y-auto messaging-scrollbar">
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 py-8">
                   <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>No messages in this conversation yet</p>
+                  <p className="text-sm sm:text-base">No messages in this conversation yet</p>
                 </div>
               )}
 
@@ -499,18 +499,18 @@ const AdminMessaging: React.FC = () => {
                   className={`flex ${message.senderType === 'admin' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-md px-4 py-3 rounded-2xl shadow-sm ${
+                    className={`max-w-[85%] sm:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-sm ${
                       message.senderType === 'admin'
                         ? 'bg-blue-600 text-white rounded-br-md'
                         : 'bg-white text-gray-800 border border-gray-200 rounded-bl-md'
                     }`}
                   >
-                    <div className="mb-2">{message.content}</div>
+                    <div className="mb-2 text-sm sm:text-base break-words">{message.content}</div>
                     <div className={`text-xs flex items-center justify-between ${
                       message.senderType === 'admin' ? 'text-blue-100' : 'text-gray-500'
                     }`}>
-                      <span>{message.senderName}</span>
-                      <span>{formatTime(message.createdAt)}</span>
+                      <span className="truncate mr-2">{message.senderName}</span>
+                      <span className="whitespace-nowrap">{formatTime(message.createdAt)}</span>
                     </div>
                   </div>
                 </div>
@@ -520,12 +520,12 @@ const AdminMessaging: React.FC = () => {
             </div>
 
             {/* Message Input */}
-            <div className="p-6 border-t border-gray-200 bg-gradient-to-r from-white to-blue-50">
-              <div className="mb-3 flex items-center space-x-2 text-sm text-gray-600">
-                <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                <span className="font-medium">Falcon Security Support - Responding as: {adminName}</span>
+            <div className="p-4 sm:p-6 border-t border-gray-200 bg-gradient-to-r from-white to-blue-50">
+              <div className="mb-2 sm:mb-3 flex items-center space-x-2 text-xs sm:text-sm text-gray-600">
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                <span className="font-medium truncate">Falcon Security Support - Responding as: {adminName}</span>
               </div>
-              <div className="flex items-end space-x-4">
+              <div className="flex items-end space-x-2 sm:space-x-4">
                 <div className="flex-1">
                   <textarea
                     value={newMessage}
@@ -533,33 +533,33 @@ const AdminMessaging: React.FC = () => {
                     onKeyPress={handleKeyPress}
                     placeholder="Type your professional response to help this customer..."
                     rows={3}
-                    className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none bg-white shadow-sm transition-all duration-200"
+                    className="w-full px-3 sm:px-4 py-3 sm:py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none bg-white shadow-sm transition-all duration-200 text-sm sm:text-base"
                   />
                 </div>
                 <motion.button
                   onClick={sendReply}
                   disabled={!newMessage.trim() || !isConnected || isSending}
-                  className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg flex items-center justify-center"
+                  className="p-3 sm:p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg flex items-center justify-center"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   {isSending ? (
-                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   ) : (
-                    <Send className="w-6 h-6" />
+                    <Send className="w-5 h-5 sm:w-6 sm:h-6" />
                   )}
                 </motion.button>
               </div>
-              <div className="mt-3 flex justify-between items-center text-xs">
-                <div className="text-gray-500">
+              <div className="mt-2 sm:mt-3 flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs space-y-2 sm:space-y-0">
+                <div className="text-gray-500 hidden sm:block">
                   <span className="font-medium">Tips:</span> Press Enter to send • Shift+Enter for new line • Be professional and helpful
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className={`flex items-center px-2 py-1 rounded-full ${isConnected ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                <div className="flex items-center justify-between sm:justify-end space-x-2 sm:space-x-3">
+                  <div className={`flex items-center px-2 py-1 rounded-full text-xs ${isConnected ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                     <div className={`w-2 h-2 rounded-full mr-1 ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
                     {isConnected ? 'Connected' : 'Disconnected'}
                   </div>
-                  <div className="text-blue-600 font-medium">🛡️ Falcon Security</div>
+                  <div className="text-blue-600 font-medium text-xs">🛡️ Falcon Security</div>
                 </div>
               </div>
             </div>

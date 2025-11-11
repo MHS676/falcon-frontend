@@ -25,7 +25,24 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Close mobile menu when screen size changes
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMobileMenuOpen(false);
+        setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
+      }
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
@@ -67,12 +84,39 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
   ];
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 overflow-hidden">
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => {
+          setSidebarOpen(!sidebarOpen);
+          setMobileMenuOpen(!mobileMenuOpen);
+        }}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gradient-to-br from-slate-900 to-blue-900 text-white rounded-lg shadow-lg"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Overlay for mobile */}
+      {mobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          onClick={() => {
+            setSidebarOpen(false);
+            setMobileMenuOpen(false);
+          }}
+        />
+      )}
+
       {/* Sidebar */}
       <motion.div
         initial={false}
-        animate={{ width: sidebarOpen ? 280 : 80 }}
-        className="bg-gradient-to-b from-slate-900 via-blue-900 to-indigo-950 shadow-2xl flex flex-col relative overflow-hidden"
+        animate={{ 
+          width: sidebarOpen ? 280 : 80,
+          x: sidebarOpen || window.innerWidth >= 1024 ? 0 : -280
+        }}
+        className="bg-gradient-to-b from-slate-900 via-blue-900 to-indigo-950 shadow-2xl flex flex-col relative overflow-hidden z-40 lg:relative fixed inset-y-0 left-0"
       >
         {/* Decorative background */}
         <div className="absolute inset-0 opacity-10">
@@ -182,18 +226,18 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
       </motion.div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden w-full lg:w-auto">
         {/* Header */}
         <motion.header 
-          className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-200/50 px-8 py-5"
+          className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-200/50 px-4 sm:px-6 lg:px-8 py-4 sm:py-5"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex-1 min-w-0">
               <motion.h2 
-                className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent capitalize"
+                className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent capitalize truncate"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
@@ -201,7 +245,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
                 {currentModule.replace('-', ' ')}
               </motion.h2>
               <motion.p 
-                className="text-gray-600 text-sm mt-1 font-medium"
+                className="text-gray-600 text-xs sm:text-sm mt-1 font-medium hidden sm:block"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -209,23 +253,23 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
                 Manage your {currentModule} content efficiently
               </motion.p>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3 ml-4">
               <motion.button 
                 onClick={() => navigate('/')}
-                className="px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center space-x-2 shadow-lg shadow-green-500/30 font-medium"
+                className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg sm:rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-green-500/30 font-medium text-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <HomeIcon className="w-5 h-5" />
+                <HomeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="hidden sm:inline">Home</span>
               </motion.button>
               <motion.button 
                 onClick={handleLogout}
-                className="px-5 py-2.5 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl hover:from-red-600 hover:to-rose-700 transition-all duration-300 flex items-center space-x-2 shadow-lg shadow-red-500/30 font-medium"
+                className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-lg sm:rounded-xl hover:from-red-600 hover:to-rose-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-red-500/30 font-medium text-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                <ArrowRightOnRectangleIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="hidden sm:inline">Logout</span>
               </motion.button>
             </div>
@@ -233,7 +277,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
         </motion.header>
 
         {/* Content Area */}
-        <main className="flex-1 overflow-auto p-8 bg-gradient-to-br from-gray-50/50 to-white">
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-gray-50/50 to-white">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
