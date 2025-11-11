@@ -10,8 +10,34 @@ import {
 } from '@heroicons/react/24/outline';
 import { sendContact } from '../services/api';
 import toast from 'react-hot-toast';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
+import { useSEO } from '../hooks/useSEO';
 
 const Contact = () => {
+  // Initialize SEO
+  const seoData = useSEO({
+    title: 'Contact Falcon Security - Get Professional Security Services Quote',
+    description: 'Contact Falcon Security Limited for professional security services in Bangladesh. Get a free quote, consultation, and expert advice on residential, commercial, and event security needs.',
+    keywords: [
+      'contact falcon security',
+      'security quote bangladesh',
+      'security consultation',
+      'hire security services',
+      'professional security quote',
+      'security company contact',
+      'falcon security phone',
+      'security services inquiry'
+    ],
+    image: '/images/contact/falcon-security-contact.jpg',
+    type: 'website'
+  });
+
+  // Convert keywords for SEO component
+  const seoProps = {
+    ...seoData,
+    keywords: seoData.keywords?.join(', ')
+  };
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -56,7 +82,12 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16">
+    <>
+      <SEO {...seoProps} />
+      
+      <div className="min-h-screen pt-16" itemScope itemType="https://schema.org/ContactPage">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb />
       {/* Emergency Banner */}
       <div className="bg-red-600 text-white py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -308,6 +339,7 @@ const Contact = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

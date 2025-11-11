@@ -38,28 +38,41 @@ const AdminMessaging: React.FC = () => {
 
   useEffect(() => {
     connectToChat();
+    
+    // Set up periodic session refresh every 30 seconds as backup
+    const sessionRefreshInterval = setInterval(() => {
+      if (isConnected) {
+        loadSessions();
+      }
+    }, 30000);
+
     return () => {
       if (socket) {
         socket.disconnect();
       }
+      clearInterval(sessionRefreshInterval);
     };
-  }, []);
+  }, [isConnected]);
 
   // Auto-scroll removed as requested
 
   const connectToChat = () => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
     
-    const socketConnection = io(`${API_URL}/chat`, {
+    const socketConnection = io(API_URL, {
       query: {
         userType: 'admin'
-      }
+      },
+      transports: ['websocket', 'polling'],
+      forceNew: true
     });
 
     socketConnection.on('connect', () => {
       console.log('Admin connected to chat server');
       setIsConnected(true);
+      // Join admin room and request active sessions
       socketConnection.emit('admin_join');
+      loadSessions(); // Also load sessions via API as backup
     });
 
     socketConnection.on('disconnect', () => {
@@ -67,11 +80,19 @@ const AdminMessaging: React.FC = () => {
       setIsConnected(false);
     });
 
+    socketConnection.on('connect_error', (error) => {
+      console.error('Socket connection error:', error);
+      setIsConnected(false);
+    });
+
     socketConnection.on('active_sessions', (activeSessions: ChatSession[]) => {
+      console.log('Received active sessions:', activeSessions.length);
       setSessions(activeSessions);
     });
 
-    socketConnection.on('new_guest_message', (message: Message & { sessionToken: string }) => {
+    socketConnection.on('new_guest_message', (message: Message & { sessionToken: string; sessionId: string }) => {
+      console.log('Received new guest message:', message);
+      
       // Update sessions to show new message
       setSessions(prev => prev.map(session => {
         if (session.id === message.sessionId) {
@@ -80,7 +101,7 @@ const AdminMessaging: React.FC = () => {
             messages: [message],
             lastActivity: message.createdAt,
             _count: {
-              messages: session._count.messages + 1
+              messages: (session._count.messages || 0) + 1
             }
           };
         }
@@ -102,6 +123,7 @@ const AdminMessaging: React.FC = () => {
     });
 
     socketConnection.on('admin_message_sent', (message: Message) => {
+      console.log('Admin message sent confirmation:', message);
       if (selectedSession && selectedSession.id === message.sessionId) {
         setMessages(prev => [...prev, message]);
       }
@@ -115,7 +137,26 @@ const AdminMessaging: React.FC = () => {
     }
   };
 
-  // Scroll functionality removed as requested
+  // Load sessions via API (backup method)
+  const loadSessions = async () => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(`${API_URL}/api/messaging/sessions`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        const sessionsData = await response.json();
+        console.log('Loaded sessions via API:', sessionsData.length);
+        setSessions(sessionsData);
+      }
+    } catch (error) {
+      console.error('Error loading sessions:', error);
+    }
+  };
 
   const selectSession = async (session: ChatSession) => {
     setSelectedSession(session);

@@ -7,8 +7,35 @@ import {
   GlobeAmericasIcon,
   CheckBadgeIcon 
 } from '@heroicons/react/24/outline';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
+import OptimizedImage from '../components/OptimizedImage';
+import { useSEO } from '../hooks/useSEO';
 
 const About = () => {
+  // Initialize SEO
+  const seoData = useSEO({
+    title: 'About Falcon Security - Professional Security Company in Bangladesh',
+    description: 'Learn about Falcon Security Limited, our mission, values, and commitment to providing top-tier security services across Bangladesh with 10+ years of experience and 500+ trained professionals.',
+    keywords: [
+      'about falcon security',
+      'security company bangladesh',
+      'professional security team',
+      'security mission bangladesh',
+      'experienced security company',
+      'trusted security provider',
+      'falcon security history',
+      'security company values'
+    ],
+    image: '/images/about/falcon-security-team.jpg',
+    type: 'website'
+  });
+
+  // Convert keywords for SEO component
+  const seoProps = {
+    ...seoData,
+    keywords: seoData.keywords?.join(', ')
+  };
   const stats = [
     { number: '10+', label: 'Years Experience' },
     { number: '500+', label: 'Security Guards' },
@@ -40,7 +67,12 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-16">
+    <>
+      <SEO {...seoProps} />
+      
+      <div className="min-h-screen pt-16" itemScope itemType="https://schema.org/AboutPage">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-red-50 to-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -226,6 +258,7 @@ const About = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

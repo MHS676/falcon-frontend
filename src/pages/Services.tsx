@@ -10,8 +10,36 @@ import {
   PhoneIcon,
   ClockIcon
 } from '@heroicons/react/24/outline';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
+import OptimizedImage from '../components/OptimizedImage';
+import { useSEO } from '../hooks/useSEO';
+import { generateServiceSchema } from '../hooks/useSEO';
 
 const Services = () => {
+  // Initialize SEO
+  const seoData = useSEO({
+    title: 'Security Services - Professional Protection Solutions | Falcon Security',
+    description: 'Comprehensive security services including armed guards, corporate security, residential protection, event security, and construction site security. Professional security solutions across Bangladesh.',
+    keywords: [
+      'security services',
+      'armed security guards',
+      'corporate security',
+      'residential security',
+      'event security',
+      'construction site security',
+      'professional security',
+      'security company bangladesh'
+    ],
+    image: '/images/services/security-services-hero.jpg',
+    type: 'website'
+  });
+
+  // Convert keywords for SEO component
+  const seoProps = {
+    ...seoData,
+    keywords: seoData.keywords?.join(', ')
+  };
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const services = [
@@ -102,7 +130,12 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-16 pb-12">
+    <>
+      <SEO {...seoProps} />
+      
+      <div className="min-h-screen pt-16 pb-12" itemScope itemType="https://schema.org/WebPage">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-red-50 to-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -252,6 +285,7 @@ const Services = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
