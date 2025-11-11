@@ -259,14 +259,36 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-2">Welcome back, Admin! 👋</h1>
-        <p className="text-blue-100">
-          Here's what's happening with your portfolio today.
-        </p>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white p-10 rounded-2xl shadow-2xl relative overflow-hidden"
+      >
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+        </div>
+        <div className="relative z-10">
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-4xl font-bold mb-3 drop-shadow-md"
+          >
+            Welcome back, Admin! 👋
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-blue-100 text-lg"
+          >
+            Here's what's happening with your Falcon Security portfolio today.
+          </motion.p>
+        </div>
+      </motion.div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -277,25 +299,36 @@ const AdminDashboard = () => {
               key={card.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
+              transition={{ delay: index * 0.05 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden relative"
             >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{card.title}</p>
-                  <p className="text-3xl font-bold text-gray-900 dark:text-white">{card.total}</p>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {card.active} active
-                    </span>
-                    <div className="flex items-center space-x-1 text-green-500">
-                      <ArrowUpIcon className="w-3 h-3" />
-                      <span className="text-xs">{card.trend}</span>
-                    </div>
+              {/* Decorative gradient background */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${getColorClasses(card.color)} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+              
+              <div className="relative z-10 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <motion.div 
+                    className={`w-14 h-14 bg-gradient-to-br ${getColorClasses(card.color)} rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300`}
+                    whileHover={{ rotate: 5 }}
+                  >
+                    <Icon className="w-7 h-7 text-white" />
+                  </motion.div>
+                  <div className="flex items-center space-x-1.5 text-green-500 bg-green-50 px-3 py-1.5 rounded-full">
+                    <ArrowUpIcon className="w-4 h-4" />
+                    <span className="text-sm font-bold">{card.trend}</span>
                   </div>
                 </div>
-                <div className={`w-12 h-12 bg-gradient-to-br ${getColorClasses(card.color)} rounded-lg flex items-center justify-center`}>
-                  <Icon className="w-6 h-6 text-white" />
+                
+                <div>
+                  <p className="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wide">{card.title}</p>
+                  <p className="text-4xl font-extrabold text-gray-900 mb-3">{card.total}</p>
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <span className="text-sm text-gray-500 font-medium">
+                      <span className="text-gray-900 font-bold">{card.active}</span> active
+                    </span>
+                    <ShieldCheckIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -306,96 +339,158 @@ const AdminDashboard = () => {
       {/* Charts and Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Quick Actions */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300"
+        >
+          <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <div className="w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3"></div>
+            Quick Actions
+          </h3>
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center space-x-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors">
-              <BriefcaseIcon className="w-6 h-6 text-blue-500" />
-              <div className="text-left">
-                <p className="font-medium text-gray-900 dark:text-white">Add Project</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Create new project</p>
+            <motion.button 
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl hover:from-blue-100 hover:to-blue-200/50 transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200/50"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <BriefcaseIcon className="w-6 h-6 text-white" />
               </div>
-            </button>
-            <button className="flex items-center space-x-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors">
-              <ChatBubbleLeftRightIcon className="w-6 h-6 text-green-500" />
-              <div className="text-left">
-                <p className="font-medium text-gray-900 dark:text-white">Write Post</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Create blog post</p>
+              <div className="text-center">
+                <p className="font-bold text-gray-900">Add Project</p>
+                <p className="text-xs text-gray-600 mt-1">Create new project</p>
               </div>
-            </button>
-            <button className="flex items-center space-x-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors">
-              <FolderIcon className="w-6 h-6 text-purple-500" />
-              <div className="text-left">
-                <p className="font-medium text-gray-900 dark:text-white">Upload Images</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Add to gallery</p>
+            </motion.button>
+            <motion.button 
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-green-50 to-green-100/50 rounded-xl hover:from-green-100 hover:to-green-200/50 transition-all duration-300 shadow-sm hover:shadow-md border border-green-200/50"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                <ChatBubbleLeftRightIcon className="w-6 h-6 text-white" />
               </div>
-            </button>
-            <button className="flex items-center space-x-3 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors">
-              <Cog6ToothIcon className="w-6 h-6 text-orange-500" />
-              <div className="text-left">
-                <p className="font-medium text-gray-900 dark:text-white">Settings</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Update config</p>
+              <div className="text-center">
+                <p className="font-bold text-gray-900">Write Post</p>
+                <p className="text-xs text-gray-600 mt-1">Create blog post</p>
               </div>
-            </button>
+            </motion.button>
+            <motion.button 
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-xl hover:from-purple-100 hover:to-purple-200/50 transition-all duration-300 shadow-sm hover:shadow-md border border-purple-200/50"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <FolderIcon className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center">
+                <p className="font-bold text-gray-900">Upload Images</p>
+                <p className="text-xs text-gray-600 mt-1">Add to gallery</p>
+              </div>
+            </motion.button>
+            <motion.button 
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-xl hover:from-orange-100 hover:to-orange-200/50 transition-all duration-300 shadow-sm hover:shadow-md border border-orange-200/50"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Cog6ToothIcon className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center">
+                <p className="font-bold text-gray-900">Settings</p>
+                <p className="text-xs text-gray-600 mt-1">Update config</p>
+              </div>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Recent Activity */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300"
+        >
+          <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <div className="w-2 h-8 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full mr-3"></div>
+            Recent Activity
+          </h3>
           <div className="space-y-4">
-            {recentActivity.map((activity) => {
+            {recentActivity.map((activity, idx) => {
               const Icon = getActivityIcon(activity.type);
               return (
-                <div key={activity.id} className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                <motion.div 
+                  key={activity.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 + (idx * 0.1) }}
+                  className="flex items-start space-x-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 group cursor-pointer"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-colors flex-shrink-0">
+                    <Icon className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      {activity.title}
-                      {activity.status && (
-                        <span className="ml-2 px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
-                          {activity.status}
-                        </span>
-                      )}
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{activity.timestamp}</p>
+                    <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">{activity.title}</p>
+                    <p className="text-xs text-gray-500 mt-1">{activity.timestamp}</p>
                   </div>
-                </div>
+                  {activity.status && (
+                    <span className={`px-2.5 py-1 text-xs font-bold rounded-full ${
+                      activity.status === 'unread' || activity.status === 'new'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-green-100 text-green-700'
+                    }`}>
+                      {activity.status}
+                    </span>
+                  )}
+                </motion.div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* System Status */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">System Status</h3>
+      {/* System Overview */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7 }}
+        className="bg-gradient-to-br from-white to-blue-50/30 p-8 rounded-2xl shadow-md border border-gray-100"
+      >
+        <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+          <div className="w-2 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full mr-3"></div>
+          System Overview
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <div className="w-8 h-8 bg-green-500 rounded-full animate-pulse"></div>
+          <div className="flex items-center space-x-4 p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <ShieldCheckIcon className="w-6 h-6 text-white" />
             </div>
-            <h4 className="font-medium text-gray-900 dark:text-white">API Status</h4>
-            <p className="text-sm text-green-600 dark:text-green-400">All systems operational</p>
+            <div>
+              <p className="text-sm font-semibold text-gray-600">Security Status</p>
+              <p className="text-xl font-bold text-green-600">All Systems Secure</p>
+            </div>
           </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <BuildingOfficeIcon className="w-8 h-8 text-blue-500" />
+          <div className="flex items-center space-x-4 p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+              <EyeIcon className="w-6 h-6 text-white" />
             </div>
-            <h4 className="font-medium text-gray-900 dark:text-white">Database</h4>
-            <p className="text-sm text-blue-600 dark:text-blue-400">Connected & healthy</p>
+            <div>
+              <p className="text-sm font-semibold text-gray-600">Site Visitors</p>
+              <p className="text-xl font-bold text-gray-900">2,547 Today</p>
+            </div>
           </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <ShieldCheckIcon className="w-8 h-8 text-purple-500" />
+          <div className="flex items-center space-x-4 p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+              <ArrowUpIcon className="w-6 h-6 text-white" />
             </div>
-            <h4 className="font-medium text-gray-900 dark:text-white">Security</h4>
-            <p className="text-sm text-purple-600 dark:text-purple-400">Protected & secure</p>
+            <div>
+              <p className="text-sm font-semibold text-gray-600">Performance</p>
+              <p className="text-xl font-bold text-green-600">+12% This Month</p>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

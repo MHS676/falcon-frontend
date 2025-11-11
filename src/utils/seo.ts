@@ -142,15 +142,15 @@ Crawl-delay: 1`;
 // Helper function to get current URLs dynamically from API
 export const getDynamicUrls = async (): Promise<SitemapUrl[]> => {
   const baseUrl = 'https://falcon-frontend-six.vercel.app';
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
   
   try {
     // Fetch blog posts
-    const blogResponse = await fetch(`${API_URL}/api/blog`);
+    const blogResponse = await fetch(`${API_BASE_URL}/blog`);
     const blogs = blogResponse.ok ? await blogResponse.json() : [];
     
     // Fetch services  
-    const servicesResponse = await fetch(`${API_URL}/api/service`);
+    const servicesResponse = await fetch(`${API_BASE_URL}/service`);
     const services = servicesResponse.ok ? await servicesResponse.json() : [];
 
     const dynamicUrls: SitemapUrl[] = [];

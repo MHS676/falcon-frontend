@@ -108,10 +108,10 @@ class ChatService {
 
   // REST API methods for non-real-time operations
   async getSessionHistory(sessionToken: string): Promise<{ session: ChatSession | null; messages: Message[] }> {
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
     
     try {
-      const response = await fetch(`${API_URL}/api/messaging/session/token/${sessionToken}`);
+      const response = await fetch(`${API_BASE_URL}/messaging/session/token/${sessionToken}`);
       return await response.json();
     } catch (error) {
       console.error('Error fetching session history:', error);

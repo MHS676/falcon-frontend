@@ -35,6 +35,13 @@ const AdminMessaging: React.FC = () => {
   const [newMessage, setNewMessage] = useState('');
   const [adminName] = useState('Falcon Security Support');
   const [isConnected, setIsConnected] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   useEffect(() => {
     connectToChat();
@@ -59,7 +66,7 @@ const AdminMessaging: React.FC = () => {
   const connectToChat = () => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
     
-    const socketConnection = io(API_URL, {
+    const socketConnection = io(`${API_URL}/chat`, {
       query: {
         userType: 'admin'
       },
@@ -124,8 +131,16 @@ const AdminMessaging: React.FC = () => {
 
     socketConnection.on('admin_message_sent', (message: Message) => {
       console.log('Admin message sent confirmation:', message);
+      // Add message to the messages list if it's for the current session
       if (selectedSession && selectedSession.id === message.sessionId) {
-        setMessages(prev => [...prev, message]);
+        setMessages(prev => {
+          // Check if message already exists to avoid duplicates
+          const exists = prev.some(m => m.id === message.id);
+          if (exists) {
+            return prev;
+          }
+          return [...prev, message];
+        });
       }
     });
 
@@ -140,9 +155,9 @@ const AdminMessaging: React.FC = () => {
   // Load sessions via API (backup method)
   const loadSessions = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`${API_URL}/api/messaging/sessions`, {
+      const response = await fetch(`${API_BASE_URL}/messaging/sessions`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -163,15 +178,15 @@ const AdminMessaging: React.FC = () => {
     
     // Load messages for this session
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-      const response = await fetch(`${API_URL}/api/messaging/session/${session.id}/messages`);
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+      const response = await fetch(`${API_BASE_URL}/messaging/session/${session.id}/messages`);
       const sessionMessages = await response.json();
       setMessages(sessionMessages);
 
       // Mark messages as read
       const token = localStorage.getItem('adminToken');
       if (token) {
-        await fetch(`${API_URL}/api/messaging/session/${session.id}/read`, {
+        await fetch(`${API_BASE_URL}/messaging/session/${session.id}/read`, {
           method: 'PATCH',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -192,16 +207,43 @@ const AdminMessaging: React.FC = () => {
   };
 
   const sendReply = () => {
-    if (!newMessage.trim() || !selectedSession || !socket) return;
+    if (!newMessage.trim() || !selectedSession || !socket || isSending) return;
 
+    const messageContent = newMessage.trim();
+    const tempId = `temp-${Date.now()}`;
+    
+    setIsSending(true);
+    
+    // Optimistically add message to UI immediately
+    const optimisticMessage: Message = {
+      id: tempId,
+      sessionId: selectedSession.id,
+      content: messageContent,
+      senderType: 'admin',
+      senderName: adminName,
+      isRead: true,
+      createdAt: new Date().toISOString()
+    };
+    
+    setMessages(prev => [...prev, optimisticMessage]);
+    setNewMessage(''); // Clear input immediately
+
+    // Send to server
     socket.emit('admin_reply', {
-      content: newMessage,
+      content: messageContent,
       sessionId: selectedSession.id,
       adminName
     }, (response: any) => {
+      setIsSending(false);
       if (response.success) {
-        setNewMessage('');
+        // Replace temporary message with server message
+        setMessages(prev => prev.map(msg => 
+          msg.id === tempId ? response.message : msg
+        ));
       } else {
+        // Remove optimistic message on failure
+        setMessages(prev => prev.filter(msg => msg.id !== tempId));
+        setNewMessage(messageContent); // Restore message text
         alert('Failed to send message: ' + (response.error || 'Unknown error'));
       }
     });
@@ -250,8 +292,8 @@ const AdminMessaging: React.FC = () => {
   return (
     <div className="flex bg-gray-50 -m-6" style={{ height: 'calc(100vh - 80px)' }}>
       {/* Sessions Sidebar */}
-      <div className="w-1/3 bg-white border-r border-gray-200 h-full">
-        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white">
+      <div className="w-1/3 bg-white border-r border-gray-200 h-full flex flex-col">
+        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white flex-shrink-0">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
@@ -293,7 +335,7 @@ const AdminMessaging: React.FC = () => {
           </div>
         </div>
         
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-gray-100 overflow-y-auto flex-1 messaging-scrollbar">
           {sessions.map((session) => (
             <motion.div
               key={session.id}
@@ -443,7 +485,7 @@ const AdminMessaging: React.FC = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 space-y-4 bg-gray-50 min-h-0">
+            <div className="flex-1 p-4 space-y-4 bg-gray-50 min-h-0 overflow-y-auto messaging-scrollbar">
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 py-8">
                   <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -473,6 +515,8 @@ const AdminMessaging: React.FC = () => {
                   </div>
                 </div>
               ))}
+              {/* Scroll anchor */}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Message Input */}
@@ -494,12 +538,16 @@ const AdminMessaging: React.FC = () => {
                 </div>
                 <motion.button
                   onClick={sendReply}
-                  disabled={!newMessage.trim() || !isConnected}
-                  className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
+                  disabled={!newMessage.trim() || !isConnected || isSending}
+                  className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg flex items-center justify-center"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Send className="w-6 h-6" />
+                  {isSending ? (
+                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Send className="w-6 h-6" />
+                  )}
                 </motion.button>
               </div>
               <div className="mt-3 flex justify-between items-center text-xs">
