@@ -78,8 +78,8 @@ const AdminLogin = () => {
           className="text-center"
         >
           {/* Logo */}
-          <div className="mx-auto w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-2xl overflow-hidden">
-            <img src={logo} alt="Falcon Logo" className="w-full h-full object-contain" />
+          <div className="">
+            <img src={logo} alt="Falcon Logo" className=" object-contain mx-auto w-24 h-24  flex items-center justify-center mb-6  overflow-hidden" />
           </div>
 
           <h2 className="text-3xl font-bold text-white mb-2">
