@@ -7,8 +7,11 @@ const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
+  const [userName, setUserName] = useState('');
+  const [showNameInput, setShowNameInput] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [hasStartedChat, setHasStartedChat] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,13 +63,47 @@ const ChatWidget: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const sendWelcomeMessage = async () => {
+    if (!hasStartedChat) {
+      setHasStartedChat(true);
+      // Send auto-welcome message after user's first message
+      setTimeout(async () => {
+        try {
+          const welcomeMsg = `Hello${userName ? ` ${userName}` : ''}! 👋 Welcome to Falcon Security Limited. Thank you for contacting us. Our security experts will respond to your inquiry shortly. How can we assist you with your security needs today?`;
+          
+          // Simulate admin welcome message
+          const welcomeMessage: Message = {
+            id: Date.now().toString(),
+            sessionId: chatService.getSessionToken() || '',
+            content: welcomeMsg,
+            senderType: 'admin',
+            senderName: 'Falcon Security Support',
+            isRead: false,
+            createdAt: new Date().toISOString()
+          };
+          
+          setMessages(prev => [...prev, welcomeMessage]);
+        } catch (error) {
+          console.error('Error sending welcome message:', error);
+        }
+      }, 1500); // Send welcome message after 1.5 seconds
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
     setIsSending(true);
     try {
-      await chatService.sendMessage(newMessage);
+      const displayName = userName.trim() || 'Anonymous User';
+      await chatService.sendMessage(newMessage, displayName);
       setNewMessage('');
+      setShowNameInput(false);
+      
+      // Send welcome message after first user message
+      if (!hasStartedChat) {
+        sendWelcomeMessage();
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       alert('Failed to send message. Please try again.');
@@ -134,54 +171,105 @@ const ChatWidget: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 text-sm">
-                  <div className="mb-2">👋 Hello! How can we help you today?</div>
-                  <div className="text-xs">Start typing your message below...</div>
+                  <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
+                    <div className="text-blue-600 text-lg mb-2">🛡️ Falcon Security Limited</div>
+                    <div className="text-gray-700 font-medium mb-2">Professional Security Solutions</div>
+                    <div className="text-xs text-gray-600">
+                      Our security experts are ready to help! Start a conversation below.
+                    </div>
+                  </div>
                 </div>
               )}
 
               {messages.map((message) => (
-                <div
+                <motion.div
                   key={message.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
                   className={`flex ${message.senderType === 'guest' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
+                    className={`max-w-xs px-4 py-3 rounded-2xl text-sm shadow-sm ${
                       message.senderType === 'guest'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-800'
+                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-br-md'
+                        : 'bg-white text-gray-800 border border-gray-200 rounded-bl-md'
                     }`}
                   >
-                    <div className="mb-1">{message.content}</div>
-                    <div className={`text-xs ${
+                    <div className="mb-2">{message.content}</div>
+                    <div className={`text-xs flex justify-between items-center ${
                       message.senderType === 'guest' ? 'text-blue-100' : 'text-gray-500'
                     }`}>
-                      {message.senderType === 'admin' ? 'Support Team' : 'You'} • {formatTime(message.createdAt)}
+                      <span className="font-medium">
+                        {message.senderType === 'admin' ? '🛡️ Support' : '👤 You'}
+                      </span>
+                      <span>{formatTime(message.createdAt)}</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Message Input */}
-            <div className="p-4 border-t border-gray-200">
-              <div className="flex items-center space-x-2">
+            {/* Name Input Section */}
+            {showNameInput && messages.length === 0 && (
+              <div className="p-4 border-t border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div className="flex items-center space-x-2 mb-3">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm">👤</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-gray-800">What should we call you?</div>
+                    <div className="text-xs text-gray-600">Optional - helps us personalize our service</div>
+                  </div>
+                </div>
                 <input
                   type="text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
-                  disabled={isSending}
-                  className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                  placeholder="Your name (optional)"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 bg-white"
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      setShowNameInput(false);
+                    }
+                  }}
                 />
-                <button
+              </div>
+            )}
+
+            {/* Message Input */}
+            <div className="p-4 border-t border-gray-200 bg-white">
+              <div className="flex items-end space-x-3">
+                <div className="flex-1">
+                  <textarea
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder={`Type your message${userName ? `, ${userName}` : ''}...`}
+                    disabled={isSending}
+                    rows={2}
+                    className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 disabled:opacity-50 resize-none"
+                  />
+                </div>
+                <motion.button
                   onClick={handleSendMessage}
                   disabled={isSending || !newMessage.trim()}
-                  className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Send className="w-4 h-4" />
-                </button>
+                  {isSending ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
+                </motion.button>
+              </div>
+              <div className="mt-2 text-xs text-gray-500 flex justify-between items-center">
+                <span>Press Enter to send • Shift+Enter for new line</span>
+                {userName && (
+                  <span className="text-blue-600 font-medium">Chatting as: {userName}</span>
+                )}
               </div>
             </div>
           </motion.div>

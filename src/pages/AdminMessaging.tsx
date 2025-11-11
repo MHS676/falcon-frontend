@@ -215,25 +215,45 @@ const AdminMessaging: React.FC = () => {
     <div className="flex h-screen bg-gray-50">
       {/* Sessions Sidebar */}
       <div className="w-1/3 bg-white border-r border-gray-200 overflow-y-auto">
-        <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold flex items-center">
-              <MessageSquare className="w-5 h-5 mr-2" />
-              Chat Sessions
-            </h2>
-            <div className="flex items-center space-x-2">
-              <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`}></div>
-              <span className="text-sm">{isConnected ? 'Connected' : 'Disconnected'}</span>
+        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
+                <MessageSquare className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold">Falcon Security Support</h2>
+                <p className="text-blue-100 text-sm">Real-time Customer Messaging</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 bg-white/10 px-3 py-2 rounded-lg backdrop-blur-sm">
+                <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
+                <span className="text-sm font-medium">
+                  {isConnected ? 'Online' : 'Connecting...'}
+                </span>
+              </div>
+              {getUnreadCount() > 0 && (
+                <div className="bg-red-500 text-white px-3 py-2 rounded-lg font-medium text-sm animate-bounce">
+                  {getUnreadCount()} New Messages
+                </div>
+              )}
             </div>
           </div>
-          <div className="mt-2 flex items-center text-sm">
-            <Users className="w-4 h-4 mr-1" />
-            {sessions.length} active sessions
-            {getUnreadCount() > 0 && (
-              <span className="ml-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                {getUnreadCount()} unread
-              </span>
-            )}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6 text-sm">
+              <div className="flex items-center space-x-2">
+                <Users className="w-4 h-4" />
+                <span>{sessions.length} Active Chats</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock className="w-4 h-4" />
+                <span>24/7 Support</span>
+              </div>
+            </div>
+            <div className="text-xs text-blue-100">
+              Last updated: {new Date().toLocaleTimeString()}
+            </div>
           </div>
         </div>
         
@@ -242,61 +262,97 @@ const AdminMessaging: React.FC = () => {
             <motion.div
               key={session.id}
               onClick={() => selectSession(session)}
-              className={`p-4 cursor-pointer transition-all duration-200 hover:bg-blue-50 ${
+              className={`p-5 cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 border-b border-gray-100 ${
                 selectedSession?.id === session.id
-                  ? 'bg-blue-100 border-r-4 border-blue-500'
+                  ? 'bg-gradient-to-r from-blue-100 to-indigo-100 border-r-4 border-blue-500 shadow-lg'
                   : ''
               }`}
-              whileHover={{ x: 4 }}
+              whileHover={{ scale: 1.02, x: 6 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="flex justify-between items-start mb-2">
+              <div className="flex justify-between items-start mb-3">
                 <div className="flex items-center">
-                  <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-2 mr-3">
-                    <User className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-gray-800">
-                      {session.guestName || 'Anonymous User'}
-                    </h3>
-                    {session.guestEmail && (
-                      <div className="flex items-center text-xs text-gray-500 mt-1">
-                        <Mail className="w-3 h-3 mr-1" />
-                        {session.guestEmail}
+                  <div className="relative">
+                    <div className="bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-xl p-3 mr-4 shadow-lg">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    {session._count.messages > 0 && (
+                      <div className="absolute -top-2 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-bounce border-2 border-white">
+                        {session._count.messages}
                       </div>
                     )}
                   </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-800 text-base">
+                      {session.guestName || 'Anonymous User'}
+                    </h3>
+                    <div className="flex items-center space-x-3 mt-1">
+                      {session.guestEmail && (
+                        <div className="flex items-center text-xs text-gray-600">
+                          <Mail className="w-3 h-3 mr-1" />
+                          {session.guestEmail}
+                        </div>
+                      )}
+                      <div className="flex items-center text-xs text-green-600">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></div>
+                        Active
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                {session._count.messages > 0 && (
-                  <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center animate-pulse">
-                    {session._count.messages}
-                  </span>
-                )}
               </div>
               
               {session.messages.length > 0 && (
-                <p className="text-sm text-gray-600 truncate mb-2 bg-gray-50 p-2 rounded">
-                  "{session.messages[0].content}"
-                </p>
+                <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-3 rounded-xl mb-3 border border-gray-200">
+                  <div className="text-xs text-gray-500 mb-1 font-medium">Latest message:</div>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    "{session.messages[0].content.length > 60 
+                      ? session.messages[0].content.substring(0, 60) + '...' 
+                      : session.messages[0].content}"
+                  </p>
+                </div>
               )}
               
-              <div className="flex items-center justify-between text-xs text-gray-500">
-                <div className="flex items-center">
-                  <Clock className="w-3 h-3 mr-1" />
-                  {formatDate(session.lastActivity)}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4 text-xs text-gray-500">
+                  <div className="flex items-center bg-gray-100 px-2 py-1 rounded-full">
+                    <Clock className="w-3 h-3 mr-1" />
+                    {formatDate(session.lastActivity)}
+                  </div>
+                  <div className="flex items-center bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    {formatTime(session.lastActivity)}
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <Calendar className="w-3 h-3 mr-1" />
-                  {formatTime(session.lastActivity)}
-                </div>
+                {selectedSession?.id === session.id && (
+                  <div className="text-xs text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded-full">
+                    Active Chat
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
           
           {sessions.length === 0 && (
-            <div className="p-12 text-center text-gray-500">
-              <MessageSquare className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-medium mb-2">No active chats</h3>
-              <p className="text-sm">Customer chat sessions will appear here when they start a conversation</p>
+            <div className="p-12 text-center">
+              <div className="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl p-8 mb-6">
+                <MessageSquare className="w-20 h-20 mx-auto mb-4 text-blue-500" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">Ready for Customer Support</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Falcon Security Limited support is online and ready to help customers. 
+                  New chat sessions will appear here automatically when customers reach out.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-xs">
+                <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                  <div className="font-medium text-green-800">Response Time</div>
+                  <div className="text-green-600">Average: &lt; 2 minutes</div>
+                </div>
+                <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                  <div className="font-medium text-blue-800">Availability</div>
+                  <div className="text-blue-600">24/7 Support</div>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -307,34 +363,44 @@ const AdminMessaging: React.FC = () => {
         {selectedSession ? (
           <>
             {/* Chat Header */}
-            <div className="p-4 border-b border-gray-200 bg-white shadow-sm">
+            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-white to-blue-50 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-full p-3 mr-4">
-                    <User className="w-6 h-6 text-white" />
+                  <div className="relative">
+                    <div className="bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-2xl p-4 mr-5 shadow-lg">
+                      <User className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 text-lg">
+                    <h3 className="font-bold text-gray-800 text-xl mb-1">
                       {selectedSession.guestName || 'Anonymous User'}
                     </h3>
-                    <div className="flex items-center text-sm text-gray-500 space-x-4">
+                    <div className="flex items-center space-x-6 text-sm">
                       {selectedSession.guestEmail && (
-                        <div className="flex items-center">
-                          <Mail className="w-4 h-4 mr-1" />
+                        <div className="flex items-center text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                          <Mail className="w-4 h-4 mr-2" />
                           {selectedSession.guestEmail}
                         </div>
                       )}
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        Session started: {formatDate(selectedSession.createdAt)}
+                      <div className="flex items-center text-blue-700 bg-blue-100 px-3 py-1 rounded-full">
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Started: {formatDate(selectedSession.createdAt)}
+                      </div>
+                      <div className="flex items-center text-green-700 bg-green-100 px-3 py-1 rounded-full">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                        Active Chat
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium text-gray-700">Session ID</div>
-                  <div className="text-xs text-gray-500 font-mono">
-                    {selectedSession.sessionToken.substring(0, 8)}...
+                <div className="text-right bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                  <div className="text-sm font-semibold text-gray-700 mb-1">Session Details</div>
+                  <div className="text-xs text-gray-500 font-mono mb-2">
+                    ID: {selectedSession.sessionToken.substring(0, 12)}...
+                  </div>
+                  <div className="text-xs text-blue-600 font-medium">
+                    🛡️ Falcon Security Support
                   </div>
                 </div>
               </div>
@@ -375,50 +441,98 @@ const AdminMessaging: React.FC = () => {
             </div>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-gray-200 bg-white">
-              <div className="flex items-end space-x-3">
+            <div className="p-6 border-t border-gray-200 bg-gradient-to-r from-white to-blue-50">
+              <div className="mb-3 flex items-center space-x-2 text-sm text-gray-600">
+                <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                <span className="font-medium">Falcon Security Support - Responding as: {adminName}</span>
+              </div>
+              <div className="flex items-end space-x-4">
                 <div className="flex-1">
                   <textarea
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Type your reply..."
+                    placeholder="Type your professional response to help this customer..."
                     rows={3}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+                    className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none bg-white shadow-sm transition-all duration-200"
                   />
                 </div>
-                <button
+                <motion.button
                   onClick={sendReply}
                   disabled={!newMessage.trim() || !isConnected}
-                  className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Send className="w-5 h-5" />
-                </button>
+                  <Send className="w-6 h-6" />
+                </motion.button>
               </div>
-              <div className="mt-2 text-xs text-gray-500">
-                Press Enter to send • Shift+Enter for new line
+              <div className="mt-3 flex justify-between items-center text-xs">
+                <div className="text-gray-500">
+                  <span className="font-medium">Tips:</span> Press Enter to send • Shift+Enter for new line • Be professional and helpful
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className={`flex items-center px-2 py-1 rounded-full ${isConnected ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    <div className={`w-2 h-2 rounded-full mr-1 ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
+                    {isConnected ? 'Connected' : 'Disconnected'}
+                  </div>
+                  <div className="text-blue-600 font-medium">🛡️ Falcon Security</div>
+                </div>
               </div>
             </div>
           </>
         ) : (
-          <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
-            <div className="text-center max-w-md mx-auto p-8">
-              <div className="bg-blue-100 rounded-full p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <MessageSquare className="w-12 h-12 text-blue-600" />
+          <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+            <div className="text-center max-w-lg mx-auto p-12">
+              <div className="relative mb-8">
+                <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 rounded-3xl p-8 w-32 h-32 mx-auto flex items-center justify-center shadow-2xl">
+                  <MessageSquare className="w-16 h-16 text-white" />
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white animate-bounce flex items-center justify-center">
+                  <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                </div>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                Falcon Security Support Chat
+              
+              <h3 className="text-3xl font-bold text-gray-800 mb-3">
+                🛡️ Falcon Security Support Dashboard
               </h3>
-              <p className="text-gray-600 mb-6">
-                Select a chat session from the sidebar to start responding to customer inquiries. 
-                New conversations will appear automatically when customers reach out.
+              <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+                Welcome to the professional customer support center. Select any chat session from the sidebar 
+                to begin assisting customers with their security needs.
               </p>
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <div className="text-sm text-gray-600">
-                  <strong>Status:</strong> {isConnected ? 
-                    <span className="text-green-600">Connected and ready</span> : 
-                    <span className="text-red-600">Connecting...</span>
-                  }
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+                  <div className="flex items-center mb-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                    <div className="font-semibold text-gray-800">System Status</div>
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {isConnected ? 
+                      <span className="text-green-600 font-medium">🟢 Online & Ready</span> : 
+                      <span className="text-orange-600 font-medium">🟡 Connecting...</span>
+                    }
+                  </div>
+                </div>
+                
+                <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+                  <div className="flex items-center mb-3">
+                    <Clock className="w-4 h-4 text-blue-600 mr-2" />
+                    <div className="font-semibold text-gray-800">Response Goal</div>
+                  </div>
+                  <div className="text-sm text-blue-600 font-medium">
+                    &lt; 2 minutes average
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-6 shadow-xl">
+                <div className="font-semibold text-lg mb-2">Professional Support Guidelines</div>
+                <div className="text-blue-100 text-sm space-y-1">
+                  <div>• Respond professionally and courteously</div>
+                  <div>• Provide accurate security information</div>
+                  <div>• Offer appropriate service recommendations</div>
+                  <div>• Maintain Falcon Security standards</div>
                 </div>
               </div>
             </div>
