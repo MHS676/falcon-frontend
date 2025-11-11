@@ -13,6 +13,7 @@ import Blog from './pages/Blog';
 import Careers from './pages/Careers';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import ChatWidget from './components/Chat/ChatWidget';
 
 function AppContent() {
   const location = useLocation();
@@ -63,6 +64,9 @@ function AppContent() {
       
       {/* Show Footer only for non-admin routes */}
       {!isAdminRoute && <Footer />}
+      
+      {/* Show ChatWidget only for non-admin routes */}
+      {!isAdminRoute && <ChatWidget />}
       
       <Toaster 
         position="top-right"
