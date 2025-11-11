@@ -45,8 +45,8 @@ const sendToAnalytics = (metric: WebVitalsMetric) => {
     console.log('Web Vital:', metric);
   }
 
-  // Send to custom analytics endpoint
-  if (typeof window !== 'undefined') {
+  // Send to custom analytics endpoint (only in production)
+  if (typeof window !== 'undefined' && import.meta.env.PROD) {
     fetch('/api/analytics/web-vitals', {
       method: 'POST',
       headers: {
