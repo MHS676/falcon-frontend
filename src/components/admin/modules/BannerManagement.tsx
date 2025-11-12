@@ -106,7 +106,13 @@ const BannerManagement = () => {
       const message = Array.isArray(serverData?.message)
         ? serverData.message.join('\n')
         : (serverData?.message || serverData?.error || error.message || 'Failed to save banner');
-      console.error('Error saving banner:', { config: error?.config, response: serverData });
+      
+      // Enhanced error logging
+      console.error('❌ Banner save failed:');
+      console.error('Status:', error?.response?.status);
+      console.error('Server response:', serverData);
+      console.error('Full error:', error);
+      
       toast.error(message);
     } finally {
       setLoading(false);
