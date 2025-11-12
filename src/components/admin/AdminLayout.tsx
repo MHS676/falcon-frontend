@@ -15,7 +15,9 @@ import {
   CloudArrowUpIcon,
   BuildingOfficeIcon,
   ArrowRightOnRectangleIcon,
+  BellIcon,
 } from '@heroicons/react/24/outline';
+import { contactAPI } from '../../services/api';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -26,7 +28,26 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
+
+  // Fetch unread message count
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await contactAPI.getAll();
+        const unread = response.data.filter((contact: any) => contact.status === 'new' || contact.status === 'in-progress').length;
+        setUnreadCount(unread);
+      } catch (error) {
+        console.error('Error fetching unread count:', error);
+      }
+    };
+
+    fetchUnreadCount();
+    // Refresh unread count every 30 seconds
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Close mobile menu when screen size changes
   useEffect(() => {
@@ -254,6 +275,27 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
               </motion.p>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3 ml-4">
+              <motion.button 
+                onClick={() => {
+                  onModuleChange('contact');
+                  setUnreadCount(0);
+                }}
+                className="relative px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg sm:rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-amber-500/30 font-medium text-sm"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <BellIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                {unreadCount > 0 && (
+                  <motion.span 
+                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                  >
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </motion.span>
+                )}
+                <span className="hidden sm:inline">Messages</span>
+              </motion.button>
               <motion.button 
                 onClick={() => navigate('/')}
                 className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg sm:rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-green-500/30 font-medium text-sm"
