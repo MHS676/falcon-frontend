@@ -211,8 +211,77 @@ const BannerManagement = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setFormData(prev => ({ ...prev, image: file }));
+    const file = e.target.files?.[0];
+    if (!file) {
+      setFormData(prev => ({ ...prev, image: null }));
+      return;
+    }
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      toast.error('Please upload a valid image file (JPEG, PNG, or WebP)');
+      e.target.value = '';
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast.error('Image size must be less than 5MB');
+      e.target.value = '';
+      return;
+    }
+
+    // Check image dimensions
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      
+      // Recommended banner size: 1920x1080 (16:9 ratio)
+      const recommendedWidth = 1920;
+      const recommendedHeight = 1080;
+      const aspectRatio = img.width / img.height;
+      const recommendedRatio = recommendedWidth / recommendedHeight;
+      
+      // Allow some tolerance in aspect ratio (±0.1)
+      if (Math.abs(aspectRatio - recommendedRatio) > 0.1) {
+        toast.error(
+          `Banner dimensions should be ${recommendedWidth}x${recommendedHeight} (16:9 ratio).\n` +
+          `Your image is ${img.width}x${img.height}.`,
+          { duration: 5000 }
+        );
+        e.target.value = '';
+        return;
+      }
+      
+      // Warn if dimensions are too small
+      if (img.width < 1280 || img.height < 720) {
+        toast.error(
+          `Image resolution too low. Minimum: 1280x720\nYour image: ${img.width}x${img.height}`,
+          { duration: 4000 }
+        );
+        e.target.value = '';
+        return;
+      }
+      
+      // Success - show image info
+      toast.success(
+        `Image validated: ${img.width}x${img.height} (${(file.size / 1024 / 1024).toFixed(2)}MB)`,
+        { duration: 3000 }
+      );
+      setFormData(prev => ({ ...prev, image: file, imageUrl: '' }));
+    };
+    
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      toast.error('Failed to load image. Please try another file.');
+      e.target.value = '';
+    };
+    
+    img.src = objectUrl;
   };
 
   if (loading && banners.length === 0) {
@@ -255,6 +324,11 @@ const BannerManagement = () => {
                 src={banner.image}
                 alt={banner.title}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null; // Prevent infinite loop
+                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2UwZTBlMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTk5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBOb3QgRm91bmQ8L3RleHQ+PC9zdmc+';
+                }}
               />
               <div className="absolute top-2 left-2">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -379,24 +453,30 @@ const BannerManagement = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Banner Image
+                    Banner Image *
                   </label>
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                    accept="image/*"
-                    required={!selectedBanner && !formData.imageUrl}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  />
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Upload a file or provide an image URL below.</p>
-                  <input
-                    type="url"
-                    name="imageUrl"
-                    placeholder="https://... (optional image URL)"
-                    value={formData.imageUrl}
-                    onChange={handleInputChange}
-                    className="mt-2 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  />
+                  <div className="space-y-2">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-3 mb-2">
+                      <p className="text-xs text-blue-800 dark:text-blue-200 font-medium">
+                        📐 Recommended Size: 1920x1080 pixels (16:9 ratio)
+                      </p>
+                      <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                        Minimum: 1280x720 | Maximum file size: 5MB | Formats: JPEG, PNG, WebP
+                      </p>
+                    </div>
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      required={!selectedBanner && !formData.imageUrl}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/50 dark:file:text-blue-200"
+                    />
+                    {formData.image && (
+                      <p className="text-xs text-green-600 dark:text-green-400">
+                        ✓ {formData.image.name} selected
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
