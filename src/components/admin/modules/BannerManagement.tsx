@@ -32,6 +32,7 @@ const BannerManagement = () => {
     title: '',
     subtitle: '',
     image: null as File | null,
+    imageUrl: '',
     buttonText: '',
     buttonUrl: '',
     active: true,
@@ -60,7 +61,7 @@ const BannerManagement = () => {
     setLoading(true);
 
     try {
-      // If there's an image file, use multipart/form-data; otherwise send JSON to keep types
+      // If there's an image file, use multipart/form-data; otherwise if imageUrl provided, include it as field
       if (formData.image) {
         const submitData = new FormData();
         submitData.append('title', formData.title);
@@ -86,6 +87,7 @@ const BannerManagement = () => {
           buttonUrl: formData.buttonUrl || undefined,
           active: !!formData.active,
           order: Number(formData.order) || 0,
+          image: formData.imageUrl || undefined,
         };
 
         if (selectedBanner) {
@@ -144,6 +146,7 @@ const BannerManagement = () => {
         title: banner.title,
         subtitle: banner.subtitle || '',
         image: null,
+        imageUrl: banner.image || '',
         buttonText: banner.buttonText || '',
         buttonUrl: banner.buttonUrl || '',
         active: banner.active,
@@ -161,6 +164,7 @@ const BannerManagement = () => {
       title: '',
       subtitle: '',
       image: null,
+      imageUrl: '',
       buttonText: '',
       buttonUrl: '',
       active: true,
@@ -346,14 +350,23 @@ const BannerManagement = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Banner Image *
+                    Banner Image
                   </label>
                   <input
                     type="file"
                     onChange={handleFileChange}
                     accept="image/*"
-                    required={!selectedBanner}
+                    required={!selectedBanner && !formData.imageUrl}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  />
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Upload a file or provide an image URL below.</p>
+                  <input
+                    type="url"
+                    name="imageUrl"
+                    placeholder="https://... (optional image URL)"
+                    value={formData.imageUrl}
+                    onChange={handleInputChange}
+                    className="mt-2 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
