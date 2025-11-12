@@ -61,7 +61,7 @@ const BannerManagement = () => {
     setLoading(true);
 
     try {
-      // If there's an image file, try external uploader first; otherwise, if imageUrl provided, include it as field
+      // If there's an image file, try external uploader first
       if (formData.image) {
         const uploadedUrl = await tryExternalImageUpload(formData.image, 'banner');
         if (uploadedUrl) {
@@ -82,24 +82,13 @@ const BannerManagement = () => {
             toast.success('Banner created successfully');
           }
         } else {
-        const submitData = new FormData();
-        submitData.append('title', formData.title);
-        submitData.append('subtitle', formData.subtitle);
-        submitData.append('buttonText', formData.buttonText);
-        submitData.append('buttonUrl', formData.buttonUrl);
-        submitData.append('active', formData.active.toString());
-        submitData.append('order', formData.order.toString());
-        submitData.append('image', formData.image);
-
-        if (selectedBanner) {
-          await bannerAPI.update(selectedBanner.id, submitData as any);
-          toast.success('Banner updated successfully');
-        } else {
-          await bannerAPI.create(submitData as any);
-          toast.success('Banner created successfully');
+          // External upload failed - inform user to use image URL instead
+          toast.error('Image upload service is unavailable. Please paste a direct image URL instead.');
+          setLoading(false);
+          return;
         }
-        }
-      } else {
+      } else if (formData.imageUrl) {
+        // No file uploaded, use image URL directly
         const payload = {
           title: formData.title,
           subtitle: formData.subtitle || undefined,
@@ -107,7 +96,7 @@ const BannerManagement = () => {
           buttonUrl: formData.buttonUrl || undefined,
           active: !!formData.active,
           order: Number(formData.order) || 0,
-          image: formData.imageUrl || undefined,
+          image: formData.imageUrl,
         };
 
         if (selectedBanner) {
@@ -117,6 +106,10 @@ const BannerManagement = () => {
           await bannerAPI.create(payload as any);
           toast.success('Banner created successfully');
         }
+      } else {
+        toast.error('Please upload an image file or provide an image URL');
+        setLoading(false);
+        return;
       }
       
       fetchBanners();
