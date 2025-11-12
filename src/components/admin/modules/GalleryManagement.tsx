@@ -17,7 +17,6 @@ interface GalleryItem {
   image: string;
   category?: string;
   tags: string[];
-  isActive: boolean;
   createdAt: string;
 }
 
@@ -32,8 +31,7 @@ const GalleryManagement = () => {
     description: '',
     image: null as File | null,
     category: '',
-    tags: '',
-    isActive: true
+    tags: ''
   });
 
   useEffect(() => {
@@ -63,7 +61,6 @@ const GalleryManagement = () => {
       submitData.append('description', formData.description);
       submitData.append('category', formData.category);
       submitData.append('tags', formData.tags);
-      submitData.append('isActive', formData.isActive.toString());
       
       if (formData.image) {
         submitData.append('image', formData.image);
@@ -114,8 +111,7 @@ const GalleryManagement = () => {
         description: item.description || '',
         image: null,
         category: item.category || '',
-        tags: Array.isArray(item.tags) ? item.tags.join(', ') : '',
-        isActive: item.isActive
+        tags: Array.isArray(item.tags) ? item.tags.join(', ') : ''
       });
     } else {
       setSelectedItem(null);
@@ -130,8 +126,7 @@ const GalleryManagement = () => {
       description: '',
       image: null,
       category: '',
-      tags: '',
-      isActive: true
+      tags: ''
     });
   };
 
@@ -212,13 +207,6 @@ const GalleryManagement = () => {
                   </div>
                 </div>
               </div>
-              {!item.isActive && (
-                <div className="absolute top-2 right-2">
-                  <span className="px-2 py-1 bg-red-500 text-white rounded text-xs font-medium">
-                    Hidden
-                  </span>
-                </div>
-              )}
               {item.category && (
                 <div className="absolute bottom-2 left-2">
                   <span className="px-2 py-1 bg-blue-500 text-white rounded text-xs">
@@ -369,19 +357,6 @@ const GalleryManagement = () => {
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="isActive"
-                    checked={formData.isActive}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Show in gallery
-                  </label>
                 </div>
 
                 <div className="flex justify-end space-x-3 pt-4">

@@ -6,19 +6,21 @@ import toast from 'react-hot-toast';
 
 interface SocialLink {
   id: string;
-  name: string;
+  platform: string;
   url: string;
-  icon: string;
-  isActive: boolean;
+  icon?: string;
+  order?: number;
+  active?: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
 interface SocialFormData {
-  name: string;
+  platform: string;
   url: string;
-  icon: string;
-  isActive: boolean;
+  icon?: string;
+  order?: number;
+  active?: boolean;
 }
 
 const SocialManagement = () => {
@@ -27,18 +29,20 @@ const SocialManagement = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<SocialFormData>({
-    name: '',
+    platform: '',
     url: '',
     icon: '',
-    isActive: true
+    order: 0,
+    active: false
   });
 
   const resetForm = () => {
     setFormData({
-      name: '',
+      platform: '',
       url: '',
       icon: '',
-      isActive: true
+      order: 0,
+      active: false
     });
     setEditingId(null);
     setShowForm(false);
@@ -83,10 +87,11 @@ const SocialManagement = () => {
 
   const handleEdit = (socialLink: SocialLink) => {
     setFormData({
-      name: socialLink.name,
+      platform: socialLink.platform,
       url: socialLink.url,
       icon: socialLink.icon,
-      isActive: socialLink.isActive
+      order: socialLink.order,
+      active: socialLink.active
     });
     setEditingId(socialLink.id);
     setShowForm(true);
@@ -152,8 +157,8 @@ const SocialManagement = () => {
                 </label>
                 <input
                   type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  value={formData.platform}
+                  onChange={(e) => setFormData(prev => ({ ...prev, platform: e.target.value }))}
                   className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="e.g., Facebook, Twitter, LinkedIn"
                   required
@@ -180,23 +185,22 @@ const SocialManagement = () => {
                 </label>
                 <input
                   type="text"
-                  value={formData.icon}
+                  value={formData.icon || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, icon: e.target.value }))}
                   className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="e.g., fab fa-facebook, /icons/twitter.svg"
-                  required
                 />
               </div>
 
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  id="isActive"
-                  checked={formData.isActive}
-                  onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                  id="active"
+                  checked={formData.active || false}
+                  onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                <label htmlFor="active" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                   Active
                 </label>
               </div>
@@ -233,20 +237,20 @@ const SocialManagement = () => {
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                  {link.icon.startsWith('http') ? (
-                    <img src={link.icon} alt={link.name} className="w-6 h-6" />
+                  {link.icon && link.icon.startsWith('http') ? (
+                    <img src={link.icon} alt={link.platform} className="w-6 h-6" />
                   ) : (
                     <i className={`${link.icon} text-lg text-gray-600 dark:text-gray-400`}></i>
                   )}
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">{link.name}</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{link.platform}</h3>
                   <div className="flex items-center gap-2">
                     <span className={`inline-block w-2 h-2 rounded-full ${
-                      link.isActive ? 'bg-green-400' : 'bg-red-400'
+                      link.active ? 'bg-green-400' : 'bg-red-400'
                     }`}></span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {link.isActive ? 'Active' : 'Inactive'}
+                      {link.active ? 'Active' : 'Inactive'}
                     </span>
                   </div>
                 </div>

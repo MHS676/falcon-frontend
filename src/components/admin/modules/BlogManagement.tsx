@@ -72,13 +72,17 @@ const BlogManagement = () => {
       submitData.append('content', formData.content);
       submitData.append('excerpt', formData.excerpt);
       submitData.append('slug', formData.slug);
-      submitData.append('tags', formData.tags);
-      submitData.append('category', formData.category);
-      submitData.append('status', formData.status);
-      submitData.append('isPublished', formData.isPublished.toString());
+      
+      if (formData.tags) {
+        submitData.append('tags', formData.tags);
+      }
       
       if (formData.image) {
-        submitData.append('image', formData.image);
+        submitData.append('coverImage', formData.image);
+      }
+      
+      if (formData.isPublished) {
+        submitData.append('published', 'true');
       }
 
       if (selectedPost) {
