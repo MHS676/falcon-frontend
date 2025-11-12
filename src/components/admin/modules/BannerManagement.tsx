@@ -9,6 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { bannerAPI, tryExternalImageUpload } from '../../../services/api';
 import toast from 'react-hot-toast';
+import ImageCropper from '../ImageCropper';
 
 interface Banner {
   id: string;
@@ -28,6 +29,9 @@ const BannerManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBanner, setSelectedBanner] = useState<Banner | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isCropping, setIsCropping] = useState(false);
+  const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+  const [originalFileName, setOriginalFileName] = useState<string>('');
   const [formData, setFormData] = useState({
     title: '',
     subtitle: '',
@@ -233,55 +237,36 @@ const BannerManagement = () => {
       return;
     }
 
-    // Check image dimensions
-    const img = new Image();
+    // Open cropper for any image
     const objectUrl = URL.createObjectURL(file);
+    setOriginalFileName(file.name);
+    setImageToCrop(objectUrl);
+    setIsCropping(true);
+  };
+
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    // Convert blob to file
+    const croppedFile = new File([croppedBlob], originalFileName, {
+      type: 'image/jpeg',
+      lastModified: Date.now(),
+    });
+
+    toast.success(
+      `Image cropped to 1920x1080 (${(croppedBlob.size / 1024 / 1024).toFixed(2)}MB)`,
+      { duration: 3000 }
+    );
     
-    img.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      
-      // Recommended banner size: 1920x1080 (16:9 ratio)
-      const recommendedWidth = 1920;
-      const recommendedHeight = 1080;
-      const aspectRatio = img.width / img.height;
-      const recommendedRatio = recommendedWidth / recommendedHeight;
-      
-      // Allow some tolerance in aspect ratio (±0.1)
-      if (Math.abs(aspectRatio - recommendedRatio) > 0.1) {
-        toast.error(
-          `Banner dimensions should be ${recommendedWidth}x${recommendedHeight} (16:9 ratio).\n` +
-          `Your image is ${img.width}x${img.height}.`,
-          { duration: 5000 }
-        );
-        e.target.value = '';
-        return;
-      }
-      
-      // Warn if dimensions are too small
-      if (img.width < 1280 || img.height < 720) {
-        toast.error(
-          `Image resolution too low. Minimum: 1280x720\nYour image: ${img.width}x${img.height}`,
-          { duration: 4000 }
-        );
-        e.target.value = '';
-        return;
-      }
-      
-      // Success - show image info
-      toast.success(
-        `Image validated: ${img.width}x${img.height} (${(file.size / 1024 / 1024).toFixed(2)}MB)`,
-        { duration: 3000 }
-      );
-      setFormData(prev => ({ ...prev, image: file, imageUrl: '' }));
-    };
-    
-    img.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      toast.error('Failed to load image. Please try another file.');
-      e.target.value = '';
-    };
-    
-    img.src = objectUrl;
+    setFormData(prev => ({ ...prev, image: croppedFile, imageUrl: '' }));
+    setIsCropping(false);
+    setImageToCrop(null);
+  };
+
+  const handleCropCancel = () => {
+    if (imageToCrop) {
+      URL.revokeObjectURL(imageToCrop);
+    }
+    setIsCropping(false);
+    setImageToCrop(null);
   };
 
   if (loading && banners.length === 0) {
@@ -458,10 +443,10 @@ const BannerManagement = () => {
                   <div className="space-y-2">
                     <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-3 mb-2">
                       <p className="text-xs text-blue-800 dark:text-blue-200 font-medium">
-                        📐 Recommended Size: 1920x1080 pixels (16:9 ratio)
+                        ✂️ Auto-crop to 1920x1080 pixels (16:9 ratio)
                       </p>
                       <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
-                        Minimum: 1280x720 | Maximum file size: 5MB | Formats: JPEG, PNG, WebP
+                        Select any image and crop it to the perfect banner size | Max: 5MB | Formats: JPEG, PNG, WebP
                       </p>
                     </div>
                     <input
@@ -586,6 +571,18 @@ const BannerManagement = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Image Cropper Modal */}
+      {isCropping && imageToCrop && (
+        <ImageCropper
+          image={imageToCrop}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+          aspectRatio={16 / 9}
+          cropWidth={1920}
+          cropHeight={1080}
+        />
       )}
     </div>
   );
