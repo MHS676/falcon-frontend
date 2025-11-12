@@ -64,10 +64,21 @@ const ProjectsManagement = () => {
     setLoading(true);
 
     try {
+      // Convert technologies from string to array
+      const technologiesArray = formData.technologies
+        .split(',')
+        .map(tech => tech.trim())
+        .filter(tech => tech.length > 0);
+
       const submitData = new FormData();
       submitData.append('title', formData.title);
       submitData.append('description', formData.description);
-      submitData.append('technologies', formData.technologies);
+      
+      // Append technologies as individual items for FormData
+      technologiesArray.forEach((tech, index) => {
+        submitData.append(`technologies[${index}]`, tech);
+      });
+      
       submitData.append('liveUrl', formData.liveUrl);
       submitData.append('githubUrl', formData.githubUrl);
       submitData.append('featured', formData.featured.toString());

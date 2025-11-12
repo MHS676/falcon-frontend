@@ -56,11 +56,21 @@ const GalleryManagement = () => {
     setLoading(true);
 
     try {
+      // Convert tags from string to array
+      const tagsArray = formData.tags
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag.length > 0);
+
       const submitData = new FormData();
       submitData.append('title', formData.title);
       submitData.append('description', formData.description);
       submitData.append('category', formData.category);
-      submitData.append('tags', formData.tags);
+      
+      // Append tags as individual items for FormData
+      tagsArray.forEach((tag, index) => {
+        submitData.append(`tags[${index}]`, tag);
+      });
       
       if (formData.image) {
         submitData.append('image', formData.image);
