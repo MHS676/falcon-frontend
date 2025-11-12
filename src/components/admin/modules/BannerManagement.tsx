@@ -61,10 +61,13 @@ const BannerManagement = () => {
     setLoading(true);
 
     try {
-      // If there's an image file, try external uploader first
+      // If there's an image file, upload it
       if (formData.image) {
+        // Try external uploader first
         const uploadedUrl = await tryExternalImageUpload(formData.image, 'banner');
+        
         if (uploadedUrl) {
+          // External upload succeeded - use JSON payload
           const payload = {
             title: formData.title,
             subtitle: formData.subtitle || undefined,
@@ -82,10 +85,23 @@ const BannerManagement = () => {
             toast.success('Banner created successfully');
           }
         } else {
-          // External upload failed - inform user to use image URL instead
-          toast.error('Image upload service is unavailable. Please paste a direct image URL instead.');
-          setLoading(false);
-          return;
+          // External upload failed - send file to backend for local storage
+          const submitData = new FormData();
+          submitData.append('title', formData.title);
+          submitData.append('subtitle', formData.subtitle);
+          submitData.append('buttonText', formData.buttonText);
+          submitData.append('buttonUrl', formData.buttonUrl);
+          submitData.append('active', formData.active.toString());
+          submitData.append('order', formData.order.toString());
+          submitData.append('image', formData.image);
+
+          if (selectedBanner) {
+            await bannerAPI.update(selectedBanner.id, submitData as any);
+            toast.success('Banner updated successfully');
+          } else {
+            await bannerAPI.create(submitData as any);
+            toast.success('Banner created successfully');
+          }
         }
       } else if (formData.imageUrl) {
         // No file uploaded, use image URL directly
