@@ -7,7 +7,7 @@ import {
   XMarkIcon,
   PhotoIcon
 } from '@heroicons/react/24/outline';
-import { bannerAPI, tryExternalImageUpload } from '../../../services/api';
+import { bannerAPI } from '../../../services/api';
 import toast from 'react-hot-toast';
 import ImageCropper from '../ImageCropper';
 
@@ -65,47 +65,23 @@ const BannerManagement = () => {
     setLoading(true);
 
     try {
-      // If there's an image file, upload it
+      // If there's an image file, upload it via multipart to backend
       if (formData.image) {
-        // Try external uploader first
-        const uploadedUrl = await tryExternalImageUpload(formData.image, 'banner');
-        
-        if (uploadedUrl) {
-          // External upload succeeded - use JSON payload
-          const payload = {
-            title: formData.title,
-            subtitle: formData.subtitle || undefined,
-            buttonText: formData.buttonText || undefined,
-            buttonUrl: formData.buttonUrl || undefined,
-            active: !!formData.active,
-            order: Number(formData.order) || 0,
-            image: uploadedUrl,
-          };
-          if (selectedBanner) {
-            await bannerAPI.update(selectedBanner.id, payload as any);
-            toast.success('Banner updated successfully');
-          } else {
-            await bannerAPI.create(payload as any);
-            toast.success('Banner created successfully');
-          }
-        } else {
-          // External upload failed - send file to backend for local storage
-          const submitData = new FormData();
-          submitData.append('title', formData.title);
-          submitData.append('subtitle', formData.subtitle);
-          submitData.append('buttonText', formData.buttonText);
-          submitData.append('buttonUrl', formData.buttonUrl);
-          submitData.append('active', formData.active.toString());
-          submitData.append('order', formData.order.toString());
-          submitData.append('image', formData.image);
+        const submitData = new FormData();
+        submitData.append('title', formData.title);
+        submitData.append('subtitle', formData.subtitle);
+        submitData.append('buttonText', formData.buttonText);
+        submitData.append('buttonUrl', formData.buttonUrl);
+        submitData.append('active', formData.active.toString());
+        submitData.append('order', formData.order.toString());
+        submitData.append('image', formData.image);
 
-          if (selectedBanner) {
-            await bannerAPI.update(selectedBanner.id, submitData as any);
-            toast.success('Banner updated successfully');
-          } else {
-            await bannerAPI.create(submitData as any);
-            toast.success('Banner created successfully');
-          }
+        if (selectedBanner) {
+          await bannerAPI.update(selectedBanner.id, submitData as any);
+          toast.success('Banner updated successfully');
+        } else {
+          await bannerAPI.create(submitData as any);
+          toast.success('Banner created successfully');
         }
       } else if (formData.imageUrl) {
         // No file uploaded, use image URL directly
