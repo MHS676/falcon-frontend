@@ -14,11 +14,10 @@ interface Banner {
   id: string;
   title: string;
   subtitle?: string;
-  description?: string;
   image: string;
-  ctaText?: string;
-  ctaLink?: string;
-  isActive: boolean;
+  buttonText?: string;
+  buttonUrl?: string;
+  active: boolean;
   order: number;
   createdAt: string;
 }
@@ -32,11 +31,10 @@ const BannerManagement = () => {
   const [formData, setFormData] = useState({
     title: '',
     subtitle: '',
-    description: '',
     image: null as File | null,
-    ctaText: '',
-    ctaLink: '',
-    isActive: true,
+    buttonText: '',
+    buttonUrl: '',
+    active: true,
     order: 1
   });
 
@@ -62,33 +60,54 @@ const BannerManagement = () => {
     setLoading(true);
 
     try {
-      const submitData = new FormData();
-      submitData.append('title', formData.title);
-      submitData.append('subtitle', formData.subtitle);
-      submitData.append('description', formData.description);
-      submitData.append('ctaText', formData.ctaText);
-      submitData.append('ctaLink', formData.ctaLink);
-      submitData.append('isActive', formData.isActive.toString());
-      submitData.append('order', formData.order.toString());
-      
+      // If there's an image file, use multipart/form-data; otherwise send JSON to keep types
       if (formData.image) {
+        const submitData = new FormData();
+        submitData.append('title', formData.title);
+        submitData.append('subtitle', formData.subtitle);
+        submitData.append('buttonText', formData.buttonText);
+        submitData.append('buttonUrl', formData.buttonUrl);
+        submitData.append('active', formData.active.toString());
+        submitData.append('order', formData.order.toString());
         submitData.append('image', formData.image);
-      }
 
-      if (selectedBanner) {
-        await bannerAPI.update(selectedBanner.id, submitData);
-        toast.success('Banner updated successfully');
+        if (selectedBanner) {
+          await bannerAPI.update(selectedBanner.id, submitData as any);
+          toast.success('Banner updated successfully');
+        } else {
+          await bannerAPI.create(submitData as any);
+          toast.success('Banner created successfully');
+        }
       } else {
-        await bannerAPI.create(submitData);
-        toast.success('Banner created successfully');
+        const payload = {
+          title: formData.title,
+          subtitle: formData.subtitle || undefined,
+          buttonText: formData.buttonText || undefined,
+          buttonUrl: formData.buttonUrl || undefined,
+          active: !!formData.active,
+          order: Number(formData.order) || 0,
+        };
+
+        if (selectedBanner) {
+          await bannerAPI.update(selectedBanner.id, payload as any);
+          toast.success('Banner updated successfully');
+        } else {
+          await bannerAPI.create(payload as any);
+          toast.success('Banner created successfully');
+        }
       }
       
       fetchBanners();
       resetForm();
       setIsModalOpen(false);
     } catch (error: any) {
-      console.error('Error saving banner:', error);
-      toast.error(error.response?.data?.message || 'Failed to save banner');
+      // Improve visibility of server-side validation errors
+      const serverData = error?.response?.data;
+      const message = Array.isArray(serverData?.message)
+        ? serverData.message.join('\n')
+        : (serverData?.message || serverData?.error || error.message || 'Failed to save banner');
+      console.error('Error saving banner:', { config: error?.config, response: serverData });
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -118,11 +137,10 @@ const BannerManagement = () => {
       setFormData({
         title: banner.title,
         subtitle: banner.subtitle || '',
-        description: banner.description || '',
         image: null,
-        ctaText: banner.ctaText || '',
-        ctaLink: banner.ctaLink || '',
-        isActive: banner.isActive,
+        buttonText: banner.buttonText || '',
+        buttonUrl: banner.buttonUrl || '',
+        active: banner.active,
         order: banner.order
       });
     } else {
@@ -136,11 +154,10 @@ const BannerManagement = () => {
     setFormData({
       title: '',
       subtitle: '',
-      description: '',
       image: null,
-      ctaText: '',
-      ctaLink: '',
-      isActive: true,
+      buttonText: '',
+      buttonUrl: '',
+      active: true,
       order: banners.length + 1
     });
   };
@@ -202,11 +219,11 @@ const BannerManagement = () => {
               />
               <div className="absolute top-2 left-2">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  banner.isActive 
+                  banner.active 
                     ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                     : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
                 }`}>
-                  {banner.isActive ? 'Active' : 'Inactive'}
+                  {banner.active ? 'Active' : 'Inactive'}
                 </span>
               </div>
               <div className="absolute top-2 right-2">
@@ -225,9 +242,9 @@ const BannerManagement = () => {
                   {banner.subtitle}
                 </p>
               )}
-              {banner.description && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
-                  {banner.description}
+              {banner.buttonText && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                  Button: {banner.buttonText} → {banner.buttonUrl}
                 </p>
               )}
               
@@ -323,19 +340,6 @@ const BannerManagement = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Description
-                  </label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Banner Image *
                   </label>
                   <input
@@ -350,25 +354,27 @@ const BannerManagement = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      CTA Text
+                      Button Text
                     </label>
                     <input
                       type="text"
-                      name="ctaText"
-                      value={formData.ctaText}
+                      name="buttonText"
+                      value={formData.buttonText}
                       onChange={handleInputChange}
+                      placeholder="e.g., Learn More"
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      CTA Link
+                      Button URL
                     </label>
                     <input
                       type="url"
-                      name="ctaLink"
-                      value={formData.ctaLink}
+                      name="buttonUrl"
+                      value={formData.buttonUrl}
                       onChange={handleInputChange}
+                      placeholder="e.g., /services"
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
@@ -391,8 +397,8 @@ const BannerManagement = () => {
                   <div className="flex items-center mt-7">
                     <input
                       type="checkbox"
-                      name="isActive"
-                      checked={formData.isActive}
+                      name="active"
+                      checked={formData.active}
                       onChange={handleInputChange}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
