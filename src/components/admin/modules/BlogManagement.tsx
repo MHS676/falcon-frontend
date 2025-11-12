@@ -79,10 +79,8 @@ const BlogManagement = () => {
       submitData.append('excerpt', formData.excerpt);
       submitData.append('slug', formData.slug);
       
-      // Append tags as individual items for FormData
-      tagsArray.forEach((tag, index) => {
-        submitData.append(`tags[${index}]`, tag);
-      });
+      // Send tags as JSON string for proper array deserialization
+      submitData.append('tags', JSON.stringify(tagsArray));
       
       if (formData.image) {
         submitData.append('coverImage', formData.image);

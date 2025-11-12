@@ -74,10 +74,8 @@ const ProjectsManagement = () => {
       submitData.append('title', formData.title);
       submitData.append('description', formData.description);
       
-      // Append technologies as individual items for FormData
-      technologiesArray.forEach((tech, index) => {
-        submitData.append(`technologies[${index}]`, tech);
-      });
+      // Send technologies as JSON string for proper array deserialization
+      submitData.append('technologies', JSON.stringify(technologiesArray));
       
       submitData.append('liveUrl', formData.liveUrl);
       submitData.append('githubUrl', formData.githubUrl);

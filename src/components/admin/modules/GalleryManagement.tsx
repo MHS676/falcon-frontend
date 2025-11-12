@@ -67,10 +67,8 @@ const GalleryManagement = () => {
       submitData.append('description', formData.description);
       submitData.append('category', formData.category);
       
-      // Append tags as individual items for FormData
-      tagsArray.forEach((tag, index) => {
-        submitData.append(`tags[${index}]`, tag);
-      });
+      // Send tags as JSON string for proper array deserialization
+      submitData.append('tags', JSON.stringify(tagsArray));
       
       if (formData.image) {
         submitData.append('image', formData.image);
