@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+const EXTERNAL_UPLOAD_BASE: string | undefined =
+  (import.meta as any).env?.VITE_IMAGE_UPLOAD_SERVICE_URL ||
+  (import.meta as any).env?.IMAGE_UPLOAD_SERVICE_URL;
 
 // Main API instance
 const api = axios.create({
@@ -59,6 +62,45 @@ export const createFormData = (data: Record<string, any>): FormData => {
     }
   });
   return formData;
+};
+
+// Try to upload an image to an external upload service (if configured)
+export const tryExternalImageUpload = async (
+  file: File,
+  folder?: string
+): Promise<string | null> => {
+  if (!EXTERNAL_UPLOAD_BASE) return null;
+
+  const base = EXTERNAL_UPLOAD_BASE.replace(/\/$/, '');
+  // Common conventions: '/upload' endpoint and 'file' field; allow 'image' fallback
+  const urlCandidates = [`${base}/upload`, base];
+
+  const form = new FormData();
+  form.append('file', file);
+  if (folder) form.append('folder', folder);
+
+  let lastError: any = null;
+  for (const url of urlCandidates) {
+    try {
+      const res = await axios.post(url, form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        withCredentials: false,
+      });
+      const data = res?.data ?? {};
+      const imageUrl =
+        data.url || data.secure_url || data.location || data.imageUrl || data.result?.url || res.headers?.location;
+      if (typeof imageUrl === 'string' && imageUrl.startsWith('http')) {
+        return imageUrl;
+      }
+    } catch (err: any) {
+      lastError = err;
+      // try next candidate
+    }
+  }
+  if (lastError) {
+    console.error('External image upload failed:', lastError);
+  }
+  return null;
 };
 
 // Auth API

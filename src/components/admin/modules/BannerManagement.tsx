@@ -7,7 +7,7 @@ import {
   XMarkIcon,
   PhotoIcon
 } from '@heroicons/react/24/outline';
-import { bannerAPI } from '../../../services/api';
+import { bannerAPI, tryExternalImageUpload } from '../../../services/api';
 import toast from 'react-hot-toast';
 
 interface Banner {
@@ -61,8 +61,27 @@ const BannerManagement = () => {
     setLoading(true);
 
     try {
-      // If there's an image file, use multipart/form-data; otherwise if imageUrl provided, include it as field
+      // If there's an image file, try external uploader first; otherwise, if imageUrl provided, include it as field
       if (formData.image) {
+        const uploadedUrl = await tryExternalImageUpload(formData.image, 'banner');
+        if (uploadedUrl) {
+          const payload = {
+            title: formData.title,
+            subtitle: formData.subtitle || undefined,
+            buttonText: formData.buttonText || undefined,
+            buttonUrl: formData.buttonUrl || undefined,
+            active: !!formData.active,
+            order: Number(formData.order) || 0,
+            image: uploadedUrl,
+          };
+          if (selectedBanner) {
+            await bannerAPI.update(selectedBanner.id, payload as any);
+            toast.success('Banner updated successfully');
+          } else {
+            await bannerAPI.create(payload as any);
+            toast.success('Banner created successfully');
+          }
+        } else {
         const submitData = new FormData();
         submitData.append('title', formData.title);
         submitData.append('subtitle', formData.subtitle);
@@ -78,6 +97,7 @@ const BannerManagement = () => {
         } else {
           await bannerAPI.create(submitData as any);
           toast.success('Banner created successfully');
+        }
         }
       } else {
         const payload = {
