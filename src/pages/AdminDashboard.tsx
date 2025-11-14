@@ -11,6 +11,7 @@ import ContactManagement from '../components/admin/modules/ContactManagement';
 import JobsManagement from '../components/admin/modules/JobsManagement';
 import SocialManagement from '../components/admin/modules/SocialManagement';
 import SettingsManagement from '../components/admin/modules/SettingsManagement';
+import AdminManagement from '../components/admin/modules/AdminManagement';
 import ClientsManagement from '../components/admin/modules/ClientsManagement';
 import UploadManagement from '../components/admin/modules/UploadManagement';
 import AdminMessaging from './AdminMessaging';
@@ -51,6 +52,8 @@ const AdminDashboard = () => {
         return <SocialManagement />;
       case 'settings':
         return <SettingsManagement />;
+      case 'admins':
+        return <AdminManagement />;
       case 'services':
         return <ServicesManagement />;
       case 'upload':

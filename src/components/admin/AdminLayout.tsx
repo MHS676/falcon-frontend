@@ -37,9 +37,8 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
     const fetchUnreadCounts = async () => {
       try {
         // Fetch contact unread count
-        const contactResponse = await contactAPI.getAll();
-        const contactUnread = contactResponse.data.filter((contact: any) => contact.status === 'new' || contact.status === 'in-progress').length;
-        setContactUnreadCount(contactUnread);
+        const contactResponse = await contactAPI.getUnreadCount();
+        setContactUnreadCount(contactResponse.data.count || 0);
 
         // Fetch message unread count
         const messageResponse = await messagingAPI.getUnreadCount();
@@ -104,6 +103,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
     { id: 'contact', name: 'Contact', icon: EnvelopeIcon, count: contactUnreadCount > 0 ? contactUnreadCount : null },
     { id: 'social', name: 'Social Links', icon: UserGroupIcon, count: null },
     { id: 'settings', name: 'Settings', icon: Cog6ToothIcon, count: null },
+    { id: 'admins', name: 'Admin Users', icon: UserGroupIcon, count: null },
     { id: 'services', name: 'Services', icon: WrenchScrewdriverIcon, count: null },
     { id: 'upload', name: 'Upload', icon: CloudArrowUpIcon, count: null },
     { id: 'clients', name: 'Clients', icon: BuildingOfficeIcon, count: null },

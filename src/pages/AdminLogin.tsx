@@ -170,6 +170,17 @@ const AdminLogin = () => {
               )}
             </motion.button>
 
+            {/* Forgot Password Link */}
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => navigate('/admin/forgot-password')}
+                className="text-sm text-blue-300 hover:text-blue-200 transition-colors"
+              >
+                Forgot your password?
+              </button>
+            </div>
+
             {/* Security Note */}
             <div className="text-center">
               <p className="text-xs text-slate-400">

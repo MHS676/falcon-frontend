@@ -13,6 +13,8 @@ import Blog from './pages/Blog';
 import Careers from './pages/Careers';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import ChatWidget from './components/Chat/ChatWidget';
 import AdminChat from './components/Chat/AdminChat';
 
@@ -43,6 +45,8 @@ function AppContent() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+            <Route path="/admin/reset-password" element={<ResetPassword />} />
             <Route path="/admin/chat" element={<AdminChat />} />
             <Route 
               path="/admin/dashboard/*" 

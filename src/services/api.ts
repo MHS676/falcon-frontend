@@ -150,30 +150,31 @@ export const blogAPI = {
 
 // Contact API
 export const contactAPI = {
-  submit: (data: FormData) => api.post('/contact', data),
+  submit: (data: any) => api.post('/contact', data),
   getAll: () => api.get('/contact'),
+  getUnreadCount: () => api.get('/contact/unread/count'),
   getById: (id: string) => api.get(`/contact/${id}`),
-  updateStatus: (id: string, data: FormData) => api.patch(`/contact/${id}/status`, data),
+  updateStatus: (id: string, data: any) => api.patch(`/contact/${id}/status`, data),
   delete: (id: string) => api.delete(`/contact/${id}`),
 };
 
 // Social Links API
 export const socialAPI = {
-  create: (data: FormData) => api.post('/social', data),
+  create: (data: any) => api.post('/social', data),
   getAll: () => api.get('/social'),
   getActive: () => api.get('/social/active'),
   getById: (id: string) => api.get(`/social/${id}`),
-  update: (id: string, data: FormData) => api.patch(`/social/${id}`, data),
+  update: (id: string, data: any) => api.patch(`/social/${id}`, data),
   delete: (id: string) => api.delete(`/social/${id}`),
 };
 
 // Settings API
 export const settingsAPI = {
-  create: (data: FormData) => api.post('/settings', data),
+  create: (data: any) => api.post('/settings', data),
   getAll: () => api.get('/settings'),
   getPublic: () => api.get('/settings/public'),
   getByKey: (key: string) => api.get(`/settings/${key}`),
-  update: (key: string, data: FormData) => api.patch(`/settings/${key}`, data),
+  update: (key: string, data: any) => api.patch(`/settings/${key}`, data),
   delete: (key: string) => api.delete(`/settings/${key}`),
 };
 
@@ -275,6 +276,19 @@ export const messagingAPI = {
   sendAdminReply: (data: any) => api.post('/messaging/admin/reply', data),
 };
 
+// Admin Management API
+export const adminAPI = {
+  getAll: () => api.get('/auth/admins'),
+  getById: (id: string) => api.get(`/auth/admins/${id}`),
+  create: (data: any) => api.post('/auth/admins', data),
+  update: (id: string, data: any) => api.patch(`/auth/admins/${id}`, data),
+  delete: (id: string) => api.delete(`/auth/admins/${id}`),
+  changePassword: (data: any) => api.post('/auth/change-password', data),
+  forgotPassword: (data: any) => api.post('/auth/forgot-password', data),
+  resetPassword: (data: any) => api.post('/auth/reset-password', data),
+  getProfile: () => api.get('/auth/profile'),
+};
+
 // Legacy functions for backward compatibility
 // The backend expects JSON for authentication routes (email/password).
 // Send a JSON body for login rather than FormData to avoid 400 Bad Request
@@ -289,8 +303,8 @@ export const deleteBanner = (id: string) => bannerAPI.delete(id);
 export const getSettings = () => settingsAPI.getAll();
 export const getPublicSettings = () => settingsAPI.getPublic();
 export const getSetting = (key: string) => settingsAPI.getByKey(key);
-export const createSetting = (data: any) => settingsAPI.create(createFormData(data));
-export const updateSetting = (key: string, data: any) => settingsAPI.update(key, createFormData(data));
+export const createSetting = (data: any) => settingsAPI.create(data);
+export const updateSetting = (key: string, data: any) => settingsAPI.update(key, data);
 export const deleteSetting = (key: string) => settingsAPI.delete(key);
 export const getProjects = () => projectsAPI.getAll();
 export const getFeaturedProjects = () => projectsAPI.getFeatured();
@@ -298,12 +312,11 @@ export const getProject = (id: string) => projectsAPI.getById(id);
 export const createProject = (data: any) => projectsAPI.create(createFormData(data));
 export const updateProject = (id: string, data: any) => projectsAPI.update(id, createFormData(data));
 export const deleteProject = (id: string) => projectsAPI.delete(id);
-export const sendContact = (data: any) => contactAPI.submit(createFormData(data));
+export const sendContact = (data: any) => contactAPI.submit(data);
 export const getContacts = () => contactAPI.getAll();
 export const getContact = (id: string) => contactAPI.getById(id);
 export const updateContactStatus = (id: string, status: string) => {
-  const data = new FormData();
-  data.append('status', status);
+  const data = { status };
   return contactAPI.updateStatus(id, data);
 };
 export const deleteContact = (id: string) => contactAPI.delete(id);
@@ -313,8 +326,8 @@ export const createBlogPost = (data: any) => blogAPI.create(createFormData(data)
 export const deleteBlogPost = (id: string) => blogAPI.delete(id);
 export const getSocialLinks = () => socialAPI.getAll();
 export const getActiveSocialLinks = () => socialAPI.getActive();
-export const createSocialLink = (data: any) => socialAPI.create(createFormData(data));
-export const updateSocialLink = (id: string, data: any) => socialAPI.update(id, createFormData(data));
+export const createSocialLink = (data: any) => socialAPI.create(data);
+export const updateSocialLink = (id: string, data: any) => socialAPI.update(id, data);
 export const deleteSocialLink = (id: string) => socialAPI.delete(id);
 export const getGuards = () => guardsAPI.getAll();
 export const getGuard = (id: string) => guardsAPI.getById(id);
