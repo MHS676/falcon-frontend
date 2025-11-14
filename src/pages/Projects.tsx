@@ -9,6 +9,7 @@ interface Project {
   title: string;
   description: string;
   image?: string;
+  category?: string;
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
@@ -83,9 +84,16 @@ const Projects = () => {
                     </div>
                   )}
                   <div className="p-6">
-                    <h3 className="text-2xl font-heading font-bold mb-3">
-                      {project.title}
-                    </h3>
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-2xl font-heading font-bold flex-1">
+                        {project.title}
+                      </h3>
+                      {project.category && (
+                        <span className="ml-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium whitespace-nowrap">
+                          {project.category}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-gray-600 mb-4">{project.description}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.technologies.map((tech) => (

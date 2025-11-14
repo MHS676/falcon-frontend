@@ -264,6 +264,17 @@ export const guardsAPI = {
   delete: (id: string) => api.delete(`/guards/${id}`),
 };
 
+// Messaging API
+export const messagingAPI = {
+  getAllSessions: () => api.get('/messaging/sessions'),
+  getSessionMessages: (sessionId: string) => api.get(`/messaging/session/${sessionId}/messages`),
+  getSessionByToken: (sessionToken: string) => api.get(`/messaging/session/token/${sessionToken}`),
+  markAsRead: (sessionId: string) => api.patch(`/messaging/session/${sessionId}/read`),
+  closeSession: (sessionId: string) => api.patch(`/messaging/session/${sessionId}/close`),
+  getUnreadCount: () => api.get('/messaging/unread/count'),
+  sendAdminReply: (data: any) => api.post('/messaging/admin/reply', data),
+};
+
 // Legacy functions for backward compatibility
 // The backend expects JSON for authentication routes (email/password).
 // Send a JSON body for login rather than FormData to avoid 400 Bad Request
@@ -320,8 +331,8 @@ export const getActiveServices = () => servicesAPI.getActive();
 export const getFeaturedServices = () => servicesAPI.getFeatured();
 export const getClients = () => clientsAPI.getAll();
 export const getClient = (id: string) => clientsAPI.getById(id);
-export const createClient = (data: any) => clientsAPI.create(createFormData(data));
-export const updateClient = (id: string, data: any) => clientsAPI.update(id, createFormData(data));
+export const createClient = (data: any) => clientsAPI.create(data);
+export const updateClient = (id: string, data: any) => clientsAPI.update(id, data);
 export const deleteClient = (id: string) => clientsAPI.delete(id);
 export const getFeaturedClients = () => clientsAPI.getFeatured();
 export const getActiveClients = () => clientsAPI.getActive();
@@ -366,11 +377,11 @@ export const getOptimizedUrl = (publicId: string, options: any = {}) => uploadAP
 // Jobs API
 export const jobsAPI = {
   // Job endpoints
-  create: (data: FormData) => api.post('/jobs', data),
+  create: (data: any) => api.post('/jobs', data),
   getAll: () => api.get('/jobs'),
   getActive: () => api.get('/jobs/active'),
   getById: (id: string) => api.get(`/jobs/${id}`),
-  update: (id: string, data: FormData) => api.patch(`/jobs/${id}`, data),
+  update: (id: string, data: any) => api.patch(`/jobs/${id}`, data),
   delete: (id: string) => api.delete(`/jobs/${id}`),
   getStats: () => api.get('/jobs/stats'),
   

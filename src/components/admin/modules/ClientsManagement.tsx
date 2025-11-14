@@ -7,24 +7,28 @@ import toast from 'react-hot-toast';
 interface Client {
   id: string;
   name: string;
-  description: string;
-  logo: string;
-  website: string;
-  category: string;
+  company?: string;
+  position?: string;
+  testimonial: string;
+  image?: string;
+  rating: number;
+  projectType?: string;
   featured: boolean;
-  isActive: boolean;
+  active: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
 interface ClientFormData {
   name: string;
-  description: string;
-  logo: File | null;
-  website: string;
-  category: string;
+  company: string;
+  position: string;
+  testimonial: string;
+  image: string;
+  rating: number;
+  projectType: string;
   featured: boolean;
-  isActive: boolean;
+  active: boolean;
 }
 
 const ClientsManagement = () => {
@@ -34,23 +38,27 @@ const ClientsManagement = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<ClientFormData>({
     name: '',
-    description: '',
-    logo: null,
-    website: '',
-    category: '',
+    company: '',
+    position: '',
+    testimonial: '',
+    image: '',
+    rating: 5,
+    projectType: '',
     featured: false,
-    isActive: true
+    active: true
   });
 
   const resetForm = () => {
     setFormData({
       name: '',
-      description: '',
-      logo: null,
-      website: '',
-      category: '',
+      company: '',
+      position: '',
+      testimonial: '',
+      image: '',
+      rating: 5,
+      projectType: '',
       featured: false,
-      isActive: true
+      active: true
     });
     setEditingId(null);
     setShowForm(false);
@@ -96,12 +104,14 @@ const ClientsManagement = () => {
   const handleEdit = (client: Client) => {
     setFormData({
       name: client.name,
-      description: client.description,
-      logo: null, // File will be handled separately
-      website: client.website,
-      category: client.category,
+      company: client.company || '',
+      position: client.position || '',
+      testimonial: client.testimonial,
+      image: client.image || '',
+      rating: client.rating,
+      projectType: client.projectType || '',
       featured: client.featured,
-      isActive: client.isActive
+      active: client.active
     });
     setEditingId(client.id);
     setShowForm(true);
@@ -120,11 +130,6 @@ const ClientsManagement = () => {
       console.error('Error deleting client:', error);
       toast.error('Failed to delete client');
     }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setFormData(prev => ({ ...prev, logo: file }));
   };
 
   if (loading) {
@@ -181,36 +186,49 @@ const ClientsManagement = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Description
+                  Company
+                </label>
+                <input
+                  type="text"
+                  value={formData.company}
+                  onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
+                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Position
+                </label>
+                <input
+                  type="text"
+                  value={formData.position}
+                  onChange={(e) => setFormData(prev => ({ ...prev, position: e.target.value }))}
+                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Testimonial *
                 </label>
                 <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  value={formData.testimonial}
+                  onChange={(e) => setFormData(prev => ({ ...prev, testimonial: e.target.value }))}
                   rows={3}
                   className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Logo
+                  Image URL
                 </label>
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Website URL
-                </label>
-                <input
-                  type="url"
-                  value={formData.website}
-                  onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
+                  type="text"
+                  value={formData.image}
+                  onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
                   className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="https://..."
                 />
@@ -218,14 +236,28 @@ const ClientsManagement = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Category
+                  Rating (1-5)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  value={formData.rating}
+                  onChange={(e) => setFormData(prev => ({ ...prev, rating: parseInt(e.target.value) }))}
+                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Project Type
                 </label>
                 <input
                   type="text"
-                  value={formData.category}
-                  onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                  value={formData.projectType}
+                  onChange={(e) => setFormData(prev => ({ ...prev, projectType: e.target.value }))}
                   className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="e.g., Technology, Healthcare, Finance"
+                  placeholder="e.g., Corporate Security, Event Security"
                 />
               </div>
 
@@ -246,12 +278,12 @@ const ClientsManagement = () => {
                 <div className="flex items-center">
                   <input
                     type="checkbox"
-                    id="isActive"
-                    checked={formData.isActive}
-                    onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                    id="active"
+                    checked={formData.active}
+                    onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                  <label htmlFor="active" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                     Active
                   </label>
                 </div>
@@ -289,22 +321,30 @@ const ClientsManagement = () => {
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
-                  {client.logo ? (
-                    <img src={client.logo} alt={client.name} className="w-full h-full object-cover" />
+                  {client.image ? (
+                    <img src={client.image} alt={client.name} className="w-full h-full object-cover" />
                   ) : (
                     <PhotoIcon className="h-6 w-6 text-gray-400" />
                   )}
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-900 dark:text-white">{client.name}</h3>
-                  <div className="flex items-center gap-2">
+                  {client.company && (
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{client.company}</p>
+                  )}
+                  <div className="flex items-center gap-2 mt-1">
                     {client.featured && <StarIcon className="h-4 w-4 text-yellow-400" />}
                     <span className={`inline-block w-2 h-2 rounded-full ${
-                      client.isActive ? 'bg-green-400' : 'bg-red-400'
+                      client.active ? 'bg-green-400' : 'bg-red-400'
                     }`}></span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {client.isActive ? 'Active' : 'Inactive'}
+                      {client.active ? 'Active' : 'Inactive'}
                     </span>
+                    <div className="flex text-yellow-400">
+                      {[...Array(client.rating)].map((_, i) => (
+                        <StarIcon key={i} className="h-3 w-3 fill-current" />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -325,28 +365,21 @@ const ClientsManagement = () => {
             </div>
 
             <div className="space-y-2">
-              {client.category && (
-                <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded-full">
-                  {client.category}
-                </span>
-              )}
-              
-              {client.description && (
-                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
-                  {client.description}
+              {client.position && (
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <span className="font-medium">Position:</span> {client.position}
                 </p>
               )}
               
-              {client.website && (
-                <a 
-                  href={client.website} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 block truncate"
-                >
-                  {client.website}
-                </a>
+              {client.projectType && (
+                <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded-full">
+                  {client.projectType}
+                </span>
               )}
+              
+              <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 italic">
+                "{client.testimonial}"
+              </p>
               
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 Added: {new Date(client.createdAt).toLocaleDateString()}

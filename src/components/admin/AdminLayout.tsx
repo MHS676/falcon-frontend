@@ -15,9 +15,9 @@ import {
   CloudArrowUpIcon,
   BuildingOfficeIcon,
   ArrowRightOnRectangleIcon,
-  BellIcon,
+  PencilIcon,
 } from '@heroicons/react/24/outline';
-import { contactAPI } from '../../services/api';
+import { contactAPI, messagingAPI } from '../../services/api';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -28,24 +28,30 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const [contactUnreadCount, setContactUnreadCount] = useState(0);
+  const [messageUnreadCount, setMessageUnreadCount] = useState(0);
   const navigate = useNavigate();
 
-  // Fetch unread message count
+  // Fetch unread counts for both contacts and messages
   useEffect(() => {
-    const fetchUnreadCount = async () => {
+    const fetchUnreadCounts = async () => {
       try {
-        const response = await contactAPI.getAll();
-        const unread = response.data.filter((contact: any) => contact.status === 'new' || contact.status === 'in-progress').length;
-        setUnreadCount(unread);
+        // Fetch contact unread count
+        const contactResponse = await contactAPI.getAll();
+        const contactUnread = contactResponse.data.filter((contact: any) => contact.status === 'new' || contact.status === 'in-progress').length;
+        setContactUnreadCount(contactUnread);
+
+        // Fetch message unread count
+        const messageResponse = await messagingAPI.getUnreadCount();
+        setMessageUnreadCount(messageResponse.data.messages || 0);
       } catch (error) {
-        console.error('Error fetching unread count:', error);
+        console.error('Error fetching unread counts:', error);
       }
     };
 
-    fetchUnreadCount();
-    // Refresh unread count every 30 seconds
-    const interval = setInterval(fetchUnreadCount, 30000);
+    fetchUnreadCounts();
+    // Refresh unread counts every 30 seconds
+    const interval = setInterval(fetchUnreadCounts, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -90,12 +96,12 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
 
   const modules = [
     { id: 'dashboard', name: 'Dashboard', icon: HomeIcon, count: null },
-    { id: 'messaging', name: 'Messages', icon: ChatBubbleLeftRightIcon, count: null },
+    { id: 'messaging', name: 'Messages', icon: ChatBubbleLeftRightIcon, count: messageUnreadCount > 0 ? messageUnreadCount : null },
     { id: 'banner', name: 'Banner', icon: PhotoIcon, count: null },
     { id: 'gallery', name: 'Gallery', icon: FolderIcon, count: null },
     { id: 'projects', name: 'Projects', icon: BriefcaseIcon, count: null },
-    { id: 'blog', name: 'Blog', icon: EnvelopeIcon, count: null },
-    { id: 'contact', name: 'Contact', icon: EnvelopeIcon, count: null },
+    { id: 'blog', name: 'Blog', icon: PencilIcon, count: null },
+    { id: 'contact', name: 'Contact', icon: EnvelopeIcon, count: contactUnreadCount > 0 ? contactUnreadCount : null },
     { id: 'social', name: 'Social Links', icon: UserGroupIcon, count: null },
     { id: 'settings', name: 'Settings', icon: Cog6ToothIcon, count: null },
     { id: 'services', name: 'Services', icon: WrenchScrewdriverIcon, count: null },
@@ -275,23 +281,47 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
               </motion.p>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3 ml-4">
+              {/* Contact Notifications */}
               <motion.button 
                 onClick={() => {
                   onModuleChange('contact');
-                  setUnreadCount(0);
+                  setContactUnreadCount(0);
                 }}
                 className="relative px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg sm:rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-amber-500/30 font-medium text-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <BellIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                {unreadCount > 0 && (
+                <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                {contactUnreadCount > 0 && (
                   <motion.span 
                     className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
                   >
-                    {unreadCount > 99 ? '99+' : unreadCount}
+                    {contactUnreadCount > 99 ? '99+' : contactUnreadCount}
+                  </motion.span>
+                )}
+                <span className="hidden sm:inline">Contact</span>
+              </motion.button>
+
+              {/* Message Notifications */}
+              <motion.button 
+                onClick={() => {
+                  onModuleChange('messaging');
+                  setMessageUnreadCount(0);
+                }}
+                className="relative px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg sm:rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-blue-500/30 font-medium text-sm"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ChatBubbleLeftRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                {messageUnreadCount > 0 && (
+                  <motion.span 
+                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                  >
+                    {messageUnreadCount > 99 ? '99+' : messageUnreadCount}
                   </motion.span>
                 )}
                 <span className="hidden sm:inline">Messages</span>

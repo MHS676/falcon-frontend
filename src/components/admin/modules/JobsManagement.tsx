@@ -103,25 +103,24 @@ const JobsManagement = () => {
         .map(item => item.trim())
         .filter(item => item.length > 0);
 
-      const submitData = new FormData();
-      submitData.append('title', formData.title);
-      submitData.append('description', formData.description);
-      submitData.append('shortDesc', formData.shortDesc || '');
-      submitData.append('company', formData.company || '');
-      submitData.append('location', formData.location || '');
-      submitData.append('jobType', formData.jobType);
-      submitData.append('experienceLevel', formData.experienceLevel);
-      submitData.append('salary', formData.salary || '');
-      
-      // Send arrays as JSON strings for proper deserialization
-      submitData.append('requirements', JSON.stringify(requirementsArray));
-      submitData.append('benefits', JSON.stringify(benefitsArray));
-      submitData.append('skills', JSON.stringify(skillsArray));
-      
-      submitData.append('remote', formData.remote.toString());
-      submitData.append('urgent', formData.urgent.toString());
-      submitData.append('active', formData.active.toString());
-      submitData.append('applicationDeadline', formData.applicationDeadline || '');
+      // Create JSON payload instead of FormData
+      const submitData = {
+        title: formData.title,
+        description: formData.description,
+        shortDesc: formData.shortDesc || '',
+        company: formData.company || '',
+        location: formData.location || '',
+        jobType: formData.jobType,
+        experienceLevel: formData.experienceLevel,
+        salary: formData.salary || '',
+        requirements: requirementsArray,
+        benefits: benefitsArray,
+        skills: skillsArray,
+        remote: formData.remote,
+        urgent: formData.urgent,
+        active: formData.active,
+        applicationDeadline: formData.applicationDeadline || '',
+      };
 
       if (selectedJob) {
         await jobsAPI.update(selectedJob.id, submitData);
