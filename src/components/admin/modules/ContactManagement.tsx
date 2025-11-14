@@ -20,7 +20,7 @@ interface Contact {
   phone?: string;
   subject: string;
   message: string;
-  status: 'pending' | 'read' | 'replied' | 'resolved';
+  status: 'new' | 'in-progress' | 'responded';
   createdAt: string;
 }
 
@@ -88,22 +88,20 @@ const ContactManagement = () => {
     setSelectedContact(contact);
     setIsViewModalOpen(true);
     
-    // Mark as read if it's pending
-    if (contact.status === 'pending') {
-      handleStatusUpdate(contact.id, 'read');
+    // Mark as in-progress if it's new
+    if (contact.status === 'new') {
+      handleStatusUpdate(contact.id, 'in-progress');
     }
   };
 
   const getStatusColor = (status: Contact['status']) => {
     switch (status) {
-      case 'pending':
+      case 'new':
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'read':
+      case 'in-progress':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'replied':
+      case 'responded':
         return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'resolved':
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
@@ -111,13 +109,11 @@ const ContactManagement = () => {
 
   const getStatusIcon = (status: Contact['status']) => {
     switch (status) {
-      case 'pending':
+      case 'new':
         return <ClockIcon className="w-4 h-4" />;
-      case 'read':
+      case 'in-progress':
         return <EyeIcon className="w-4 h-4" />;
-      case 'replied':
-        return <CheckIcon className="w-4 h-4" />;
-      case 'resolved':
+      case 'responded':
         return <CheckIcon className="w-4 h-4" />;
       default:
         return <ClockIcon className="w-4 h-4" />;
@@ -155,10 +151,9 @@ const ContactManagement = () => {
             className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           >
             <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="read">Read</option>
-            <option value="replied">Replied</option>
-            <option value="resolved">Resolved</option>
+            <option value="new">New</option>
+            <option value="in-progress">In Progress</option>
+            <option value="responded">Responded</option>
           </select>
         </div>
       </div>
@@ -227,30 +222,21 @@ const ContactManagement = () => {
                 </button>
                 
                 <div className="flex flex-col space-y-1">
-                  {contact.status === 'pending' && (
+                  {contact.status === 'new' && (
                     <button
-                      onClick={() => handleStatusUpdate(contact.id, 'read')}
+                      onClick={() => handleStatusUpdate(contact.id, 'in-progress')}
                       className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
                     >
-                      Mark Read
+                      Start Review
                     </button>
                   )}
                   
-                  {(contact.status === 'read' || contact.status === 'pending') && (
+                  {(contact.status === 'in-progress' || contact.status === 'new') && (
                     <button
-                      onClick={() => handleStatusUpdate(contact.id, 'replied')}
+                      onClick={() => handleStatusUpdate(contact.id, 'responded')}
                       className="px-2 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
                     >
-                      Mark Replied
-                    </button>
-                  )}
-                  
-                  {contact.status === 'replied' && (
-                    <button
-                      onClick={() => handleStatusUpdate(contact.id, 'resolved')}
-                      className="px-2 py-1 text-xs bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
-                    >
-                      Mark Resolved
+                      Mark Responded
                     </button>
                   )}
                   
@@ -359,15 +345,15 @@ const ContactManagement = () => {
                     Reply via Email
                   </a>
                   
-                  {selectedContact.status !== 'resolved' && (
+                  {selectedContact.status !== 'responded' && (
                     <button
                       onClick={() => {
-                        handleStatusUpdate(selectedContact.id, 'resolved');
+                        handleStatusUpdate(selectedContact.id, 'responded');
                         setIsViewModalOpen(false);
                       }}
                       className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
                     >
-                      Mark Resolved
+                      Mark Responded
                     </button>
                   )}
                 </div>
