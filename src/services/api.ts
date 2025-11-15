@@ -289,6 +289,20 @@ export const adminAPI = {
   getProfile: () => api.get('/auth/profile'),
 };
 
+// Employee API
+export const employeeAPI = {
+  create: (data: FormData) => api.post('/employee', data),
+  getAll: () => api.get('/employee'),
+  getActive: () => api.get('/employee/active'),
+  getStats: () => api.get('/employee/stats'),
+  getByDepartment: (department: string) => api.get(`/employee/department/${department}`),
+  getByStatus: (status: string) => api.get(`/employee/status/${status}`),
+  getByEmployeeId: (employeeId: string) => api.get('/employee/search', { params: { employeeId } }),
+  getById: (id: string) => api.get(`/employee/${id}`),
+  update: (id: string, data: FormData) => api.patch(`/employee/${id}`, data),
+  delete: (id: string) => api.delete(`/employee/${id}`),
+};
+
 // Legacy functions for backward compatibility
 // The backend expects JSON for authentication routes (email/password).
 // Send a JSON body for login rather than FormData to avoid 400 Bad Request
@@ -383,9 +397,19 @@ export const uploadDocument = (file: File, folder = 'documents') => {
   formData.append('file', file);
   return uploadAPI.uploadDocument(formData, folder);
 };
-
 export const deleteFile = (publicId: string) => uploadAPI.deleteFile(publicId);
 export const getOptimizedUrl = (publicId: string, options: any = {}) => uploadAPI.getOptimized({ publicId, ...options });
+
+// Employee helper functions
+export const getEmployees = () => employeeAPI.getAll();
+export const getActiveEmployees = () => employeeAPI.getActive();
+export const getEmployeeStats = () => employeeAPI.getStats();
+export const getEmployee = (id: string) => employeeAPI.getById(id);
+export const createEmployee = (data: FormData) => employeeAPI.create(data);
+export const updateEmployee = (id: string, data: FormData) => employeeAPI.update(id, data);
+export const deleteEmployee = (id: string) => employeeAPI.delete(id);
+export const getEmployeesByDepartment = (department: string) => employeeAPI.getByDepartment(department);
+export const getEmployeesByStatus = (status: string) => employeeAPI.getByStatus(status);
 
 // Jobs API
 export const jobsAPI = {

@@ -16,15 +16,13 @@ interface BlogPost {
   id: string;
   title: string;
   content: string;
-  excerpt: string;
+  excerpt?: string;
   slug: string;
-  image?: string;
+  coverImage?: string;
   tags: string[];
-  category: string;
-  status: 'draft' | 'published' | 'archived';
-  isPublished: boolean;
-  publishedAt?: string;
+  published: boolean;
   createdAt: string;
+  updatedAt: string;
 }
 
 const BlogManagement = () => {
@@ -38,11 +36,9 @@ const BlogManagement = () => {
     content: '',
     excerpt: '',
     slug: '',
-    image: null as File | null,
+    coverImage: null as File | null,
     tags: '',
-    category: '',
-    status: 'draft' as BlogPost['status'],
-    isPublished: false
+    published: false
   });
 
   useEffect(() => {
@@ -82,11 +78,11 @@ const BlogManagement = () => {
       // Send tags as JSON string for proper array deserialization
       submitData.append('tags', JSON.stringify(tagsArray));
       
-      if (formData.image) {
-        submitData.append('coverImage', formData.image);
+      if (formData.coverImage) {
+        submitData.append('coverImage', formData.coverImage);
       }
       
-      if (formData.isPublished) {
+      if (formData.published) {
         submitData.append('published', 'true');
       }
 
@@ -133,13 +129,11 @@ const BlogManagement = () => {
       setFormData({
         title: post.title,
         content: post.content,
-        excerpt: post.excerpt,
+        excerpt: post.excerpt || '',
         slug: post.slug,
-        image: null,
+        coverImage: null,
         tags: Array.isArray(post.tags) ? post.tags.join(', ') : '',
-        category: post.category,
-        status: post.status,
-        isPublished: post.isPublished
+        published: post.published
       });
     } else {
       setSelectedPost(null);
@@ -154,11 +148,9 @@ const BlogManagement = () => {
       content: '',
       excerpt: '',
       slug: '',
-      image: null,
+      coverImage: null,
       tags: '',
-      category: '',
-      status: 'draft',
-      isPublished: false
+      published: false
     });
   };
 
@@ -187,20 +179,13 @@ const BlogManagement = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setFormData(prev => ({ ...prev, image: file }));
+    setFormData(prev => ({ ...prev, coverImage: file }));
   };
 
-  const getStatusColor = (status: BlogPost['status']) => {
-    switch (status) {
-      case 'published':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'draft':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'archived':
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-    }
+  const getStatusColor = (published: boolean) => {
+    return published
+      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+      : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
   };
 
   if (loading && blogPosts.length === 0) {
@@ -244,14 +229,9 @@ const BlogManagement = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     {post.title}
                   </h3>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(post.status)}`}>
-                    {post.status}
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(post.published)}`}>
+                    {post.published ? 'Published' : 'Draft'}
                   </span>
-                  {post.isPublished && (
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded text-xs font-medium">
-                      Published
-                    </span>
-                  )}
                 </div>
                 
                 <p className="text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
@@ -263,35 +243,37 @@ const BlogManagement = () => {
                     <CalendarIcon className="w-4 h-4" />
                     <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <TagIcon className="w-4 h-4" />
-                    <span>{post.category}</span>
-                  </div>
                   {Array.isArray(post.tags) && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded text-xs"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {post.tags.length > 3 && (
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded text-xs">
-                          +{post.tags.length - 3}
-                        </span>
-                      )}
-                    </div>
+                    <>
+                      <div className="flex items-center space-x-1">
+                        <TagIcon className="w-4 h-4" />
+                        <span>{post.tags.length} tags</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {post.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded text-xs"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {post.tags.length > 3 && (
+                          <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded text-xs">
+                            +{post.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
               
               <div className="flex items-center space-x-2 ml-4">
-                {post.image && (
+                {post.coverImage && (
                   <div className="w-20 h-16 bg-gray-100 dark:bg-gray-700 rounded overflow-hidden">
                     <img
-                      src={post.image}
+                      src={post.coverImage}
                       alt={post.title}
                       className="w-full h-full object-cover"
                     />
@@ -424,63 +406,31 @@ const BlogManagement = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Category *
-                    </label>
-                    <input
-                      type="text"
-                      name="category"
-                      value={formData.category}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Tags (comma-separated)
-                    </label>
-                    <input
-                      type="text"
-                      name="tags"
-                      value={formData.tags}
-                      onChange={handleInputChange}
-                      placeholder="react, typescript, web development"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Tags (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    name="tags"
+                    value={formData.tags}
+                    onChange={handleInputChange}
+                    placeholder="security-tips, business-security, prevention"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  />
                 </div>
 
-                <div className="flex items-center space-x-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Status
-                    </label>
-                    <select
-                      name="status"
-                      value={formData.status}
-                      onChange={handleInputChange}
-                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    >
-                      <option value="draft">Draft</option>
-                      <option value="published">Published</option>
-                      <option value="archived">Archived</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center mt-7">
-                    <input
-                      type="checkbox"
-                      name="isPublished"
-                      checked={formData.isPublished}
-                      onChange={handleInputChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                    <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Publish immediately
-                    </label>
-                  </div>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="published"
+                    checked={formData.published}
+                    onChange={handleInputChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Publish this post
+                  </label>
                 </div>
 
                 <div className="flex justify-end space-x-3 pt-4">

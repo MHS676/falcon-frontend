@@ -4,7 +4,7 @@ import AdminLayout from '../components/admin/AdminLayout';
 import DashboardOverview from '../components/admin/AdminDashboard';
 import BannerManagement from '../components/admin/modules/BannerManagement';
 import GalleryManagement from '../components/admin/modules/GalleryManagement';
-import ProjectsManagement from '../components/admin/modules/ProjectsManagement';
+// import ProjectsManagement from '../components/admin/modules/ProjectsManagement';
 import BlogManagement from '../components/admin/modules/BlogManagement';
 import ServicesManagement from '../components/admin/modules/ServicesManagement';
 import ContactManagement from '../components/admin/modules/ContactManagement';
@@ -14,6 +14,7 @@ import SettingsManagement from '../components/admin/modules/SettingsManagement';
 import AdminManagement from '../components/admin/modules/AdminManagement';
 import ClientsManagement from '../components/admin/modules/ClientsManagement';
 import UploadManagement from '../components/admin/modules/UploadManagement';
+import EmployeeManagement from '../components/admin/modules/EmployeeManagement';
 import AdminMessaging from './AdminMessaging';
 
 const AdminDashboard = () => {
@@ -42,8 +43,8 @@ const AdminDashboard = () => {
         return <BannerManagement />;
       case 'gallery':
         return <GalleryManagement />;
-      case 'projects':
-        return <ProjectsManagement />;
+      // case 'projects':
+      //   return <ProjectsManagement />;
       case 'blog':
         return <BlogManagement />;
       case 'contact':
@@ -64,6 +65,8 @@ const AdminDashboard = () => {
         return <JobsManagement />;
       case 'jobs':
         return <JobsManagement />;
+      case 'employees':
+        return <EmployeeManagement />;
       case 'messaging':
         return <AdminMessaging />;
       default:
