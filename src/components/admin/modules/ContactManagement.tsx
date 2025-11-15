@@ -41,6 +41,24 @@ const ContactManagement = () => {
       setLoading(true);
       const response = await contactAPI.getAll();
       setContacts(response.data);
+      
+      // Automatically mark all "new" contacts as "in-progress" when viewing the module
+      const newContacts = response.data.filter((contact: Contact) => contact.status === 'new');
+      if (newContacts.length > 0) {
+        // Update all new contacts to in-progress in the background
+        Promise.all(
+          newContacts.map((contact: Contact) => {
+            const formData = new FormData();
+            formData.append('status', 'in-progress');
+            return contactAPI.updateStatus(contact.id, formData);
+          })
+        ).then(() => {
+          // Refresh contacts after marking as in-progress
+          contactAPI.getAll().then(res => setContacts(res.data));
+        }).catch(err => {
+          console.error('Error auto-updating contact status:', err);
+        });
+      }
     } catch (error) {
       console.error('Error fetching contacts:', error);
       toast.error('Failed to load contacts');
