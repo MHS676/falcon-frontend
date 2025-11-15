@@ -17,6 +17,7 @@ import {
   PencilIcon,
 } from '@heroicons/react/24/outline';
 import { contactAPI, messagingAPI } from '../../services/api';
+import logo from '../../../upload/logo.png';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -108,6 +109,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
     { id: 'upload', name: 'Upload', icon: CloudArrowUpIcon, count: null },
     { id: 'clients', name: 'Clients', icon: BuildingOfficeIcon, count: null },
     { id: 'career', name: 'Career', icon: BriefcaseIcon, count: null },
+    { id: 'cv-management', name: 'CV Management', icon: UserGroupIcon, count: null },
   ];
 
   return (
@@ -155,11 +157,11 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
         <div className="p-6 border-b border-white/10 backdrop-blur-sm bg-white/5 relative z-10">
           <div className="flex items-center space-x-3">
             <motion.div 
-              className="w-12 h-12 bg-gradient-to-br from-blue-400 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg ring-2 ring-white/20"
+              className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg ring-2 ring-white/20 overflow-hidden"
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              <span className="text-white font-bold text-xl drop-shadow-lg">F</span>
+              <img src={logo} alt="Falcon Security Logo" className="w-full h-full object-contain p-1" />
             </motion.div>
             {sidebarOpen && (
               <motion.div

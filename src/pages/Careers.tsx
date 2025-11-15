@@ -5,7 +5,8 @@ import {
   ClockIcon, 
   CurrencyDollarIcon,
   CalendarIcon,
-  XMarkIcon 
+  XMarkIcon,
+  DocumentArrowUpIcon
 } from '@heroicons/react/24/outline';
 import { Dialog } from '@headlessui/react';
 import toast from 'react-hot-toast';
@@ -32,6 +33,7 @@ interface ApplicationData {
   email: string;
   phone: string;
   coverLetter: string;
+  category: string;
 }
 
 const Careers = () => {
@@ -40,12 +42,14 @@ const Careers = () => {
   const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isApplying, setIsApplying] = useState(false);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [applicationData, setApplicationData] = useState<ApplicationData>({
     careerId: '',
     fullName: '',
     email: '',
     phone: '',
     coverLetter: '',
+    category: '',
   });
 
   useEffect(() => {
@@ -78,23 +82,34 @@ const Careers = () => {
     setIsApplying(true);
 
     try {
+      const formData = new FormData();
+      formData.append('careerId', applicationData.careerId);
+      formData.append('fullName', applicationData.fullName);
+      formData.append('email', applicationData.email);
+      formData.append('phone', applicationData.phone);
+      formData.append('coverLetter', applicationData.coverLetter);
+      formData.append('category', applicationData.category);
+      
+      if (resumeFile) {
+        formData.append('resume', resumeFile);
+      }
+
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/career/apply`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(applicationData),
+        body: formData,
       });
 
       if (response.ok) {
         toast.success('Application submitted successfully!');
         setIsModalOpen(false);
+        setResumeFile(null);
         setApplicationData({
           careerId: '',
           fullName: '',
           email: '',
           phone: '',
           coverLetter: '',
+          category: '',
         });
       } else {
         const error = await response.json();
@@ -331,6 +346,75 @@ const Careers = () => {
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="+1 (555) 123-4567"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Position Category *
+                    </label>
+                    <select
+                      required
+                      value={applicationData.category}
+                      onChange={(e) => setApplicationData(prev => ({ ...prev, category: e.target.value }))}
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                    >
+                      <option value="">Select a category</option>
+                      <option value="Security Guard">Security Guard</option>
+                      <option value="Supervisor">Supervisor</option>
+                      <option value="Manager">Manager</option>
+                      <option value="Team Leader">Team Leader</option>
+                      <option value="Operations">Operations</option>
+                      <option value="Administration">Administration</option>
+                      <option value="Technical">Technical</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Upload CV/Resume *
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        required
+                        accept=".pdf,.doc,.docx"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            if (file.size > 5 * 1024 * 1024) {
+                              toast.error('File size must be less than 5MB');
+                              e.target.value = '';
+                              return;
+                            }
+                            setResumeFile(file);
+                          }
+                        }}
+                        className="hidden"
+                        id="resume-upload"
+                      />
+                      <label
+                        htmlFor="resume-upload"
+                        className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all"
+                      >
+                        <div className="text-center">
+                          <DocumentArrowUpIcon className="w-12 h-12 mx-auto text-slate-400 mb-2" />
+                          {resumeFile ? (
+                            <div>
+                              <p className="text-sm font-medium text-slate-900">{resumeFile.name}</p>
+                              <p className="text-xs text-slate-500 mt-1">
+                                {(resumeFile.size / 1024 / 1024).toFixed(2)} MB
+                              </p>
+                            </div>
+                          ) : (
+                            <div>
+                              <p className="text-sm font-medium text-slate-700">Click to upload CV/Resume</p>
+                              <p className="text-xs text-slate-500 mt-1">PDF, DOC, DOCX up to 5MB</p>
+                            </div>
+                          )}
+                        </div>
+                      </label>
+                    </div>
                   </div>
 
                   <div>
