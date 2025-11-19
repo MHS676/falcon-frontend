@@ -110,7 +110,7 @@ const Banner = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-4xl md:text-6xl font-bold text-white mb-4"
+              className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
             >
               {currentBanner.title}
             </motion.h1>
@@ -120,7 +120,7 @@ const Banner = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-xl md:text-2xl text-gray-200 mb-4"
+                className="text-xl md:text-2xl text-gray-200 mb-4 drop-shadow-[0_3px_8px_rgba(0,0,0,0.7)]"
               >
                 {currentBanner.subtitle}
               </motion.h2>
@@ -131,7 +131,7 @@ const Banner = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-lg text-gray-300 mb-6 leading-relaxed"
+                className="text-lg text-gray-300 mb-6 leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
               >
                 {currentBanner.description}
               </motion.p>
