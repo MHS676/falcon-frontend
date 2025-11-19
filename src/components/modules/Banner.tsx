@@ -64,7 +64,7 @@ const Banner = () => {
 
   if (loading) {
     return (
-      <div className="relative h-96 bg-gradient-to-r from-blue-600 to-purple-700 animate-pulse">
+      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-blue-600 to-purple-700 animate-pulse">
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
     );
@@ -72,7 +72,7 @@ const Banner = () => {
 
   if (banners.length === 0) {
     return (
-      <div className="relative h-96 bg-gradient-to-r from-blue-600 to-purple-700 flex items-center justify-center">
+      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-blue-600 to-purple-700 flex items-center justify-center">
         <div className="text-center text-white">
           <h2 className="text-3xl font-bold mb-4">Welcome to My Portfolio</h2>
           <p className="text-lg">Discover my work and expertise</p>
@@ -84,7 +84,7 @@ const Banner = () => {
   const currentBanner = banners[currentIndex];
 
   return (
-    <div className="relative h-96 md:h-[500px] overflow-hidden">
+    <div className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
       {/* Banner Image */}
       <motion.div
         key={currentIndex}
@@ -97,9 +97,10 @@ const Banner = () => {
         <img
           src={currentBanner.image}
           alt={currentBanner.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
+          style={{ objectPosition: 'center center' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/30"></div>
       </motion.div>
 
       {/* Content */}

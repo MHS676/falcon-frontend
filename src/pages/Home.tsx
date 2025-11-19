@@ -155,7 +155,7 @@ const Home = () => {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-700">
+      {/* <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -175,7 +175,7 @@ const Home = () => {
             <ContactForm showAdditionalFields={true} />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Trust Indicators */}
       <section className="py-16 bg-slate-50 dark:bg-gray-900">
