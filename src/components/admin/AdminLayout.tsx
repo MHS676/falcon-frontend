@@ -157,7 +157,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
         <div className="p-6 border-b border-white/10 backdrop-blur-sm bg-white/5 relative z-10">
           <div className="flex items-center space-x-3">
             <motion.div 
-              className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg ring-2 ring-white/20 overflow-hidden"
+              className="w-12 h-12  rounded-xl flex items-center justify-center shadow-lg ring-2 ring-white/20 overflow-hidden"
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
