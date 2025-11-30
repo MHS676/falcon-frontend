@@ -5,12 +5,12 @@ import Gallery from "../components/modules/Gallery";
 import Services from "../components/modules/Services";
 import Clients from "../components/modules/Clients";
 import Blog from "../components/modules/Blog";
-import ContactForm from "../components/forms/ContactForm";
 import SEO from "../components/SEO";
 // import Breadcrumb from "../components/Breadcrumb";
 import OptimizedImage from "../components/OptimizedImage";
 import { useSEO } from "../hooks/useSEO";
 import { useWebVitals } from "../hooks/useWebVitals";
+import { ContactForm, Projects } from '../components';
 
 const Home = () => {
   // Initialize SEO and performance monitoring
@@ -92,7 +92,7 @@ const Home = () => {
       </section>
 
       {/* Featured Projects */}
-      {/* <section className="py-16 bg-white dark:bg-gray-800">
+      <section className="py-16 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -110,7 +110,7 @@ const Home = () => {
           </motion.div>
           <Projects showFeaturedOnly={true} maxItems={6} />
         </div>
-      </section> */}
+      </section>
 
       {/* Gallery Section */}
       <section className="py-16 bg-slate-50 dark:bg-gray-900">
@@ -155,7 +155,7 @@ const Home = () => {
       </section>
 
       {/* Main Contact Section */}
-      {/* <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-700">
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -175,7 +175,7 @@ const Home = () => {
             <ContactForm showAdditionalFields={true} />
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Trust Indicators */}
       <section className="py-16 bg-slate-50 dark:bg-gray-900">

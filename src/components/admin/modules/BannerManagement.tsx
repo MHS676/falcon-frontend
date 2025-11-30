@@ -459,11 +459,11 @@ const BannerManagement = () => {
                       Button URL
                     </label>
                     <input
-                      type="url"
+                      type="text"
                       name="buttonUrl"
                       value={formData.buttonUrl}
                       onChange={handleInputChange}
-                      placeholder="e.g., /services"
+                      placeholder="e.g., /services or https://example.com"
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
