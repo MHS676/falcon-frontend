@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import logo from '../assets/falcon-logo.png';
 import {
   ChevronDownIcon,
   ShieldCheckIcon,
@@ -69,7 +68,7 @@ const Hero = () => {
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-blue-500 to-slate-700 p-2"
               />
               <div className="relative w-32 h-32 rounded-full bg-white p-4 flex items-center justify-center overflow-hidden">
-                <img src={logo} alt="Falcon Logo" className="w-full h-full object-contain rounded-full" />
+                <ShieldCheckIcon className="w-20 h-20 text-red-600" />
               </div>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
                 <span className="text-xs text-white">✓</span>
