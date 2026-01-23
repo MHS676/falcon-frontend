@@ -145,9 +145,40 @@ const CVManagement = () => {
     }
   };
 
-  const handleDownloadCV = (resumePath: string) => {
-    const url = `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '')}/${resumePath}`;
-    window.open(url, '_blank');
+  const handleDownloadCV = async (resumePath: string) => {
+    // Check if resumePath is already an absolute URL (Cloudinary)
+    let url = resumePath.startsWith('http') 
+      ? resumePath 
+      : `${import.meta.env.VITE_API_BASE_URL?.replace('/api', '')}/${resumePath}`;
+    
+    // For Cloudinary URLs, add fl_attachment flag for proper download with filename
+    if (url.includes('res.cloudinary.com')) {
+      // Extract filename from URL for the download
+      const urlParts = url.split('/');
+      const filename = urlParts[urlParts.length - 1];
+      
+      // Add fl_attachment flag to force download with proper filename
+      url = url.replace('/upload/', '/upload/fl_attachment/');
+      
+      // Fetch and download with proper filename
+      try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+      } catch (error) {
+        console.error('Download error:', error);
+        window.open(url, '_blank');
+      }
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   const filteredApplications = applications.filter((app) => {
