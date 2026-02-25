@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircleIcon, StarIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { servicesAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
@@ -53,6 +54,7 @@ const Services = ({
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   useEffect(() => {
     fetchServices();
@@ -259,7 +261,10 @@ const Services = ({
 
               {/* CTA Button */}
               <div className="mt-4">
-                <button className="w-full bg-gradient-to-r from-red-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-red-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                <button
+                  onClick={() => setSelectedService(service)}
+                  className="w-full bg-gradient-to-r from-red-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-red-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
+                >
                   Learn More
                 </button>
               </div>
@@ -275,6 +280,107 @@ const Services = ({
           </p>
         </div>
       )}
+
+      {/* Service Detail Modal */}
+      <AnimatePresence>
+        {selectedService && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedService(null)}
+          >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 z-10 bg-gradient-to-r from-red-600 to-blue-600 p-5 flex items-center justify-between rounded-t-2xl">
+                <div>
+                  <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">{selectedService.category}</span>
+                  <h2 className="text-xl font-bold text-white mt-0.5">{selectedService.title}</h2>
+                </div>
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+                >
+                  <XMarkIcon className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-5">
+                {/* Image */}
+                {selectedService.image && (
+                  <img
+                    src={selectedService.image}
+                    alt={selectedService.title}
+                    className="w-full h-48 object-cover rounded-xl"
+                  />
+                )}
+
+                {/* Full Description */}
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+                  {selectedService.description}
+                </p>
+
+                {/* All Features */}
+                {selectedService.features && selectedService.features.length > 0 && (
+                  <div>
+                    <h4 className="font-bold text-gray-900 dark:text-white mb-3">Key Features</h4>
+                    <ul className="space-y-2">
+                      {selectedService.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5 text-sm text-gray-700 dark:text-gray-300">
+                          <CheckCircleIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Tags */}
+                {selectedService.tags && selectedService.tags.length > 0 && (
+                  <div>
+                    <h4 className="font-bold text-gray-900 dark:text-white mb-2">Tags</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedService.tags.map(tag => (
+                        <span key={tag} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Timeline */}
+                {selectedService.timeline && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-600 pt-4">
+                    <span className="font-semibold">Timeline:</span> {selectedService.timeline}
+                  </p>
+                )}
+
+                {/* Contact CTA */}
+                <div className="bg-gradient-to-r from-red-50 to-blue-50 dark:from-red-900/20 dark:to-blue-900/20 rounded-xl p-4 border border-red-100 dark:border-red-800">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Interested in this service?</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Contact us for a free consultation and security assessment.</p>
+                  <a
+                    href="/contact"
+                    className="inline-block bg-gradient-to-r from-red-600 to-blue-600 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:from-red-700 hover:to-blue-700 transition-all"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
