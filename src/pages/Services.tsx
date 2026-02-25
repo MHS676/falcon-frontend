@@ -1,290 +1,335 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ShieldCheckIcon, 
-  BuildingOfficeIcon, 
-  HomeIcon, 
+  UserGroupIcon,
+  MagnifyingGlassIcon,
   TruckIcon,
   CalendarDaysIcon,
-  UserGroupIcon,
+  CpuChipIcon,
+  VideoCameraIcon,
+  EyeIcon,
+  LockClosedIcon,
   PhoneIcon,
-  ClockIcon
+  ClockIcon,
+  CheckCircleIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
-// import OptimizedImage from '../components/OptimizedImage';
 import { useSEO } from '../hooks/useSEO';
-// import { generateServiceSchema } from '../hooks/useSEO';
+import { Link } from 'react-router-dom';
+
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  ShieldCheckIcon,
+  UserGroupIcon,
+  MagnifyingGlassIcon,
+  TruckIcon,
+  CalendarIcon: CalendarDaysIcon,
+  CalendarDaysIcon,
+  CpuChipIcon,
+  VideoCameraIcon,
+  EyeIcon,
+  LockClosedIcon,
+};
+
+interface ServiceData {
+  id: string;
+  title: string;
+  description: string;
+  icon?: string;
+  features: string[];
+  active: boolean;
+  featured: boolean;
+  order: number;
+}
 
 const Services = () => {
-  // Initialize SEO
   const seoData = useSEO({
-    title: 'Security Services - Professional Protection Solutions | Falcon Security',
-    description: 'Comprehensive security services including armed guards, corporate security, residential protection, event security, and construction site security. Professional security solutions across Bangladesh.',
+    title: 'Security Services - Falcon® Security Limited | Professional Protection Solutions',
+    description: 'Comprehensive security services including executive protection, manned guarding, risk consulting, escort services, event security, digital surveillance, CCTV, access control and PSIM integration. Operational since 1993 in Bangladesh.',
     keywords: [
-      'security services',
-      'armed security guards',
-      'corporate security',
-      'residential security',
-      'event security',
-      'construction site security',
-      'professional security',
-      'security company bangladesh'
+      'security services bangladesh',
+      'executive protection dhaka',
+      'manned guard service',
+      'risk consulting',
+      'escort service bangladesh',
+      'event security management',
+      'digital surveillance cctv',
+      'access control systems',
+      'psim integration',
+      'falcon security services'
     ],
     image: '/images/services/security-services-hero.jpg',
     type: 'website'
   });
 
-  // Convert keywords for SEO component
   const seoProps = {
     ...seoData,
     keywords: seoData.keywords?.join(', ')
   };
-  const [selectedService, setSelectedService] = useState<string | null>(null);
 
-  const services = [
-    {
-      id: 'armed-security',
-      title: 'Armed Security Guards',
-      description: 'Highly trained armed security personnel for high-risk environments and valuable asset protection.',
-      icon: ShieldCheckIcon,
-      features: [
-        'Licensed armed security officers',
-        'Advanced weapons training',
-        'High-value asset protection',
-        'Bank and financial institution security',
-        'Government facility security'
-      ],
-      price: 'Starting from $35/hour'
-    },
-    {
-      id: 'unarmed-security', 
-      title: 'Unarmed Security Guards',
-      description: 'Professional unarmed security for general protection, access control, and surveillance.',
-      icon: UserGroupIcon,
-      features: [
-        'Access control and monitoring',
-        'Patrol services',
-        'Customer service oriented',
-        'Incident reporting',
-        'Emergency response coordination'
-      ],
-      price: 'Starting from $18/hour'
-    },
-    {
-      id: 'corporate-security',
-      title: 'Corporate Security',
-      description: 'Comprehensive security solutions for office buildings, corporate campuses, and business facilities.',
-      icon: BuildingOfficeIcon,
-      features: [
-        'Office building security',
-        'Executive protection', 
-        'Employee safety programs',
-        'Access control systems',
-        'Security consulting'
-      ],
-      price: 'Custom pricing'
-    },
-    {
-      id: 'residential-security',
-      title: 'Residential Security',
-      description: 'Protecting homes, gated communities, and residential properties with professional security services.',
-      icon: HomeIcon,
-      features: [
-        'Gated community security',
-        'Residential patrol services',
-        'Property surveillance',
-        'Guest management',
-        'Emergency response'
-      ],
-      price: 'Starting from $20/hour'
-    },
-    {
-      id: 'construction-security',
-      title: 'Construction Site Security',
-      description: 'Specialized security for construction sites, protecting equipment, materials, and work areas.',
-      icon: TruckIcon,
-      features: [
-        'Equipment protection',
-        'Material theft prevention',
-        'Site access control',
-        'Safety compliance monitoring',
-        'Mobile patrol units'
-      ],
-      price: 'Starting from $22/hour'
-    },
-    {
-      id: 'event-security',
-      title: 'Event Security',
-      description: 'Professional event security for concerts, conferences, private parties, and public gatherings.',
-      icon: CalendarDaysIcon,
-      features: [
-        'Crowd control management',
-        'VIP protection services',
-        'Entry/exit monitoring',
-        'Emergency evacuation planning',
-        'Alcohol compliance monitoring'
-      ],
-      price: 'Starting from $25/hour'
+  const [services, setServices] = useState<ServiceData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [expandedService, setExpandedService] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/services/active`);
+      if (response.ok) {
+        const data = await response.json();
+        setServices(Array.isArray(data) ? data : []);
+      }
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const getIcon = (iconName?: string) => {
+    if (!iconName) return ShieldCheckIcon;
+    return iconMap[iconName] || ShieldCheckIcon;
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandedService(expandedService === id ? null : id);
+  };
 
   return (
     <>
       <SEO {...seoProps} />
       
-      <div className="min-h-screen pt-16 pb-12" itemScope itemType="https://schema.org/WebPage">
-        {/* Breadcrumb Navigation */}
+      <div className="min-h-screen pt-16 pb-12">
         <Breadcrumb />
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-red-50 to-blue-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6"
-          >
-            Professional Security Services
-          </motion.h1>
-          <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-slate-600 max-w-3xl mx-auto mb-8"
-          >
-            Comprehensive security solutions tailored to protect your business, property, and personnel. 
-            Licensed, trained, and professional security guards available 24/7.
-          </motion.p>
-          
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-lg">
-              <ClockIcon className="w-5 h-5 text-red-600" />
-              <span className="text-sm font-semibold">24/7 Available</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-lg">
-              <ShieldCheckIcon className="w-5 h-5 text-blue-600" />
-              <span className="text-sm font-semibold">Licensed & Insured</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-lg">
-              <PhoneIcon className="w-5 h-5 text-green-600" />
-              <span className="text-sm font-semibold">Emergency Response</span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
-                className={`bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-all duration-300 cursor-pointer ${
-                  selectedService === service.id ? 'ring-2 ring-red-500 ring-opacity-50' : ''
-                }`}
-                onClick={() => setSelectedService(selectedService === service.id ? null : service.id)}
-              >
-                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-blue-600 rounded-xl mb-6">
-                  <service.icon className="w-8 h-8 text-white" />
-                </div>
-
-                <h3 className="text-xl font-bold text-slate-900 mb-4">
-                  {service.title}
-                </h3>
-                
-                <p className="text-slate-600 mb-6 leading-relaxed">
-                  {service.description}
-                </p>
-
-                <div className="mb-6">
-                  <div className="text-lg font-semibold text-red-600 mb-3">
-                    {service.price}
-                  </div>
-                </div>
-
-                {selectedService === service.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="border-t border-slate-200 pt-4 mt-4"
-                  >
-                    <h4 className="font-semibold text-slate-900 mb-3">Service Features:</h4>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm text-slate-600">
-                          <div className="w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0"></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
-                    >
-                      Request Quote
-                    </motion.button>
-                  </motion.div>
-                )}
-
-                {selectedService !== service.id && (
-                  <button className="w-full px-4 py-2 border-2 border-red-200 text-red-600 rounded-lg font-semibold hover:bg-red-50 transition-colors">
-                    Learn More
-                  </button>
-                )}
-              </motion.div>
-            ))}
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-red-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.h1
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-6"
+            >
+              Our Services
+            </motion.h1>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-slate-600 dark:text-gray-300 max-w-4xl mx-auto mb-8"
+            >
+              Falcon® Security Limited provides comprehensive security, planning, management and service solutions. 
+              With over three decades of experience since 1993, we deliver professional protection services 
+              tailored to your specific needs.
+            </motion.p>
+            
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
+              <div className="flex items-center gap-2 bg-white dark:bg-gray-700 px-4 py-2 rounded-full shadow-lg">
+                <ClockIcon className="w-5 h-5 text-red-600" />
+                <span className="text-sm font-semibold dark:text-white">24/7 Available</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white dark:bg-gray-700 px-4 py-2 rounded-full shadow-lg">
+                <ShieldCheckIcon className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-semibold dark:text-white">ISO Certified</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white dark:bg-gray-700 px-4 py-2 rounded-full shadow-lg">
+                <PhoneIcon className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-semibold dark:text-white">Since 1993</span>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-red-600 to-blue-600 py-16 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-              Need Immediate Security Services?
-            </h2>
-            <p className="text-xl mb-8 text-red-100 max-w-2xl mx-auto">
-              Our security professionals are available 24/7 to respond to your needs. 
-              Contact us for immediate assistance or to schedule a security consultation.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white text-red-600 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
-              >
-                Call Now: (555) 123-4567
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all duration-300"
-              >
-                Request Quote
-              </motion.button>
+        {/* Services List */}
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[...Array(9)].map((_, i) => (
+                  <div key={i} className="bg-gray-200 dark:bg-gray-700 animate-pulse rounded-2xl h-80" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.map((service, index) => {
+                  const IconComponent = getIcon(service.icon);
+                  const isExpanded = expandedService === service.id;
+                  
+                  return (
+                    <motion.div
+                      key={service.id}
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.08 }}
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden hover:shadow-xl transition-all duration-300"
+                    >
+                      <div className="p-8">
+                        {/* Icon */}
+                        <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-blue-600 rounded-xl mb-6">
+                          <IconComponent className="w-8 h-8 text-white" />
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+                          {service.title}
+                        </h3>
+                        
+                        {/* Description - show first paragraph or truncated */}
+                        <p className="text-slate-600 dark:text-gray-300 mb-4 leading-relaxed">
+                          {isExpanded 
+                            ? service.description 
+                            : service.description.split('\n\n')[0].substring(0, 200) + (service.description.length > 200 ? '...' : '')
+                          }
+                        </p>
+
+                        {/* Features */}
+                        <AnimatePresence>
+                          {isExpanded && service.features && service.features.length > 0 && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="mb-4"
+                            >
+                              <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Key Features:</h4>
+                              <ul className="space-y-2">
+                                {service.features.map((feature, idx) => (
+                                  <li key={idx} className="flex items-start gap-2 text-sm text-slate-600 dark:text-gray-300">
+                                    <CheckCircleIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                    {feature}
+                                  </li>
+                                ))}
+                              </ul>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        {/* Expand/Collapse button */}
+                        <button 
+                          onClick={() => toggleExpand(service.id)}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2 border-2 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-lg font-semibold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                        >
+                          {isExpanded ? 'Show Less' : 'Learn More'}
+                          {isExpanded ? <ChevronUpIcon className="w-4 h-4" /> : <ChevronDownIcon className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Why Falcon Section */}
+        <section className="bg-slate-50 dark:bg-gray-900 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Why Choose Falcon®?</h2>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">Three Decades of Excellence</h3>
+                <p className="text-slate-600 dark:text-gray-300">
+                  Operational since 1993, enriched with vast professional experience in security services 
+                  with nationwide coverage across Bangladesh.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">Military-Grade Leadership</h3>
+                <p className="text-slate-600 dark:text-gray-300">
+                  Managed by retired officers of the Bangladesh Armed Forces with adequate training 
+                  on security and related matters, both from home and abroad.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">ISO Certified Standards</h3>
+                <p className="text-slate-600 dark:text-gray-300">
+                  Awarded ISO 9001:2015, 18788:2015 & 27001:2013 for quality management, 
+                  private security management, and information security management.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">Ethical Working Practices</h3>
+                <p className="text-slate-600 dark:text-gray-300">
+                  We highly focus on ethical working practices which helps us gain market recognition. 
+                  We tailor work according to customer needs regardless of project size.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">Comprehensive Coverage</h3>
+                <p className="text-slate-600 dark:text-gray-300">
+                  From conventional guarding to digital surveillance, PSIM integration, escort services, 
+                  and event security — we cover all your security needs.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">Trained & Vetted Personnel</h3>
+                <p className="text-slate-600 dark:text-gray-300">
+                  Extensive training at our own facility ensures guards remain motivated and acclimatized 
+                  to the scope of work. Fully HES compliant guard force.
+                </p>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
-    </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="bg-gradient-to-r from-red-600 to-blue-600 py-16 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                If Security is Your Priority, Falcon® is Just a Call Away
+              </h2>
+              <p className="text-xl mb-8 text-red-100 max-w-2xl mx-auto">
+                Your security is our priority. Contact us today for a consultation 
+                and let our team of experts design the perfect security solution for you.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <motion.a
+                  href="tel:+8801618325266"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white text-red-600 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+                >
+                  Call: +880 1618 325266
+                </motion.a>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    to="/contact"
+                    className="inline-block px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all duration-300"
+                  >
+                    Contact Us
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </div>
     </>
   );
 };

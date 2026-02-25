@@ -63,7 +63,7 @@ const Home = () => {
               Our Services
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Comprehensive solutions tailored to meet your unique requirements and exceed expectations.
+              Comprehensive security solutions tailored to protect what matters most to you.
             </p>
           </motion.div>
           <Services showFeaturedOnly={true} maxItems={6} />
@@ -84,7 +84,7 @@ const Home = () => {
               What Our Clients Say
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Trusted by leading organizations and valued clients worldwide.
+              Trusted by leading organizations across Bangladesh since 1993.
             </p>
           </motion.div>
           <Clients showFeaturedOnly={true} maxItems={6} />
@@ -105,7 +105,7 @@ const Home = () => {
               Featured Projects
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Showcase of my latest work and successful project deliveries.
+              Successful security project deployments across multiple sectors.
             </p>
           </motion.div>
           <Projects showFeaturedOnly={true} maxItems={6} />
@@ -123,10 +123,10 @@ const Home = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Portfolio Gallery
+              Our Gallery
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Visual journey through my creative work and project highlights.
+              A visual showcase of our security operations and deployments.
             </p>
           </motion.div>
           <Gallery showFeaturedOnly={true} maxItems={8} />
@@ -147,7 +147,7 @@ const Home = () => {
               Latest Insights
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Recent thoughts, tutorials, and updates from my blog.
+              Security insights, industry updates, and company news.
             </p>
           </motion.div>
           <Blog maxItems={3} showExcerpt={true} layout="grid" />
@@ -155,7 +155,7 @@ const Home = () => {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-700">
+      <section className="py-16 bg-gradient-to-r from-red-600 to-blue-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -165,10 +165,10 @@ const Home = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Let's Work Together
+              Your Security is Our Priority
             </h2>
-            <p className="text-blue-100 max-w-2xl mx-auto text-lg">
-              Ready to start your next project? Get in touch and let's create something amazing together.
+            <p className="text-red-100 max-w-2xl mx-auto text-lg">
+              Ready to secure your premises? Contact us today for a free consultation.
             </p>
           </motion.div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-8">
@@ -229,7 +229,7 @@ const Home = () => {
       </section>
 
       {/* Security Stats */}
-      <section className="py-16 bg-blue-600">
+      <section className="py-16 bg-gradient-to-r from-red-600 to-blue-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <motion.div
@@ -259,7 +259,7 @@ const Home = () => {
               viewport={{ once: true }}
               className="text-white"
             >
-              <div className="text-3xl md:text-4xl font-bold mb-2">15+</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">33+</div>
               <div className="text-blue-100">Years Experience</div>
             </motion.div>
             <motion.div
@@ -269,8 +269,8 @@ const Home = () => {
               viewport={{ once: true }}
               className="text-white"
             >
-              <div className="text-3xl md:text-4xl font-bold mb-2">100%</div>
-              <div className="text-blue-100">Client Satisfaction</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">5500+</div>
+              <div className="text-blue-100">Consignments Yearly</div>
             </motion.div>
           </div>
         </div>

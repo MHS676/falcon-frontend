@@ -117,31 +117,6 @@ const Services = ({
     setFilteredServices(filtered);
   };
 
-  const formatPrice = (price?: Service['price']) => {
-    // If price is missing entirely
-    if (!price || typeof price.min !== 'number') {
-      return 'Contact for pricing';
-    }
-
-    const symbol = price.currency === 'USD' ? '$' : price.currency || '';
-    const typeText =
-      price.type === 'hourly'
-        ? '/hr'
-        : price.type === 'project'
-          ? '/project'
-          : '';
-
-    // Handle when both min and max are numbers
-    if (
-      typeof price.max === 'number' &&
-      price.max !== price.min
-    ) {
-      return `${symbol}${price.min.toLocaleString()} - ${symbol}${price.max.toLocaleString()}${typeText}`;
-    }
-
-    // Single fixed price
-    return `${symbol}${price.min.toLocaleString()}${typeText}`;
-  };
 
 
   if (loading) {
@@ -273,26 +248,19 @@ const Services = ({
                 </div>
               )}
 
-              {/* Timeline and Price */}
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
-                <div>
-                  {service.timeline && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Timeline: {service.timeline}
-                    </p>
-                  )}
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">
-                    {formatPrice(service.price)}
-                  </p>
-                </div>
+              {/* Timeline */}
+              {service.timeline && (
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Timeline: {service.timeline}
+                </p>
               </div>
+              )}
 
               {/* CTA Button */}
               <div className="mt-4">
-                <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
-                  Get Started
+                <button className="w-full bg-gradient-to-r from-red-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-red-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                  Learn More
                 </button>
               </div>
             </div>
