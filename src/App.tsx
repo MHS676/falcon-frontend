@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import Careers from './pages/Careers';
 import Team from './pages/Team';
+import CompanyProfile from './pages/CompanyProfile';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ForgotPassword from './pages/ForgotPassword';
@@ -45,6 +46,7 @@ function AppContent() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/company-profile" element={<CompanyProfile />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/forgot-password" element={<ForgotPassword />} />
