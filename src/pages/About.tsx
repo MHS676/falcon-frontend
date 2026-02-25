@@ -7,7 +7,6 @@ import {
   GlobeAltIcon,
   CheckBadgeIcon,
   BuildingOfficeIcon,
-  AcademicCapIcon,
   MapPinIcon,
   PhoneIcon,
   EnvelopeIcon
@@ -45,21 +44,6 @@ const About = () => {
     { number: '500+', label: 'Clients Served' },
     { number: '5500+', label: 'Consignments Yearly' },
     { number: '24/7', label: 'Available Service' }
-  ];
-
-  const managementTeam = [
-    { name: 'Mrs. Mayeeda Choudhury', title: 'Chairperson', credentials: '' },
-    { name: 'Major Zulfiqar H. Choudhury (Retd)', title: 'Managing Director', credentials: '' },
-    { name: 'Major Md. Nazmul Haque (Retd)', title: 'Executive Director', credentials: 'MBA, PGDHRM' },
-    { name: 'Major Kazi Ashfaq (Retd)', title: 'Director Marketing', credentials: '' },
-    { name: 'Major Asif Chowdhury (Retd)', title: 'Director Business Development', credentials: 'MBA, MBCHRS' },
-    { name: 'Mohammad Ali Yusuf Hossain', title: 'Director of Finance & Digital Surveillance Solutions', credentials: 'MCom, MBA, DCS, CSP, Certified Lead Auditor ISO/IEC 27001:2022' },
-    { name: 'Lt. Mizanur Rahman BN (Retd)', title: 'General Manager (Admin & Ops)', credentials: 'Certified Lead Auditor ISO 9001:2015' },
-    { name: 'Md. Mostafizur Rahman', title: 'Deputy General Manager (Operations)', credentials: '' },
-    { name: 'Md. Jalal Ahmed', title: 'Manager Chittagong Region', credentials: '' },
-    { name: 'Engr. Sumon Parvez', title: 'Manager Digital Surveillance Solutions', credentials: 'BSc (EEE)' },
-    { name: 'Advocate Syed Mehedi Hasan', title: 'Advisor Legal Affairs', credentials: '' },
-    { name: 'DK Associates', title: 'Advisor Corporate Affairs', credentials: '' },
   ];
 
   const branches = [
@@ -366,45 +350,28 @@ const About = () => {
           </div>
         </section>
 
-        {/* Management Team */}
+        {/* Management Team CTA */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="text-center mb-4"
             >
+              <UserGroupIcon className="w-16 h-16 text-red-600 mx-auto mb-4" />
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Management Team</h2>
-              <p className="text-slate-600 dark:text-gray-300 max-w-3xl mx-auto mb-12">
+              <p className="text-slate-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
                 Our management team consists of veterans of the Bangladesh Armed Forces with 
-                sufficient training in security and intelligence at home and abroad. There is 
-                also a team of information technology experts who look after digital surveillance solutions.
+                sufficient training in security and intelligence at home and abroad.
               </p>
+              <Link
+                to="/team"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300"
+              >
+                Meet Our Team
+              </Link>
             </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {managementTeam.map((member, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center"
-                >
-                  <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <AcademicCapIcon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{member.name}</h3>
-                  <p className="text-red-600 dark:text-red-400 font-semibold text-sm mb-1">{member.title}</p>
-                  {member.credentials && (
-                    <p className="text-slate-500 dark:text-gray-400 text-xs">{member.credentials}</p>
-                  )}
-                </motion.div>
-              ))}
-            </div>
           </div>
         </section>
 
