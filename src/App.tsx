@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
+import ScrollToTop from './components/ScrollToTop';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
@@ -26,6 +27,9 @@ function AppContent() {
 
   return (
     <div className={isAdminRoute ? "min-h-screen" : "min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"}>
+      {/* Scroll to top on route change */}
+      <ScrollToTop />
+      
       {/* Background decoration - only for non-admin routes */}
       {!isAdminRoute && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
