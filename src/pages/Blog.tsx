@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { getBlogPosts } from '../services/api';
 import toast from 'react-hot-toast';
 
@@ -64,12 +65,12 @@ const Blog = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogs.map((blog, index) => (
+                <Link key={blog.id} to={`/blog/${blog.slug}`}>
                 <motion.article
-                  key={blog.id}
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card group cursor-pointer"
+                  className="card group cursor-pointer h-full hover:shadow-xl transition-shadow duration-300"
                 >
                   {blog.coverImage && (
                     <div className="h-48 bg-gradient-to-br from-primary-400 to-primary-600 overflow-hidden">
@@ -106,6 +107,7 @@ const Blog = () => {
                     </div>
                   </div>
                 </motion.article>
+                </Link>
               ))}
             </div>
           )}

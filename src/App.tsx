@@ -11,6 +11,7 @@ import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import BlogPostDetail from './pages/BlogPostDetail';
 import Careers from './pages/Careers';
 import Team from './pages/Team';
 import CompanyProfile from './pages/CompanyProfile';
@@ -49,6 +50,7 @@ function AppContent() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPostDetail />} />
             <Route path="/team" element={<Team />} />
             <Route path="/company-profile" element={<CompanyProfile />} />
             <Route path="/careers" element={<Careers />} />
