@@ -590,12 +590,12 @@ export default function CompanyProfile() {
         .stf__parent{margin:0 auto!important}
       `}</style>
 
-      <div className="min-h-screen pt-20 pb-10 bg-gradient-to-b from-[#3a3632] via-[#2c2926] to-[#1f1c1a]">
+      <div className="min-h-screen pt-20 pb-10 bg-white-900">
 
         {/* Top bar */}
         <div className="max-w-5xl mx-auto px-4 pb-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-center sm:text-left">
-            <h1 className="text-lg sm:text-2xl font-bold text-amber-100" style={{ fontFamily: 'Georgia, serif' }}>
+            <h1 className="text-lg sm:text-2xl font-bold text-amber-500" style={{ fontFamily: 'Georgia, serif' }}>
               Company Profile
             </h1>
             <p className="text-[10px] sm:text-sm text-stone-400" style={{ fontFamily: 'Georgia, serif' }}>
