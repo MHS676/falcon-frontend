@@ -30,7 +30,6 @@ const team = [
   { name: 'Major Zulfiqar H. Choudhury (Retd)', role: 'Managing Director', cred: '' },
   { name: 'Major Md. Nazmul Haque (Retd)', role: 'Executive Director', cred: 'MBA, PGDHRM' },
   { name: 'Major Kazi Ashfaq (Retd)', role: 'Director Marketing', cred: '' },
-  { name: 'Major Asif Chowdhury (Retd)', role: 'Director Business Development', cred: 'MBA, MBCHRS' },
   { name: 'Mohammad Ali Yusuf Hossain', role: 'Director Finance & Digital Surveillance', cred: 'MCom, MBA, DCS, CSP' },
   { name: 'Lt. Mizanur Rahman BN (Retd)', role: 'General Manager (Admin & Ops)', cred: 'ISO 9001:2015 Lead Auditor' },
   { name: 'Md. Mostafizur Rahman', role: 'Deputy General Manager (Operations)', cred: '' },

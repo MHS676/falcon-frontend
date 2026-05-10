@@ -23,7 +23,6 @@ const teamMembers: TeamMember[] = [
   { name: 'Major Zulfiqar H. Choudhury (Retd)', title: 'Managing Director', credentials: '', category: 'leadership' },
   { name: 'Major Md. Nazmul Haque (Retd)', title: 'Executive Director', credentials: 'MBA, PGDHRM', category: 'leadership' },
   { name: 'Major Kazi Ashfaq (Retd)', title: 'Director Marketing', credentials: '', category: 'management' },
-  { name: 'Major Asif Chowdhury (Retd)', title: 'Director Business Development', credentials: 'MBA, MBCHRS', category: 'management' },
   { name: 'Mohammad Ali Yusuf Hossain', title: 'Director of Finance & Digital Surveillance Solutions', credentials: 'MCom, MBA, DCS, CSP, Certified Lead Auditor ISO/IEC 27001:2022', category: 'management' },
   { name: 'Lt. Mizanur Rahman BN (Retd)', title: 'General Manager (Admin & Ops)', credentials: 'Certified Lead Auditor ISO 9001:2015', category: 'management' },
   { name: 'Md. Mostafizur Rahman', title: 'Deputy General Manager (Operations)', credentials: '', category: 'management' },
