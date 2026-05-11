@@ -64,7 +64,7 @@ const Banner = () => {
 
   if (loading) {
     return (
-      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-blue-600 to-purple-700 animate-pulse">
+      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-green-600 to-purple-700 animate-pulse">
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
     );
@@ -72,7 +72,7 @@ const Banner = () => {
 
   if (banners.length === 0) {
     return (
-      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-blue-600 to-purple-700 flex items-center justify-center">
+      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-green-600 to-purple-700 flex items-center justify-center">
         <div className="text-center text-white">
           <h2 className="text-3xl font-bold mb-4">Welcome to My Portfolio</h2>
           <p className="text-lg">Discover my work and expertise</p>
@@ -144,7 +144,7 @@ const Banner = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
                 href={currentBanner.ctaLink}
-                className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-block bg-gradient-to-r from-green-500 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 {currentBanner.ctaText}
               </motion.a>

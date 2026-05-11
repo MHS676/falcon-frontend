@@ -79,7 +79,7 @@ const Jobs = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
           </div>
         </div>
       </div>
@@ -120,8 +120,8 @@ const Jobs = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border ${
-                    selectedJob?.id === job.id ? 'border-blue-500 ring-1 ring-blue-500' : 'border-gray-200 dark:border-gray-700'
-                  } p-6 cursor-pointer hover:border-blue-300 dark:hover:border-blue-600 transition-colors`}
+                    selectedJob?.id === job.id ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-200 dark:border-gray-700'
+                  } p-6 cursor-pointer hover:border-green-300 dark:hover:border-green-600 transition-colors`}
                   onClick={() => setSelectedJob(job)}
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -131,7 +131,7 @@ const Jobs = () => {
                           {job.title}
                         </h3>
                         {job.urgent && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
                             <ExclamationTriangleIcon className="w-3 h-3 mr-1" />
                             Urgent
                           </span>
@@ -169,7 +169,7 @@ const Jobs = () => {
                       </p>
 
                       <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded text-xs">
+                        <span className="px-2 py-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded text-xs">
                           {formatExperienceLevel(job.experienceLevel)}
                         </span>
                         {job.skills.slice(0, 3).map((skill) => (
@@ -201,7 +201,7 @@ const Jobs = () => {
                       {job.applicationDeadline && (
                         <div className={`mt-2 text-sm ${
                           isDeadlineApproaching(job.applicationDeadline) 
-                            ? 'text-red-600 dark:text-red-400' 
+                            ? 'text-amber-600 dark:text-amber-400' 
                             : 'text-gray-500 dark:text-gray-400'
                         }`}>
                           Application deadline: {new Date(job.applicationDeadline).toLocaleDateString()}
@@ -283,7 +283,7 @@ const Jobs = () => {
                           {selectedJob.skills.map((skill) => (
                             <span
                               key={skill}
-                              className="px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full text-sm"
+                              className="px-3 py-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-full text-sm"
                             >
                               {skill}
                             </span>
@@ -298,7 +298,7 @@ const Jobs = () => {
                       // We'll create an application modal later
                       toast.success('Application feature coming soon!');
                     }}
-                    className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                    className="w-full bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 transition-colors font-medium"
                   >
                     Apply Now
                   </button>

@@ -248,7 +248,7 @@ const BannerManagement = () => {
   if (loading && banners.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -263,7 +263,7 @@ const BannerManagement = () => {
         </div>
         <button
           onClick={() => openModal()}
-          className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
         >
           <PlusIcon className="w-5 h-5" />
           <span>Add Banner</span>
@@ -326,7 +326,7 @@ const BannerManagement = () => {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => openModal(banner)}
-                    className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded"
+                    className="p-2 text-green-500 hover:bg-green-50 dark:hover:bg-green-900/20 rounded"
                     title="Edit"
                   >
                     <PencilIcon className="w-4 h-4" />
@@ -336,7 +336,7 @@ const BannerManagement = () => {
                       setSelectedBanner(banner);
                       setIsDeleteModalOpen(true);
                     }}
-                    className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
+                    className="p-2 text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded"
                     title="Delete"
                   >
                     <TrashIcon className="w-4 h-4" />
@@ -358,7 +358,7 @@ const BannerManagement = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-4">Get started by creating your first banner slide</p>
           <button
             onClick={() => openModal()}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
           >
             Add First Banner
           </button>
@@ -395,7 +395,7 @@ const BannerManagement = () => {
                       value={formData.title}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -407,7 +407,7 @@ const BannerManagement = () => {
                       name="subtitle"
                       value={formData.subtitle}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -417,11 +417,11 @@ const BannerManagement = () => {
                     Banner Image *
                   </label>
                   <div className="space-y-2">
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-3 mb-2">
-                      <p className="text-xs text-blue-800 dark:text-blue-200 font-medium">
+                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-3 mb-2">
+                      <p className="text-xs text-green-800 dark:text-green-200 font-medium">
                         ✂️ Auto-crop to 1920x1080 pixels (16:9 ratio)
                       </p>
-                      <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                      <p className="text-xs text-green-700 dark:text-green-300 mt-1">
                         Select any image and crop it to the perfect banner size | Max: 5MB | Formats: JPEG, PNG, WebP
                       </p>
                     </div>
@@ -430,7 +430,7 @@ const BannerManagement = () => {
                       onChange={handleFileChange}
                       accept="image/jpeg,image/jpg,image/png,image/webp"
                       required={!selectedBanner && !formData.imageUrl}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/50 dark:file:text-blue-200"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 dark:file:bg-green-900/50 dark:file:text-green-200"
                     />
                     {formData.image && (
                       <p className="text-xs text-green-600 dark:text-green-400">
@@ -451,7 +451,7 @@ const BannerManagement = () => {
                       value={formData.buttonText}
                       onChange={handleInputChange}
                       placeholder="e.g., Learn More"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -464,7 +464,7 @@ const BannerManagement = () => {
                       value={formData.buttonUrl}
                       onChange={handleInputChange}
                       placeholder="e.g., /services or https://example.com"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -480,7 +480,7 @@ const BannerManagement = () => {
                       value={formData.order}
                       onChange={handleInputChange}
                       min="1"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div className="flex items-center mt-7">
@@ -489,7 +489,7 @@ const BannerManagement = () => {
                       name="active"
                       checked={formData.active}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                     />
                     <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                       Active
@@ -508,7 +508,7 @@ const BannerManagement = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors disabled:opacity-50"
                   >
                     {loading ? 'Saving...' : selectedBanner ? 'Update' : 'Create'}
                   </button>
@@ -539,7 +539,7 @@ const BannerManagement = () => {
                 <button
                   onClick={handleDelete}
                   disabled={loading}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors disabled:opacity-50"
                 >
                   {loading ? 'Deleting...' : 'Delete'}
                 </button>

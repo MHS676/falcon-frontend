@@ -155,7 +155,7 @@ const Home = () => {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-16 bg-gradient-to-r from-red-600 to-blue-700">
+      <section className="py-16 bg-gradient-to-r from-amber-600 to-green-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -167,7 +167,7 @@ const Home = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Your Security is Our Priority
             </h2>
-            <p className="text-red-100 max-w-2xl mx-auto text-lg">
+            <p className="text-amber-100 max-w-2xl mx-auto text-lg">
               Ready to secure your premises? Contact us today for a free consultation.
             </p>
           </motion.div>
@@ -229,7 +229,7 @@ const Home = () => {
       </section>
 
       {/* Security Stats */}
-      <section className="py-16 bg-gradient-to-r from-red-600 to-blue-600">
+      <section className="py-16 bg-gradient-to-r from-amber-600 to-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <motion.div
@@ -240,7 +240,7 @@ const Home = () => {
               className="text-white"
             >
               <div className="text-3xl md:text-4xl font-bold mb-2">500+</div>
-              <div className="text-blue-100">Clients Protected</div>
+              <div className="text-green-100">Clients Protected</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -250,7 +250,7 @@ const Home = () => {
               className="text-white"
             >
               <div className="text-3xl md:text-4xl font-bold mb-2">24/7</div>
-              <div className="text-blue-100">Security Monitoring</div>
+              <div className="text-green-100">Security Monitoring</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -260,7 +260,7 @@ const Home = () => {
               className="text-white"
             >
               <div className="text-3xl md:text-4xl font-bold mb-2">33+</div>
-              <div className="text-blue-100">Years Experience</div>
+              <div className="text-green-100">Years Experience</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -270,7 +270,7 @@ const Home = () => {
               className="text-white"
             >
               <div className="text-3xl md:text-4xl font-bold mb-2">5500+</div>
-              <div className="text-blue-100">Consignments Yearly</div>
+              <div className="text-green-100">Consignments Yearly</div>
             </motion.div>
           </div>
         </div>

@@ -135,7 +135,7 @@ const ClientsManagement = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -152,7 +152,7 @@ const ClientsManagement = () => {
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
         >
           <PlusIcon className="h-5 w-5" />
           Add Client
@@ -268,7 +268,7 @@ const ClientsManagement = () => {
                     id="featured"
                     checked={formData.featured}
                     onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
                   <label htmlFor="featured" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                     Featured
@@ -281,7 +281,7 @@ const ClientsManagement = () => {
                     id="active"
                     checked={formData.active}
                     onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
                   <label htmlFor="active" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                     Active
@@ -292,7 +292,7 @@ const ClientsManagement = () => {
               <div className="flex gap-2 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors"
                 >
                   {editingId ? 'Update' : 'Create'}
                 </button>
@@ -335,7 +335,7 @@ const ClientsManagement = () => {
                   <div className="flex items-center gap-2 mt-1">
                     {client.featured && <StarIcon className="h-4 w-4 text-yellow-400" />}
                     <span className={`inline-block w-2 h-2 rounded-full ${
-                      client.active ? 'bg-green-400' : 'bg-red-400'
+                      client.active ? 'bg-green-400' : 'bg-amber-400'
                     }`}></span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
                       {client.active ? 'Active' : 'Inactive'}
@@ -351,13 +351,13 @@ const ClientsManagement = () => {
               <div className="flex gap-1">
                 <button
                   onClick={() => handleEdit(client)}
-                  className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-green-600 transition-colors"
                 >
                   <PencilIcon className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(client.id)}
-                  className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-amber-600 transition-colors"
                 >
                   <TrashIcon className="h-4 w-4" />
                 </button>
@@ -372,7 +372,7 @@ const ClientsManagement = () => {
               )}
               
               {client.projectType && (
-                <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded-full">
+                <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded-full">
                   {client.projectType}
                 </span>
               )}
@@ -400,7 +400,7 @@ const ClientsManagement = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-4">Get started by adding your first client.</p>
           <button
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             Add Client
           </button>

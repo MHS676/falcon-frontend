@@ -179,7 +179,7 @@ const ProjectsManagement = () => {
   if (loading && projects.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -194,7 +194,7 @@ const ProjectsManagement = () => {
         </div>
         <button
           onClick={() => openModal()}
-          className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
         >
           <PlusIcon className="w-5 h-5" />
           <span>Add Project</span>
@@ -232,7 +232,7 @@ const ProjectsManagement = () => {
                   {project.title}
                 </h3>
                 {project.category && (
-                  <span className="ml-2 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-xs font-medium whitespace-nowrap">
+                  <span className="ml-2 px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-medium whitespace-nowrap">
                     {project.category}
                   </span>
                 )}
@@ -261,7 +261,7 @@ const ProjectsManagement = () => {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => openModal(project)}
-                    className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded"
+                    className="p-2 text-green-500 hover:bg-green-50 dark:hover:bg-green-900/20 rounded"
                     title="Edit"
                   >
                     <PencilIcon className="w-4 h-4" />
@@ -293,7 +293,7 @@ const ProjectsManagement = () => {
                       setSelectedProject(project);
                       setIsDeleteModalOpen(true);
                     }}
-                    className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
+                    className="p-2 text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded"
                     title="Delete"
                   >
                     <TrashIcon className="w-4 h-4" />
@@ -315,7 +315,7 @@ const ProjectsManagement = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-4">Get started by creating your first project</p>
           <button
             onClick={() => openModal()}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
           >
             Add First Project
           </button>
@@ -352,7 +352,7 @@ const ProjectsManagement = () => {
                       value={formData.title}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -367,7 +367,7 @@ const ProjectsManagement = () => {
                     onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -381,7 +381,7 @@ const ProjectsManagement = () => {
                     value={formData.category}
                     onChange={handleInputChange}
                     placeholder="e.g., Security Systems, Corporate Security, Event Protection"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -394,7 +394,7 @@ const ProjectsManagement = () => {
                     onChange={handleFileChange}
                     accept="image/*"
                     required={!selectedProject}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -408,7 +408,7 @@ const ProjectsManagement = () => {
                     value={formData.technologies}
                     onChange={handleInputChange}
                     placeholder="React, TypeScript, Node.js"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -418,7 +418,7 @@ const ProjectsManagement = () => {
                     name="featured"
                     checked={formData.featured}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                     Featured Project
@@ -435,7 +435,7 @@ const ProjectsManagement = () => {
                       name="liveUrl"
                       value={formData.liveUrl}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -447,7 +447,7 @@ const ProjectsManagement = () => {
                       name="githubUrl"
                       value={formData.githubUrl}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -463,7 +463,7 @@ const ProjectsManagement = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors disabled:opacity-50"
                   >
                     {loading ? 'Saving...' : selectedProject ? 'Update' : 'Create'}
                   </button>
@@ -494,7 +494,7 @@ const ProjectsManagement = () => {
                 <button
                   onClick={handleDelete}
                   disabled={loading}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors disabled:opacity-50"
                 >
                   {loading ? 'Deleting...' : 'Delete'}
                 </button>

@@ -85,7 +85,7 @@ const BlogPostDetail = () => {
           </p>
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-red-700 hover:to-blue-700 transition-all"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-600 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-amber-700 hover:to-green-700 transition-all"
           >
             <ArrowLeftIcon className="w-4 h-4" />
             Back to Blog
@@ -125,7 +125,7 @@ const BlogPostDetail = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-red-600 to-blue-700 pt-16 pb-12 px-4">
+          <div className="bg-gradient-to-br from-amber-600 to-green-700 pt-16 pb-12 px-4">
             <div className="max-w-3xl mx-auto">
               <motion.h1
                 initial={{ y: 20, opacity: 0 }}
@@ -148,7 +148,7 @@ const BlogPostDetail = () => {
           >
             <button
               onClick={() => navigate('/blog')}
-              className="flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400 hover:underline font-medium"
+              className="flex items-center gap-1.5 text-sm text-amber-600 dark:text-amber-400 hover:underline font-medium"
             >
               <ArrowLeftIcon className="w-4 h-4" />
               Blog
@@ -180,7 +180,7 @@ const BlogPostDetail = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15 }}
-              className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed italic border-l-4 border-red-500 pl-4"
+              className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed italic border-l-4 border-amber-500 pl-4"
             >
               {post.excerpt}
             </motion.p>
@@ -194,7 +194,7 @@ const BlogPostDetail = () => {
             className="mt-8 prose prose-slate dark:prose-invert prose-lg max-w-none
               prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
               prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
-              prose-a:text-red-600 dark:prose-a:text-red-400 prose-a:no-underline hover:prose-a:underline
+              prose-a:text-amber-600 dark:prose-a:text-amber-400 prose-a:no-underline hover:prose-a:underline
               prose-strong:text-gray-900 dark:prose-strong:text-white
               prose-li:text-gray-700 dark:prose-li:text-gray-300
               prose-img:rounded-xl prose-img:shadow-lg"
@@ -232,7 +232,7 @@ const BlogPostDetail = () => {
           >
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 text-red-600 dark:text-red-400 font-semibold hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold hover:gap-3 transition-all"
             >
               <ArrowLeftIcon className="w-4 h-4" />
               Back to all posts

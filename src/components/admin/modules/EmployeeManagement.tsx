@@ -294,7 +294,7 @@ const EmployeeManagement = () => {
       case 'active': return 'bg-green-100 text-green-800';
       case 'inactive': return 'bg-gray-100 text-gray-800';
       case 'on-leave': return 'bg-yellow-100 text-yellow-800';
-      case 'terminated': return 'bg-red-100 text-red-800';
+      case 'terminated': return 'bg-amber-100 text-amber-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -302,7 +302,7 @@ const EmployeeManagement = () => {
   if (loading && employees.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -313,7 +313,7 @@ const EmployeeManagement = () => {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <UserGroupIcon className="h-8 w-8 text-blue-600" />
+            <UserGroupIcon className="h-8 w-8 text-green-600" />
             Employee Management
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -322,7 +322,7 @@ const EmployeeManagement = () => {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
         >
           <PlusIcon className="h-5 w-5" />
           Add Employee
@@ -338,7 +338,7 @@ const EmployeeManagement = () => {
                 <p className="text-sm text-gray-600 dark:text-gray-400">Total Employees</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{stats.total}</p>
               </div>
-              <UserGroupIcon className="h-12 w-12 text-blue-600 opacity-20" />
+              <UserGroupIcon className="h-12 w-12 text-green-600 opacity-20" />
             </div>
           </div>
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
@@ -363,9 +363,9 @@ const EmployeeManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Terminated</p>
-                <p className="text-2xl font-bold text-red-600 mt-1">{stats.terminated}</p>
+                <p className="text-2xl font-bold text-amber-600 mt-1">{stats.terminated}</p>
               </div>
-              <XMarkIcon className="h-12 w-12 text-red-600 opacity-20" />
+              <XMarkIcon className="h-12 w-12 text-amber-600 opacity-20" />
             </div>
           </div>
         </div>
@@ -381,13 +381,13 @@ const EmployeeManagement = () => {
               placeholder="Search employees..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <select
             value={filterDepartment}
             onChange={(e) => setFilterDepartment(e.target.value)}
-            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
           >
             <option value="all">All Departments</option>
             {departments.map(dept => (
@@ -397,7 +397,7 @@ const EmployeeManagement = () => {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
           >
             <option value="all">All Statuses</option>
             {statuses.map(status => (
@@ -446,7 +446,7 @@ const EmployeeManagement = () => {
                             alt={`${employee.firstName} ${employee.lastName}`}
                           />
                         ) : (
-                          <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+                          <div className="h-10 w-10 rounded-full bg-green-600 flex items-center justify-center text-white font-semibold">
                             {employee.firstName.charAt(0)}{employee.lastName.charAt(0)}
                           </div>
                         )}
@@ -479,7 +479,7 @@ const EmployeeManagement = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => handleViewEmployee(employee)}
-                      className="text-blue-600 hover:text-blue-900 dark:hover:text-blue-400 mr-3"
+                      className="text-green-600 hover:text-green-900 dark:hover:text-green-400 mr-3"
                     >
                       View
                     </button>
@@ -491,7 +491,7 @@ const EmployeeManagement = () => {
                     </button>
                     <button
                       onClick={() => handleDelete(employee.id)}
-                      className="text-red-600 hover:text-red-900 dark:hover:text-red-400"
+                      className="text-amber-600 hover:text-amber-900 dark:hover:text-amber-400"
                     >
                       <TrashIcon className="h-5 w-5 inline" />
                     </button>
@@ -547,7 +547,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.employeeId}
                           onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                           placeholder="EMP-001"
                         />
                       </div>
@@ -560,7 +560,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                       <div>
@@ -572,7 +572,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.firstName}
                           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                       <div>
@@ -584,7 +584,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.lastName}
                           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                       <div>
@@ -595,7 +595,7 @@ const EmployeeManagement = () => {
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                       <div>
@@ -606,7 +606,7 @@ const EmployeeManagement = () => {
                           type="date"
                           value={formData.dateOfBirth}
                           onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                     </div>
@@ -625,7 +625,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.position}
                           onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                       <div>
@@ -635,7 +635,7 @@ const EmployeeManagement = () => {
                         <select
                           value={formData.department}
                           onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         >
                           <option value="">Select Department</option>
                           {departments.map(dept => (
@@ -651,7 +651,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.employmentType}
                           onChange={(e) => setFormData({ ...formData, employmentType: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         >
                           {employmentTypes.map(type => (
                             <option key={type} value={type}>{type}</option>
@@ -667,7 +667,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.joinDate}
                           onChange={(e) => setFormData({ ...formData, joinDate: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                       <div>
@@ -678,7 +678,7 @@ const EmployeeManagement = () => {
                           required
                           value={formData.status}
                           onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         >
                           {statuses.map(status => (
                             <option key={status} value={status}>{status}</option>
@@ -693,7 +693,7 @@ const EmployeeManagement = () => {
                           type="file"
                           accept="image/*"
                           onChange={(e) => handleFileChange(e, 'photo')}
-                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                         />
                       </div>
                     </div>
@@ -711,7 +711,7 @@ const EmployeeManagement = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? 'Saving...' : isEditing ? 'Update Employee' : 'Add Employee'}
                     </button>
@@ -753,7 +753,7 @@ const EmployeeManagement = () => {
                         className="h-24 w-24 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="h-24 w-24 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-semibold">
+                      <div className="h-24 w-24 rounded-full bg-green-600 flex items-center justify-center text-white text-2xl font-semibold">
                         {currentEmployee.firstName.charAt(0)}{currentEmployee.lastName.charAt(0)}
                       </div>
                     )}
@@ -804,7 +804,7 @@ const EmployeeManagement = () => {
                         {currentEmployee.skills.map((skill, index) => (
                           <span
                             key={index}
-                            className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
+                            className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm"
                           >
                             {skill}
                           </span>
@@ -827,7 +827,7 @@ const EmployeeManagement = () => {
                       setShowViewModal(false);
                       handleOpenModal(currentEmployee);
                     }}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
                   >
                     Edit Employee
                   </button>

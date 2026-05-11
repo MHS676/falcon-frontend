@@ -117,7 +117,7 @@ const ContactManagement = () => {
       case 'new':
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
       case 'in-progress':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
       case 'responded':
         return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
       default:
@@ -146,7 +146,7 @@ const ContactManagement = () => {
   if (loading && contacts.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -166,7 +166,7 @@ const ContactManagement = () => {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
           >
             <option value="all">All</option>
             <option value="new">New</option>
@@ -234,7 +234,7 @@ const ContactManagement = () => {
               <div className="flex flex-col space-y-2 ml-4">
                 <button
                   onClick={() => openViewModal(contact)}
-                  className="px-3 py-1 text-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                  className="px-3 py-1 text-sm bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded hover:bg-green-200 dark:hover:bg-green-800 transition-colors"
                 >
                   View Full
                 </button>
@@ -243,7 +243,7 @@ const ContactManagement = () => {
                   {contact.status === 'new' && (
                     <button
                       onClick={() => handleStatusUpdate(contact.id, 'in-progress')}
-                      className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                      className="px-2 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
                     >
                       Start Review
                     </button>
@@ -263,7 +263,7 @@ const ContactManagement = () => {
                       setSelectedContact(contact);
                       setIsDeleteModalOpen(true);
                     }}
-                    className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                    className="px-2 py-1 text-xs bg-amber-500 text-white rounded hover:bg-amber-600 transition-colors"
                   >
                     Delete
                   </button>
@@ -325,7 +325,7 @@ const ContactManagement = () => {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
                     <a
                       href={`mailto:${selectedContact.email}`}
-                      className="text-blue-600 dark:text-blue-400 hover:underline"
+                      className="text-green-600 dark:text-green-400 hover:underline"
                     >
                       {selectedContact.email}
                     </a>
@@ -335,7 +335,7 @@ const ContactManagement = () => {
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
                       <a
                         href={`tel:${selectedContact.phone}`}
-                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                        className="text-green-600 dark:text-green-400 hover:underline"
                       >
                         {selectedContact.phone}
                       </a>
@@ -358,7 +358,7 @@ const ContactManagement = () => {
                 <div className="flex space-x-3 pt-4">
                   <a
                     href={`mailto:${selectedContact.email}?subject=Re: ${selectedContact.subject}&body=Hi ${selectedContact.name},%0A%0A`}
-                    className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-center"
+                    className="flex-1 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors text-center"
                   >
                     Reply via Email
                   </a>
@@ -401,7 +401,7 @@ const ContactManagement = () => {
                 <button
                   onClick={handleDelete}
                   disabled={loading}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors disabled:opacity-50"
                 >
                   {loading ? 'Deleting...' : 'Delete'}
                 </button>

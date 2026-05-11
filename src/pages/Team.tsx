@@ -85,22 +85,22 @@ const Team = () => {
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'leadership':
-        return 'from-red-500 to-red-700';
+        return 'from-amber-500 to-amber-700';
       case 'management':
-        return 'from-blue-500 to-blue-700';
+        return 'from-green-500 to-green-700';
       case 'advisory':
         return 'from-green-500 to-green-700';
       default:
-        return 'from-red-500 to-blue-600';
+        return 'from-amber-500 to-green-600';
     }
   };
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
       case 'leadership':
-        return 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300';
+        return 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300';
       case 'management':
-        return 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300';
+        return 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300';
       case 'advisory':
         return 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300';
       default:
@@ -129,7 +129,7 @@ const Team = () => {
         <Breadcrumb />
 
         {/* Hero */}
-        <section className="bg-gradient-to-br from-red-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20">
+        <section className="bg-gradient-to-br from-amber-50 to-green-50 dark:from-gray-900 dark:to-gray-800 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -30 }}
@@ -138,7 +138,7 @@ const Team = () => {
               className="text-center mb-8"
             >
               <div className="flex items-center justify-center mb-4">
-                <UserGroupIcon className="w-12 h-12 text-red-600" />
+                <UserGroupIcon className="w-12 h-12 text-amber-600" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
                 Our Team
@@ -164,7 +164,7 @@ const Team = () => {
                 placeholder="Search by name or title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
               />
             </motion.div>
 
@@ -181,8 +181,8 @@ const Team = () => {
                   onClick={() => setActiveFilter(filter.key)}
                   className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeFilter === filter.key
-                      ? 'bg-red-600 text-white shadow-lg'
-                      : 'bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
+                      ? 'bg-amber-600 text-white shadow-lg'
+                      : 'bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
                   }`}
                 >
                   {filter.label}
@@ -234,7 +234,7 @@ const Team = () => {
                         </h3>
 
                         {/* Title */}
-                        <p className="text-red-600 dark:text-red-400 font-semibold text-sm mb-2">
+                        <p className="text-amber-600 dark:text-amber-400 font-semibold text-sm mb-2">
                           {member.title}
                         </p>
 
@@ -259,7 +259,7 @@ const Team = () => {
         </section>
 
         {/* Bottom Info */}
-        <section className="bg-gradient-to-r from-red-600 to-blue-600 py-12 text-white">
+        <section className="bg-gradient-to-r from-amber-600 to-green-600 py-12 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -270,7 +270,7 @@ const Team = () => {
               <h2 className="text-2xl sm:text-3xl font-bold mb-4">
                 Managed by Professionals Since 1993
               </h2>
-              <p className="text-red-100 max-w-2xl mx-auto">
+              <p className="text-amber-100 max-w-2xl mx-auto">
                 Retired officers from the Bangladesh Army having adequate training on security 
                 and related matters, both from home and abroad, manage the services of the company.
               </p>

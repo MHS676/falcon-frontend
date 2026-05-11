@@ -125,7 +125,7 @@ const Blog = ({ maxItems, showExcerpt = true, layout = 'grid' }: BlogProps) => {
                 <span>{calculateReadTime(post.content)} min read</span>
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-2">
                 {post.title}
               </h3>
               
@@ -140,7 +140,7 @@ const Blog = ({ maxItems, showExcerpt = true, layout = 'grid' }: BlogProps) => {
                   {post.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded"
+                      className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded"
                     >
                       {tag}
                     </span>

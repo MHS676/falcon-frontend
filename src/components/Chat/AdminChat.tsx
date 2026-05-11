@@ -189,7 +189,7 @@ const AdminChat: React.FC = () => {
               onClick={() => selectSession(session)}
               className={`p-4 cursor-pointer transition-colors ${
                 selectedSession?.id === session.id
-                  ? 'bg-blue-50 border-r-4 border-blue-500'
+                  ? 'bg-green-50 border-r-4 border-green-500'
                   : 'hover:bg-gray-50'
               }`}
               whileHover={{ x: 4 }}
@@ -204,7 +204,7 @@ const AdminChat: React.FC = () => {
                   )}
                 </div>
                 {session._count.messages > 0 && (
-                  <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
+                  <span className="bg-amber-500 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">
                     {session._count.messages}
                   </span>
                 )}
@@ -259,13 +259,13 @@ const AdminChat: React.FC = () => {
                   <div
                     className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                       message.senderType === 'admin'
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-green-600 text-white'
                         : 'bg-gray-200 text-gray-800'
                     }`}
                   >
                     <div className="mb-1">{message.content}</div>
                     <div className={`text-xs ${
-                      message.senderType === 'admin' ? 'text-blue-100' : 'text-gray-500'
+                      message.senderType === 'admin' ? 'text-green-100' : 'text-gray-500'
                     }`}>
                       {message.senderName} • {formatTime(message.createdAt)}
                     </div>
@@ -284,12 +284,12 @@ const AdminChat: React.FC = () => {
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Type your reply..."
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
                 />
                 <button
                   onClick={sendReply}
                   disabled={!newMessage.trim()}
-                  className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
                 </button>

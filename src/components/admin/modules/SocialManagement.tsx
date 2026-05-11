@@ -115,7 +115,7 @@ const SocialManagement = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -132,7 +132,7 @@ const SocialManagement = () => {
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
         >
           <PlusIcon className="h-5 w-5" />
           Add Social Link
@@ -198,7 +198,7 @@ const SocialManagement = () => {
                   id="active"
                   checked={formData.active || false}
                   onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="active" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                   Active
@@ -208,7 +208,7 @@ const SocialManagement = () => {
               <div className="flex gap-2 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors"
                 >
                   {editingId ? 'Update' : 'Create'}
                 </button>
@@ -247,7 +247,7 @@ const SocialManagement = () => {
                   <h3 className="font-medium text-gray-900 dark:text-white">{link.platform}</h3>
                   <div className="flex items-center gap-2">
                     <span className={`inline-block w-2 h-2 rounded-full ${
-                      link.active ? 'bg-green-400' : 'bg-red-400'
+                      link.active ? 'bg-green-400' : 'bg-amber-400'
                     }`}></span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
                       {link.active ? 'Active' : 'Inactive'}
@@ -258,13 +258,13 @@ const SocialManagement = () => {
               <div className="flex gap-1">
                 <button
                   onClick={() => handleEdit(link)}
-                  className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-green-600 transition-colors"
                 >
                   <PencilIcon className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(link.id)}
-                  className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-amber-600 transition-colors"
                 >
                   <TrashIcon className="h-4 w-4" />
                 </button>
@@ -276,7 +276,7 @@ const SocialManagement = () => {
                 href={link.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 break-all"
+                className="text-sm text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 break-all"
               >
                 {link.url}
               </a>
@@ -299,7 +299,7 @@ const SocialManagement = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-4">Get started by creating your first social media link.</p>
           <button
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             Add Social Link
           </button>

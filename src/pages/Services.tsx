@@ -109,7 +109,7 @@ const Services = () => {
         <Breadcrumb />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-red-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20">
+        <section className="bg-gradient-to-br from-amber-50 to-green-50 dark:from-gray-900 dark:to-gray-800 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
@@ -136,11 +136,11 @@ const Services = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <div className="flex items-center gap-2 bg-white dark:bg-gray-700 px-4 py-2 rounded-full shadow-lg">
-                <ClockIcon className="w-5 h-5 text-red-600" />
+                <ClockIcon className="w-5 h-5 text-amber-600" />
                 <span className="text-sm font-semibold dark:text-white">24/7 Available</span>
               </div>
               <div className="flex items-center gap-2 bg-white dark:bg-gray-700 px-4 py-2 rounded-full shadow-lg">
-                <ShieldCheckIcon className="w-5 h-5 text-blue-600" />
+                <ShieldCheckIcon className="w-5 h-5 text-green-600" />
                 <span className="text-sm font-semibold dark:text-white">ISO Certified</span>
               </div>
               <div className="flex items-center gap-2 bg-white dark:bg-gray-700 px-4 py-2 rounded-full shadow-lg">
@@ -176,7 +176,7 @@ const Services = () => {
                     >
                       <div className="p-8">
                         {/* Icon */}
-                        <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-blue-600 rounded-xl mb-6">
+                        <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-500 to-green-600 rounded-xl mb-6">
                           <IconComponent className="w-8 h-8 text-white" />
                         </div>
 
@@ -218,7 +218,7 @@ const Services = () => {
                         {/* Expand/Collapse button */}
                         <button 
                           onClick={() => toggleExpand(service.id)}
-                          className="w-full flex items-center justify-center gap-2 px-4 py-2 border-2 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-lg font-semibold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2 border-2 border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 rounded-lg font-semibold hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors"
                         >
                           {isExpanded ? 'Show Less' : 'Learn More'}
                           {isExpanded ? <ChevronUpIcon className="w-4 h-4" /> : <ChevronDownIcon className="w-4 h-4" />}
@@ -293,7 +293,7 @@ const Services = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-gradient-to-r from-red-600 to-blue-600 py-16 text-white">
+        <section className="bg-gradient-to-r from-amber-600 to-green-600 py-16 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ y: 30, opacity: 0 }}
@@ -304,7 +304,7 @@ const Services = () => {
               <h2 className="text-3xl sm:text-4xl font-bold mb-6">
                 If Security is Your Priority, Falcon® is Just a Call Away
               </h2>
-              <p className="text-xl mb-8 text-red-100 max-w-2xl mx-auto">
+              <p className="text-xl mb-8 text-amber-100 max-w-2xl mx-auto">
                 Your security is our priority. Contact us today for a consultation 
                 and let our team of experts design the perfect security solution for you.
               </p>
@@ -313,14 +313,14 @@ const Services = () => {
                   href="tel:+8801618325266"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-white text-red-600 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+                  className="px-8 py-4 bg-white text-amber-600 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
                 >
                   Call: +880 1618 325266
                 </motion.a>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link
                     to="/contact"
-                    className="inline-block px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all duration-300"
+                    className="inline-block px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-amber-600 transition-all duration-300"
                   >
                     Contact Us
                   </Link>

@@ -115,7 +115,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
               <div className="md:w-2/3 p-6">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
-                  <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                  <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                     {getProjectDate(project.createdAt)}
                   </span>
                 </div>
@@ -137,7 +137,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={() => openProjectModal(project)}
-                    className="flex items-center space-x-1 text-blue-500 hover:text-blue-600 transition-colors"
+                    className="flex items-center space-x-1 text-green-500 hover:text-green-600 transition-colors"
                   >
                     <EyeIcon className="w-4 h-4" />
                     <span>View Details</span>
@@ -191,7 +191,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
                 className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute top-3 left-3">
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                   {getProjectDate(project.createdAt)}
                 </span>
               </div>
@@ -214,7 +214,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
                   >
                     Live Demo
                   </a>
@@ -271,7 +271,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedProject.title}</h3>
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                     {getProjectDate(selectedProject.createdAt)}
                   </span>
                 </div>
@@ -281,7 +281,7 @@ const Projects = ({ showFeaturedOnly = false, maxItems, layout = 'grid' }: Proje
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Technologies Used</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.technologies.map((tech) => (
-                      <span key={tech} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">
+                      <span key={tech} className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">
                         {tech}
                       </span>
                     ))}

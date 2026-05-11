@@ -62,7 +62,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-red-900 to-blue-900 py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-amber-900 to-green-900 py-12 px-4 sm:px-6 lg:px-8 relative">
       {/* Background Pattern */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{
@@ -110,7 +110,7 @@ const AdminLogin = () => {
                 required
                 value={credentials.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-slate-300 focus:ring-2 focus:ring-red-500 focus:border-transparent backdrop-blur-sm transition-all duration-300"
+                className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent backdrop-blur-sm transition-all duration-300"
                 placeholder="Enter your email"
               />
             </div>
@@ -128,7 +128,7 @@ const AdminLogin = () => {
                   required
                   value={credentials.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-slate-300 focus:ring-2 focus:ring-red-500 focus:border-transparent backdrop-blur-sm transition-all duration-300 pr-12"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent backdrop-blur-sm transition-all duration-300 pr-12"
                   placeholder="Enter your password"
                 />
                 <button
@@ -146,10 +146,10 @@ const AdminLogin = () => {
             </div>
 
             {/* Demo Credentials Info */}
-            {/* <div className="bg-blue-500/20 border border-blue-400/30 rounded-lg p-4">
-              <h4 className="text-sm font-semibold text-blue-200 mb-2">Demo Credentials:</h4>
-              <p className="text-xs text-blue-300">Username: admin</p>
-              <p className="text-xs text-blue-300">Password: Falcon Security Limited123</p>
+            {/* <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-4">
+              <h4 className="text-sm font-semibold text-green-200 mb-2">Demo Credentials:</h4>
+              <p className="text-xs text-green-300">Username: admin</p>
+              <p className="text-xs text-green-300">Password: Falcon Security Limited123</p>
             </div> */}
 
             {/* Login Button */}
@@ -158,7 +158,7 @@ const AdminLogin = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-lg font-semibold hover:from-red-700 hover:to-blue-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-amber-600 to-green-600 text-white rounded-lg font-semibold hover:from-amber-700 hover:to-green-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <div className="flex items-center justify-center">
@@ -175,7 +175,7 @@ const AdminLogin = () => {
               <button
                 type="button"
                 onClick={() => navigate('/admin/forgot-password')}
-                className="text-sm text-blue-300 hover:text-blue-200 transition-colors"
+                className="text-sm text-green-300 hover:text-green-200 transition-colors"
               >
                 Forgot your password?
               </button>

@@ -151,7 +151,7 @@ const AdminDashboard = () => {
       icon: PhotoIcon,
       total: stats?.banners.total || 0,
       active: stats?.banners.active || 0,
-      color: 'blue',
+      color: 'green',
       trend: '+5%'
     },
     {
@@ -183,7 +183,7 @@ const AdminDashboard = () => {
       icon: EnvelopeIcon,
       total: stats?.contacts.total || 0,
       active: stats?.contacts.unread || 0,
-      color: 'red',
+      color: 'amber',
       trend: '+3%'
     },
     {
@@ -214,16 +214,15 @@ const AdminDashboard = () => {
 
   const getColorClasses = (color: string) => {
     const colors = {
-      blue: 'from-blue-500 to-blue-600',
       green: 'from-green-500 to-green-600',
       purple: 'from-purple-500 to-purple-600',
       orange: 'from-orange-500 to-orange-600',
-      red: 'from-red-500 to-red-600',
+      amber: 'from-amber-500 to-amber-600',
       indigo: 'from-indigo-500 to-indigo-600',
       teal: 'from-teal-500 to-teal-600',
       pink: 'from-pink-500 to-pink-600'
     };
-    return colors[color as keyof typeof colors] || colors.blue;
+    return colors[color as keyof typeof colors] || colors.green;
   };
 
   const getActivityIcon = (type: string) => {
@@ -264,10 +263,10 @@ const AdminDashboard = () => {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white p-6 sm:p-10 rounded-2xl shadow-2xl relative overflow-hidden"
+        className="bg-gradient-to-br from-slate-900 via-green-900 to-indigo-900 text-white p-6 sm:p-10 rounded-2xl shadow-2xl relative overflow-hidden"
       >
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
         </div>
         <div className="relative z-10">
@@ -283,7 +282,7 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-blue-100 text-base sm:text-lg"
+            className="text-green-100 text-base sm:text-lg"
           >
             Here's what's happening with your Falcon Security portfolio today.
           </motion.p>
@@ -327,7 +326,7 @@ const AdminDashboard = () => {
                     <span className="text-sm text-gray-500 font-medium">
                       <span className="text-gray-900 font-bold">{card.active}</span> active
                     </span>
-                    <ShieldCheckIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                    <ShieldCheckIcon className="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors" />
                   </div>
                 </div>
               </div>
@@ -346,16 +345,16 @@ const AdminDashboard = () => {
           className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300"
         >
           <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            <div className="w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3"></div>
+            <div className="w-2 h-8 bg-gradient-to-b from-green-500 to-purple-600 rounded-full mr-3"></div>
             Quick Actions
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <motion.button 
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
-              className="flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl hover:from-blue-100 hover:to-blue-200/50 transition-all duration-300 shadow-sm hover:shadow-md border border-blue-200/50"
+              className="flex flex-col items-center space-y-3 p-5 bg-gradient-to-br from-green-50 to-green-100/50 rounded-xl hover:from-green-100 hover:to-green-200/50 transition-all duration-300 shadow-sm hover:shadow-md border border-green-200/50"
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
                 <BriefcaseIcon className="w-6 h-6 text-white" />
               </div>
               <div className="text-center">
@@ -427,17 +426,17 @@ const AdminDashboard = () => {
                   transition={{ delay: 0.6 + (idx * 0.1) }}
                   className="flex items-start space-x-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 group cursor-pointer"
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-colors flex-shrink-0">
-                    <Icon className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
+                  <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center group-hover:from-green-100 group-hover:to-green-200 transition-colors flex-shrink-0">
+                    <Icon className="w-5 h-5 text-gray-600 group-hover:text-green-600 transition-colors" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">{activity.title}</p>
+                    <p className="font-semibold text-gray-900 text-sm group-hover:text-green-600 transition-colors">{activity.title}</p>
                     <p className="text-xs text-gray-500 mt-1">{activity.timestamp}</p>
                   </div>
                   {activity.status && (
                     <span className={`px-2.5 py-1 text-xs font-bold rounded-full ${
                       activity.status === 'unread' || activity.status === 'new'
-                        ? 'bg-red-100 text-red-700'
+                        ? 'bg-amber-100 text-amber-700'
                         : 'bg-green-100 text-green-700'
                     }`}>
                       {activity.status}
@@ -455,7 +454,7 @@ const AdminDashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="bg-gradient-to-br from-white to-blue-50/30 p-8 rounded-2xl shadow-md border border-gray-100"
+        className="bg-gradient-to-br from-white to-green-50/30 p-8 rounded-2xl shadow-md border border-gray-100"
       >
         <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
           <div className="w-2 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full mr-3"></div>
@@ -463,7 +462,7 @@ const AdminDashboard = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center space-x-4 p-5 bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
               <ShieldCheckIcon className="w-6 h-6 text-white" />
             </div>
             <div>

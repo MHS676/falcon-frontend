@@ -84,7 +84,7 @@ const Employees = () => {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center mb-4">
-            <UserGroupIcon className="w-12 h-12 text-red-600" />
+            <UserGroupIcon className="w-12 h-12 text-amber-600" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             Our Team
@@ -108,7 +108,7 @@ const Employees = () => {
               placeholder="Search by name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
             />
             {searchQuery && (
               <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-slate-500">
@@ -121,7 +121,7 @@ const Employees = () => {
         {/* Loading State */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
           </div>
         ) : filteredEmployees.length === 0 ? (
           <motion.div
@@ -156,10 +156,10 @@ const Employees = () => {
                         <img
                           src={`${import.meta.env.VITE_API_BASE_URL?.replace('/api', '')}/${employee.photo}`}
                           alt={`${employee.firstName} ${employee.lastName}`}
-                          className="w-16 h-16 rounded-full object-cover border-2 border-red-500"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-amber-500"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-500 to-blue-600 flex items-center justify-center text-white text-xl font-bold">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-green-600 flex items-center justify-center text-white text-xl font-bold">
                           {employee.firstName.charAt(0)}
                           {employee.lastName.charAt(0)}
                         </div>
@@ -186,7 +186,7 @@ const Employees = () => {
                   {/* Employee Details */}
                   <div className="space-y-3">
                     <div className="flex items-start space-x-3">
-                      <BriefcaseIcon className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <BriefcaseIcon className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                       <div className="flex-1">
                         <p className="text-sm font-medium text-slate-900 dark:text-white">
                           {employee.position}
@@ -200,10 +200,10 @@ const Employees = () => {
                     </div>
 
                     <div className="flex items-center space-x-3">
-                      <EnvelopeIcon className="w-5 h-5 text-red-600 flex-shrink-0" />
+                      <EnvelopeIcon className="w-5 h-5 text-amber-600 flex-shrink-0" />
                       <a
                         href={`mailto:${employee.email}`}
-                        className="text-sm text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-500 transition-colors truncate"
+                        className="text-sm text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-500 transition-colors truncate"
                       >
                         {employee.email}
                       </a>
@@ -211,10 +211,10 @@ const Employees = () => {
 
                     {employee.phone && (
                       <div className="flex items-center space-x-3">
-                        <PhoneIcon className="w-5 h-5 text-red-600 flex-shrink-0" />
+                        <PhoneIcon className="w-5 h-5 text-amber-600 flex-shrink-0" />
                         <a
                           href={`tel:${employee.phone}`}
-                          className="text-sm text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                          className="text-sm text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"
                         >
                           {employee.phone}
                         </a>
@@ -222,7 +222,7 @@ const Employees = () => {
                     )}
 
                     <div className="flex items-center space-x-3">
-                      <MapPinIcon className="w-5 h-5 text-red-600 flex-shrink-0" />
+                      <MapPinIcon className="w-5 h-5 text-amber-600 flex-shrink-0" />
                       <p className="text-sm text-slate-600 dark:text-slate-300">
                         {employee.city ? `${employee.city}, ` : ''}{employee.country}
                       </p>
@@ -257,7 +257,7 @@ const Employees = () => {
             className="mt-12 text-center"
           >
             <div className="inline-flex items-center space-x-2 px-6 py-3 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-slate-700">
-              <UserGroupIcon className="w-5 h-5 text-red-600" />
+              <UserGroupIcon className="w-5 h-5 text-amber-600" />
               <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 Showing {filteredEmployees.length} of {employees.length} team member{employees.length !== 1 ? 's' : ''}
               </span>

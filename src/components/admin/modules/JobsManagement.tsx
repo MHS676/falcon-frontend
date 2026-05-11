@@ -225,7 +225,7 @@ const JobsManagement = () => {
   if (loading && jobs.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -240,7 +240,7 @@ const JobsManagement = () => {
         </div>
         <button
           onClick={() => openModal()}
-          className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
         >
           <PlusIcon className="w-5 h-5" />
           <span>Post Job</span>
@@ -266,7 +266,7 @@ const JobsManagement = () => {
                   
                   <div className="flex items-center space-x-2">
                     {job.urgent && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
                         <ExclamationTriangleIcon className="w-3 h-3 mr-1" />
                         Urgent
                       </span>
@@ -313,7 +313,7 @@ const JobsManagement = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded text-xs">
+                  <span className="px-2 py-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded text-xs">
                     {formatExperienceLevel(job.experienceLevel)}
                   </span>
                   {job.skills.slice(0, 3).map((skill) => (
@@ -353,7 +353,7 @@ const JobsManagement = () => {
               <div className="flex items-center space-x-2 ml-4">
                 <button
                   onClick={() => openModal(job)}
-                  className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded"
+                  className="p-2 text-green-500 hover:bg-green-50 dark:hover:bg-green-900/20 rounded"
                   title="Edit"
                 >
                   <PencilIcon className="w-4 h-4" />
@@ -373,7 +373,7 @@ const JobsManagement = () => {
                     setSelectedJob(job);
                     setIsDeleteModalOpen(true);
                   }}
-                  className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
+                  className="p-2 text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded"
                   title="Delete"
                 >
                   <TrashIcon className="w-4 h-4" />
@@ -391,7 +391,7 @@ const JobsManagement = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-4">Start by posting your first job opening</p>
           <button
             onClick={() => openModal()}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
           >
             Post First Job
           </button>
@@ -428,7 +428,7 @@ const JobsManagement = () => {
                       value={formData.title}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -440,7 +440,7 @@ const JobsManagement = () => {
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -454,7 +454,7 @@ const JobsManagement = () => {
                     name="shortDesc"
                     value={formData.shortDesc}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -468,7 +468,7 @@ const JobsManagement = () => {
                     onChange={handleInputChange}
                     required
                     rows={6}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -482,7 +482,7 @@ const JobsManagement = () => {
                       name="location"
                       value={formData.location}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -493,7 +493,7 @@ const JobsManagement = () => {
                       name="jobType"
                       value={formData.jobType}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     >
                       <option value="full-time">Full Time</option>
                       <option value="part-time">Part Time</option>
@@ -509,7 +509,7 @@ const JobsManagement = () => {
                       name="experienceLevel"
                       value={formData.experienceLevel}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     >
                       <option value="entry-level">Entry Level</option>
                       <option value="mid-level">Mid Level</option>
@@ -529,7 +529,7 @@ const JobsManagement = () => {
                       value={formData.salary}
                       onChange={handleInputChange}
                       placeholder="e.g., $50,000 - $70,000"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -541,7 +541,7 @@ const JobsManagement = () => {
                       name="applicationDeadline"
                       value={formData.applicationDeadline}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -556,7 +556,7 @@ const JobsManagement = () => {
                     onChange={handleInputChange}
                     rows={4}
                     placeholder="Bachelor's degree in Computer Science&#10;3+ years of experience with React&#10;Strong communication skills"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -570,7 +570,7 @@ const JobsManagement = () => {
                     onChange={handleInputChange}
                     rows={4}
                     placeholder="Health insurance&#10;401(k) matching&#10;Flexible work hours"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -584,7 +584,7 @@ const JobsManagement = () => {
                     value={formData.skills}
                     onChange={handleInputChange}
                     placeholder="React, TypeScript, Node.js, MySQL"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
@@ -595,7 +595,7 @@ const JobsManagement = () => {
                       name="remote"
                       checked={formData.remote}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                     />
                     <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                       Remote work allowed
@@ -607,7 +607,7 @@ const JobsManagement = () => {
                       name="urgent"
                       checked={formData.urgent}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
                     />
                     <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                       Urgent hiring
@@ -638,7 +638,7 @@ const JobsManagement = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors disabled:opacity-50"
                   >
                     {loading ? 'Saving...' : selectedJob ? 'Update Job' : 'Post Job'}
                   </button>
@@ -669,7 +669,7 @@ const JobsManagement = () => {
                 <button
                   onClick={handleDelete}
                   disabled={loading}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors disabled:opacity-50"
                 >
                   {loading ? 'Deleting...' : 'Delete'}
                 </button>

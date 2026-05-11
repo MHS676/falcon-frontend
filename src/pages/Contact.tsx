@@ -113,7 +113,7 @@ const Contact = () => {
         <Breadcrumb />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-red-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20">
+      <section className="bg-gradient-to-br from-amber-50 to-green-50 dark:from-gray-900 dark:to-gray-800 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -136,11 +136,11 @@ const Contact = () => {
               transition={{ delay: 0.2 }}
               className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center"
             >
-              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <PhoneIcon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Call Us</h3>
-              <a href="tel:+8801618325266" className="text-red-600 font-bold text-xl hover:underline">
+              <a href="tel:+8801618325266" className="text-amber-600 font-bold text-xl hover:underline">
                 +880 1618 325266
               </a>
               <p className="text-slate-600 dark:text-gray-400 text-sm mt-1">Available 24/7</p>
@@ -152,11 +152,11 @@ const Contact = () => {
               transition={{ delay: 0.3 }}
               className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center"
             >
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <EnvelopeIcon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Email Us</h3>
-              <a href="mailto:info@falconslimited.com" className="text-blue-600 font-bold hover:underline">
+              <a href="mailto:info@falconslimited.com" className="text-green-600 font-bold hover:underline">
                 info@falconslimited.com
               </a>
               <p className="text-slate-500 dark:text-gray-400 text-sm mt-1">
@@ -197,7 +197,7 @@ const Contact = () => {
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start gap-4">
-                  <MapPinIcon className="w-6 h-6 text-red-600 mt-1" />
+                  <MapPinIcon className="w-6 h-6 text-amber-600 mt-1" />
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">Head Office</h3>
                     <p className="text-slate-600 dark:text-gray-300">
@@ -208,12 +208,12 @@ const Contact = () => {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <ClockIcon className="w-6 h-6 text-blue-600 mt-1" />
+                  <ClockIcon className="w-6 h-6 text-green-600 mt-1" />
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">Business Hours</h3>
                     <p className="text-slate-600 dark:text-gray-300">
                       Saturday - Thursday: 9:00 AM - 6:00 PM<br />
-                      <span className="text-red-600 font-semibold">Security Services: 24/7</span>
+                      <span className="text-amber-600 font-semibold">Security Services: 24/7</span>
                     </p>
                   </div>
                 </div>
@@ -234,11 +234,11 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">Why Choose Falcon®?</h3>
                 <ul className="space-y-2 text-slate-600 dark:text-gray-300">
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
                     <span>ISO 9001:2015, 18788:2015 & 27001:2013 Certified</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                     <span>Managed by retired Bangladesh Army officers</span>
                   </li>
                   <li className="flex items-center gap-2">
@@ -274,7 +274,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
+                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   
@@ -289,7 +289,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
+                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </div>
@@ -306,7 +306,7 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
+                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   
@@ -320,7 +320,7 @@ const Contact = () => {
                       value={formData.serviceType}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
+                      className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 dark:text-white"
                     >
                       <option value="">Select a service</option>
                       {serviceTypes.map((service, index) => (
@@ -342,14 +342,14 @@ const Contact = () => {
                     required
                     rows={4}
                     placeholder="Please describe your security needs, location, and any special requirements..."
-                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition resize-none bg-white dark:bg-gray-700 dark:text-white"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition resize-none bg-white dark:bg-gray-700 dark:text-white"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-8 px-6 py-4 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full mt-8 px-6 py-4 bg-gradient-to-r from-amber-600 to-green-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Sending...' : 'Send Message'}
                 </button>
@@ -392,11 +392,11 @@ const Contact = () => {
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{branch.name}</h3>
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
-                    <MapPinIcon className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                    <MapPinIcon className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-slate-600 dark:text-gray-300">{branch.address}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <PhoneIcon className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                    <PhoneIcon className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span className="text-sm text-slate-600 dark:text-gray-300">{branch.phone}</span>
                   </div>
                   {branch.email && (

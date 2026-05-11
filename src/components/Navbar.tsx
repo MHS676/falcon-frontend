@@ -57,7 +57,7 @@ const Navbar = () => {
               <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
                 <img src={logo} alt="Falcon Logo" className="w-full h-full object-contain" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-amber-600 to-green-600 bg-clip-text text-transparent">
                 Falcon Security Limited <span></span>
               </span>
             </Link>
@@ -72,15 +72,15 @@ const Navbar = () => {
                 className={clsx(
                   'relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
                   isActive(item.href)
-                    ? 'text-red-600'
-                    : 'text-slate-700 hover:text-red-600'
+                    ? 'text-amber-600'
+                    : 'text-slate-700 hover:text-amber-600'
                 )}
               >
                 {item.name}
                 {isActive(item.href) && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-red-100 rounded-full -z-10"
+                    className="absolute inset-0 bg-amber-100 rounded-full -z-10"
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
                 )}
@@ -91,7 +91,7 @@ const Navbar = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to="/company-profile"
-                className="ml-3 inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-300"
+                className="ml-3 inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-amber-600 to-green-600 text-white rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-300"
               >
                 <ArrowDownTrayIcon className="w-4 h-4" />
                 Download
@@ -162,7 +162,7 @@ const Navbar = () => {
                   className={clsx(
                     'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
                     isActive(item.href)
-                      ? 'bg-blue-100 text-blue-600'
+                      ? 'bg-green-100 text-green-600'
                       : 'text-slate-700 hover:bg-slate-100'
                   )}
                 >
@@ -172,7 +172,7 @@ const Navbar = () => {
               <Link
                 to="/company-profile"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 px-4 py-3 rounded-lg text-base font-semibold bg-gradient-to-r from-red-600 to-blue-600 text-white"
+                className="flex items-center gap-2 px-4 py-3 rounded-lg text-base font-semibold bg-gradient-to-r from-amber-600 to-green-600 text-white"
               >
                 <ArrowDownTrayIcon className="w-5 h-5" />
                 Download Profile

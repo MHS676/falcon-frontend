@@ -21,7 +21,7 @@ const Hero = () => {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-800/70 to-slate-900/80" />
         {/* Additional red accent overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-red-900/30 via-transparent to-blue-900/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-transparent to-green-900/30" />
       </div>
 
       {/* Animated background elements */}
@@ -36,7 +36,7 @@ const Hero = () => {
             repeat: Infinity,
             ease: "linear"
           }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-red-400/10 to-blue-600/10 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-amber-400/10 to-green-600/10 rounded-full blur-3xl"
         />
         <motion.div
           animate={{
@@ -48,7 +48,7 @@ const Hero = () => {
             repeat: Infinity,
             ease: "linear"
           }}
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-blue-400/10 to-red-600/10 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-green-400/10 to-amber-600/10 rounded-full blur-3xl"
         />
       </div>
 
@@ -65,10 +65,10 @@ const Hero = () => {
               <motion.div
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-blue-500 to-slate-700 p-2"
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 via-green-500 to-slate-700 p-2"
               />
               <div className="relative w-32 h-32 rounded-full bg-white p-4 flex items-center justify-center overflow-hidden">
-                <ShieldCheckIcon className="w-20 h-20 text-red-600" />
+                <ShieldCheckIcon className="w-20 h-20 text-amber-600" />
               </div>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
                 <span className="text-xs text-white">✓</span>
@@ -89,7 +89,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <span className="block text-white mb-2">Professional</span>
-              <span className="block bg-gradient-to-r from-red-400 via-blue-400 to-white bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-amber-400 via-green-400 to-white bg-clip-text text-transparent">
                 Security Services
               </span>
             </motion.h1>
@@ -125,11 +125,11 @@ const Hero = () => {
                 <span className="text-sm font-semibold">Licensed & Insured</span>
               </div>
               <div className="flex items-center gap-2 text-white">
-                <ClockIcon className="w-6 h-6 text-blue-400" />
+                <ClockIcon className="w-6 h-6 text-green-400" />
                 <span className="text-sm font-semibold">24/7 Available</span>
               </div>
               <div className="flex items-center gap-2 text-white">
-                <PhoneIcon className="w-6 h-6 text-red-400" />
+                <PhoneIcon className="w-6 h-6 text-amber-400" />
                 <span className="text-sm font-semibold">Emergency Response</span>
               </div>
             </motion.div>
@@ -143,17 +143,17 @@ const Hero = () => {
             >
               <Link
                 to="/services"
-                className="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-red-500/25 transition-all duration-300"
+                className="group relative px-8 py-4 bg-gradient-to-r from-amber-600 to-green-600 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-amber-500/25 transition-all duration-300"
               >
                 <span className="relative z-10">Our Services</span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-red-700 to-blue-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-gradient-to-r from-amber-700 to-green-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
               </Link>
 
               <Link
                 to="/contact"
-                className="group px-8 py-4 border-2 border-white/30 text-white rounded-full font-semibold hover:border-red-400 hover:bg-white/10 transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
+                className="group px-8 py-4 border-2 border-white/30 text-white rounded-full font-semibold hover:border-amber-400 hover:bg-white/10 transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
               >
                 Emergency: (555) 911-HELP
                 <motion.span
@@ -182,7 +182,7 @@ const Hero = () => {
                 <motion.div
                   key={feature.name}
                   whileHover={{ scale: 1.1, y: -5 }}
-                  className="text-center p-4 bg-white rounded-lg shadow-lg border border-slate-200 hover:border-red-300 transition-all duration-300"
+                  className="text-center p-4 bg-white rounded-lg shadow-lg border border-slate-200 hover:border-amber-300 transition-all duration-300"
                 >
                   <div className="text-2xl mb-2">{feature.icon}</div>
                   <div className="text-sm font-semibold text-slate-800">{feature.name}</div>

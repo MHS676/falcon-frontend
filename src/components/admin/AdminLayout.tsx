@@ -113,14 +113,14 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
   ];
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 overflow-hidden">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-green-50/30 to-indigo-50/20 overflow-hidden">
       {/* Mobile Menu Button */}
       <button
         onClick={() => {
           setSidebarOpen(!sidebarOpen);
           setMobileMenuOpen(!mobileMenuOpen);
         }}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gradient-to-br from-slate-900 to-blue-900 text-white rounded-lg shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gradient-to-br from-slate-900 to-green-900 text-white rounded-lg shadow-lg"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -145,11 +145,11 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
           width: sidebarOpen ? 280 : 80,
           x: sidebarOpen || window.innerWidth >= 1024 ? 0 : -280
         }}
-        className="bg-gradient-to-b from-slate-900 via-blue-900 to-indigo-950 shadow-2xl flex flex-col relative overflow-hidden z-40 lg:relative fixed inset-y-0 left-0"
+        className="bg-gradient-to-b from-slate-900 via-green-900 to-indigo-950 shadow-2xl flex flex-col relative overflow-hidden z-40 lg:relative fixed inset-y-0 left-0"
       >
         {/* Decorative background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-0 left-0 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
           <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
         </div>
         
@@ -170,7 +170,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
                 transition={{ delay: 0.1 }}
               >
                 <h1 className="text-xl font-bold text-white tracking-tight drop-shadow-md">Falcon Security</h1>
-                <p className="text-sm text-blue-200 font-medium">Admin Control Panel</p>
+                <p className="text-sm text-green-200 font-medium">Admin Control Panel</p>
               </motion.div>
             )}
           </div>
@@ -187,7 +187,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
                 onClick={() => onModuleChange(module.id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${
                   isActive
-                    ? 'bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/50 ring-2 ring-white/20'
+                    ? 'bg-gradient-to-r from-green-500 via-green-600 to-indigo-600 text-white shadow-lg shadow-green-500/50 ring-2 ring-white/20'
                     : 'text-gray-300 hover:bg-white/10 hover:text-white hover:shadow-md'
                 }`}
                 whileHover={{ scale: 1.02, x: 4 }}
@@ -198,7 +198,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
               >
                 {isActive && (
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 opacity-20"
+                    className="absolute inset-0 bg-gradient-to-r from-green-400 to-purple-500 opacity-20"
                     layoutId="activeTab"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
@@ -266,7 +266,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
           <div className="flex items-center justify-between">
             <div className="flex-1 min-w-0">
               <motion.h2 
-                className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent capitalize truncate"
+                className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-900 via-green-900 to-indigo-900 bg-clip-text text-transparent capitalize truncate"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
@@ -296,7 +296,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
                 <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 {contactUnreadCount > 0 && (
                   <motion.span 
-                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
+                    className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
                   >
@@ -312,14 +312,14 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
                   onModuleChange('messaging');
                   setMessageUnreadCount(0);
                 }}
-                className="relative px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg sm:rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-blue-500/30 font-medium text-sm"
+                className="relative px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-green-500 to-purple-600 text-white rounded-lg sm:rounded-xl hover:from-green-600 hover:to-purple-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-green-500/30 font-medium text-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <ChatBubbleLeftRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 {messageUnreadCount > 0 && (
                   <motion.span 
-                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
+                    className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] flex items-center justify-center shadow-lg"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
                   >
@@ -339,7 +339,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
               </motion.button>
               <motion.button 
                 onClick={handleLogout}
-                className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-lg sm:rounded-xl hover:from-red-600 hover:to-rose-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-red-500/30 font-medium text-sm"
+                className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-amber-500 to-rose-600 text-white rounded-lg sm:rounded-xl hover:from-amber-600 hover:to-rose-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 shadow-lg shadow-amber-500/30 font-medium text-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >

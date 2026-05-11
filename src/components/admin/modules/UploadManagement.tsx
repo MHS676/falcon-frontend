@@ -90,7 +90,7 @@ const UploadManagement = () => {
 
   const getFileIcon = (type: string) => {
     if (type.startsWith('image/')) {
-      return <PhotoIcon className="h-8 w-8 text-blue-500" />;
+      return <PhotoIcon className="h-8 w-8 text-green-500" />;
     }
     return <DocumentIcon className="h-8 w-8 text-gray-500" />;
   };
@@ -116,7 +116,7 @@ const UploadManagement = () => {
         <div
           className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
             dragActive 
-              ? 'border-blue-400 bg-blue-50 dark:bg-blue-900/20' 
+              ? 'border-green-400 bg-green-50 dark:bg-green-900/20' 
               : 'border-gray-300 dark:border-gray-600'
           }`}
           onDragEnter={handleDrag}
@@ -136,7 +136,7 @@ const UploadManagement = () => {
           
           {uploading ? (
             <div className="space-y-2">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
               <p className="text-sm text-gray-600 dark:text-gray-400">Uploading files...</p>
             </div>
           ) : (
@@ -186,7 +186,7 @@ const UploadManagement = () => {
                   </div>
                   <button
                     onClick={() => deleteFile(file.id)}
-                    className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                    className="p-1 text-gray-400 hover:text-amber-600 transition-colors"
                   >
                     <TrashIcon className="h-4 w-4" />
                   </button>
@@ -216,7 +216,7 @@ const UploadManagement = () => {
                     href={file.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs py-2 px-3 rounded transition-colors"
+                    className="flex-1 text-center bg-green-600 hover:bg-green-700 text-white text-xs py-2 px-3 rounded transition-colors"
                   >
                     View
                   </a>
@@ -241,12 +241,12 @@ const UploadManagement = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6"
+        className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6"
       >
-        <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+        <h3 className="text-lg font-semibold text-green-900 dark:text-green-100 mb-3">
           Upload Tips
         </h3>
-        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+        <ul className="text-sm text-green-800 dark:text-green-200 space-y-1">
           <li>• Drag and drop multiple files at once for batch uploads</li>
           <li>• Supported formats: Images (JPG, PNG, GIF), Documents (PDF, DOC, TXT), and more</li>
           <li>• Files are automatically organized and optimized for web delivery</li>

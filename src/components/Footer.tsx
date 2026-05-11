@@ -26,32 +26,32 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-red-500 transition-colors">
+                <Link to="/" className="text-gray-400 hover:text-amber-500 transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-red-500 transition-colors">
+                <Link to="/about" className="text-gray-400 hover:text-amber-500 transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-400 hover:text-red-500 transition-colors">
+                <Link to="/services" className="text-gray-400 hover:text-amber-500 transition-colors">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/projects" className="text-gray-400 hover:text-red-500 transition-colors">
+                <Link to="/projects" className="text-gray-400 hover:text-amber-500 transition-colors">
                   Projects
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="text-gray-400 hover:text-red-500 transition-colors">
+                <Link to="/careers" className="text-gray-400 hover:text-amber-500 transition-colors">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-red-500 transition-colors">
+                <Link to="/contact" className="text-gray-400 hover:text-amber-500 transition-colors">
                   Contact
                 </Link>
               </li>
@@ -63,21 +63,21 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
-                <FaMapMarkerAlt className="text-red-500 mt-1 flex-shrink-0" />
+                <FaMapMarkerAlt className="text-amber-500 mt-1 flex-shrink-0" />
                 <span className="text-gray-400 text-sm">
                   House # 155, Lane # 3, Eastern Road,<br />
                   New D.O.H.S. Mohakhali, Dhaka 1206
                 </span>
               </li>
               <li className="flex items-center gap-2">
-                <FaPhoneAlt className="text-red-500 flex-shrink-0" />
-                <a href="tel:+8801618325266" className="text-gray-400 hover:text-red-500 transition-colors text-sm">
+                <FaPhoneAlt className="text-amber-500 flex-shrink-0" />
+                <a href="tel:+8801618325266" className="text-gray-400 hover:text-amber-500 transition-colors text-sm">
                   +880 1618 325266
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <FaEnvelope className="text-red-500 flex-shrink-0" />
-                <a href="mailto:info@falconslimited.com" className="text-gray-400 hover:text-red-500 transition-colors text-sm">
+                <FaEnvelope className="text-amber-500 flex-shrink-0" />
+                <a href="mailto:info@falconslimited.com" className="text-gray-400 hover:text-amber-500 transition-colors text-sm">
                   info@falconslimited.com
                 </a>
               </li>
@@ -92,7 +92,7 @@ const Footer = () => {
                 href="https://www.facebook.com/falconslimited"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors text-2xl"
+                className="text-gray-400 hover:text-green-500 transition-colors text-2xl"
                 aria-label="Facebook"
               >
                 <FaFacebook />
@@ -101,14 +101,14 @@ const Footer = () => {
                 href="https://www.linkedin.com/company/falconslimited"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors text-2xl"
+                className="text-gray-400 hover:text-green-500 transition-colors text-2xl"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin />
               </a>
               <a
                 href="mailto:info@falconslimited.com"
-                className="text-gray-400 hover:text-red-500 transition-colors text-2xl"
+                className="text-gray-400 hover:text-amber-500 transition-colors text-2xl"
                 aria-label="Email"
               >
                 <FaEnvelope />

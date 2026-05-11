@@ -86,7 +86,7 @@ const Clients = ({
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -138,7 +138,7 @@ const Clients = ({
               />
             )}
             {!client.image && (
-              <div className="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+              <div className="h-12 w-12 rounded-full bg-green-600 flex items-center justify-center text-white font-semibold">
                 {client.name.charAt(0).toUpperCase()}
               </div>
             )}
@@ -149,7 +149,7 @@ const Clients = ({
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 {client.position}
               </p>
-              <p className="text-sm text-blue-600 dark:text-blue-400">
+              <p className="text-sm text-green-600 dark:text-green-400">
                 {client.company}
               </p>
             </div>
@@ -158,7 +158,7 @@ const Clients = ({
           {/* Project Type Badge */}
           {client.projectType && (
             <div className="mt-4">
-              <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+              <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                 {client.projectType}
               </span>
             </div>

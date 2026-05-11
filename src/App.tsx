@@ -27,14 +27,14 @@ function AppContent() {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
-    <div className={isAdminRoute ? "min-h-screen" : "min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"}>
+    <div className={isAdminRoute ? "min-h-screen" : "min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-green-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"}>
       {/* Scroll to top on route change */}
       <ScrollToTop />
       
       {/* Background decoration - only for non-admin routes */}
       {!isAdminRoute && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-32 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+          <div className="absolute -top-40 -right-32 w-80 h-80 bg-gradient-to-br from-green-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-gradient-to-tr from-pink-400/20 to-orange-600/20 rounded-full blur-3xl"></div>
         </div>
       )}

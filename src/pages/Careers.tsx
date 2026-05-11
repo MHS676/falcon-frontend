@@ -134,7 +134,7 @@ const Careers = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-16">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -142,7 +142,7 @@ const Careers = () => {
   return (
     <div className="min-h-screen pt-16 pb-12">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-purple-50 py-20">
+      <section className="bg-gradient-to-br from-green-50 to-purple-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
@@ -180,12 +180,12 @@ const Careers = () => {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: index * 0.1 }}
                   className={`relative bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-all duration-300 ${
-                    career.featured ? 'ring-2 ring-blue-500 ring-opacity-50' : ''
+                    career.featured ? 'ring-2 ring-green-500 ring-opacity-50' : ''
                   }`}
                 >
                   {career.featured && (
                     <div className="absolute -top-3 left-8">
-                      <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-gradient-to-r from-green-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
                         Featured
                       </span>
                     </div>
@@ -248,7 +248,7 @@ const Careers = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleApply(career)}
-                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+                        className="px-6 py-3 bg-gradient-to-r from-green-600 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300"
                       >
                         Apply Now
                       </motion.button>
@@ -315,7 +315,7 @@ const Careers = () => {
                         required
                         value={applicationData.fullName}
                         onChange={(e) => setApplicationData(prev => ({ ...prev, fullName: e.target.value }))}
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         placeholder="Your full name"
                       />
                     </div>
@@ -329,7 +329,7 @@ const Careers = () => {
                         required
                         value={applicationData.email}
                         onChange={(e) => setApplicationData(prev => ({ ...prev, email: e.target.value }))}
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -343,7 +343,7 @@ const Careers = () => {
                       type="tel"
                       value={applicationData.phone}
                       onChange={(e) => setApplicationData(prev => ({ ...prev, phone: e.target.value }))}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -356,7 +356,7 @@ const Careers = () => {
                       required
                       value={applicationData.category}
                       onChange={(e) => setApplicationData(prev => ({ ...prev, category: e.target.value }))}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
                     >
                       <option value="">Select a category</option>
                       <option value="Security Guard">Security Guard</option>
@@ -395,7 +395,7 @@ const Careers = () => {
                       />
                       <label
                         htmlFor="resume-upload"
-                        className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all"
+                        className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-all"
                       >
                         <div className="text-center">
                           <DocumentArrowUpIcon className="w-12 h-12 mx-auto text-slate-400 mb-2" />
@@ -426,7 +426,7 @@ const Careers = () => {
                       rows={6}
                       value={applicationData.coverLetter}
                       onChange={(e) => setApplicationData(prev => ({ ...prev, coverLetter: e.target.value }))}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                       placeholder="Tell us why you're interested in this position and what makes you a great fit..."
                     />
                   </div>
@@ -442,7 +442,7 @@ const Careers = () => {
                     <button
                       type="submit"
                       disabled={isApplying}
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isApplying ? 'Submitting...' : 'Submit Application'}
                     </button>

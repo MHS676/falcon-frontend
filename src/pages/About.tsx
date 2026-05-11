@@ -98,7 +98,7 @@ const About = () => {
         <Breadcrumb />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-red-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20">
+        <section className="bg-gradient-to-br from-amber-50 to-green-50 dark:from-gray-900 dark:to-gray-800 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -50 }}
@@ -125,7 +125,7 @@ const About = () => {
                   transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="text-3xl sm:text-4xl font-bold text-red-600 mb-2">
+                  <div className="text-3xl sm:text-4xl font-bold text-amber-600 mb-2">
                     {stat.number}
                   </div>
                   <div className="text-slate-600 dark:text-gray-300 font-medium">
@@ -175,10 +175,10 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-red-500 to-blue-600 rounded-2xl p-8 text-white"
+                className="bg-gradient-to-br from-amber-500 to-green-600 rounded-2xl p-8 text-white"
               >
                 <h3 className="text-2xl font-bold mb-4">Founder's Message</h3>
-                <p className="text-red-100 mb-6 leading-relaxed italic">
+                <p className="text-amber-100 mb-6 leading-relaxed italic">
                   "Everything we hold near and dear needs to be protected and cared for. But we need 
                   to find out someone worthy enough to ensure the security of the fruits of our hard 
                   work and indeed, our very lives and properties, can be difficult. That's where 
@@ -301,7 +301,7 @@ const About = () => {
                   viewport={{ once: true }}
                   className="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow"
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <value.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
@@ -359,7 +359,7 @@ const About = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <UserGroupIcon className="w-16 h-16 text-red-600 mx-auto mb-4" />
+              <UserGroupIcon className="w-16 h-16 text-amber-600 mx-auto mb-4" />
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Management Team</h2>
               <p className="text-slate-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
                 Our management team consists of veterans of the Bangladesh Armed Forces with 
@@ -367,7 +367,7 @@ const About = () => {
               </p>
               <Link
                 to="/team"
-                className="inline-block px-8 py-4 bg-gradient-to-r from-red-600 to-blue-600 text-white rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-amber-600 to-green-600 text-white rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300"
               >
                 Meet Our Team
               </Link>
@@ -404,12 +404,12 @@ const About = () => {
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{branch.name}</h3>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
-                      <MapPinIcon className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <MapPinIcon className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-slate-600 dark:text-gray-300">{branch.address}</span>
                     </div>
                     {branch.phone && (
                       <div className="flex items-center gap-2">
-                        <PhoneIcon className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <PhoneIcon className="w-5 h-5 text-green-600 flex-shrink-0" />
                         <span className="text-sm text-slate-600 dark:text-gray-300">{branch.phone}</span>
                       </div>
                     )}
@@ -427,7 +427,7 @@ const About = () => {
         </section>
 
         {/* CTA */}
-        <section className="bg-gradient-to-r from-red-600 to-blue-600 py-16 text-white">
+        <section className="bg-gradient-to-r from-amber-600 to-green-600 py-16 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ y: 30, opacity: 0 }}
@@ -438,13 +438,13 @@ const About = () => {
               <h2 className="text-3xl sm:text-4xl font-bold mb-6">
                 Your Security is Our Priority
               </h2>
-              <p className="text-xl mb-8 text-red-100 max-w-2xl mx-auto">
+              <p className="text-xl mb-8 text-amber-100 max-w-2xl mx-auto">
                 If security is in your priority list, Falcon® is just a call away.
               </p>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to="/contact"
-                  className="inline-block px-8 py-4 bg-white text-red-600 rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300"
+                  className="inline-block px-8 py-4 bg-white text-amber-600 rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300"
                 >
                   Contact Us Today
                 </Link>

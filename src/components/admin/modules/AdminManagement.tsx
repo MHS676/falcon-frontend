@@ -186,7 +186,7 @@ const AdminManagement = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -211,7 +211,7 @@ const AdminManagement = () => {
           </button>
           <button
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
           >
             <PlusIcon className="h-5 w-5" />
             Add Admin
@@ -221,9 +221,9 @@ const AdminManagement = () => {
 
       {/* Current User Info */}
       {currentUser && (
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
           <div className="flex items-center gap-3">
-            <UserCircleIcon className="h-10 w-10 text-blue-600 dark:text-blue-400" />
+            <UserCircleIcon className="h-10 w-10 text-green-600 dark:text-green-400" />
             <div>
               <p className="font-medium text-gray-900 dark:text-white">Logged in as: {currentUser.name}</p>
               <p className="text-sm text-gray-600 dark:text-gray-400">{currentUser.email} • {currentUser.role === 'superadmin' ? 'Super Admin' : 'Admin'}</p>
@@ -287,7 +287,7 @@ const AdminManagement = () => {
               <div className="flex gap-2 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors"
                 >
                   Change Password
                 </button>
@@ -378,7 +378,7 @@ const AdminManagement = () => {
                   id="isActive"
                   checked={formData.isActive}
                   onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                   Active Account
@@ -388,7 +388,7 @@ const AdminManagement = () => {
               <div className="flex gap-2 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-colors"
                 >
                   {editingId ? 'Update' : 'Create'}
                 </button>
@@ -416,7 +416,7 @@ const AdminManagement = () => {
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-indigo-600 rounded-full flex items-center justify-center">
                   <UserCircleIcon className="h-8 w-8 text-white" />
                 </div>
                 <div>
@@ -435,7 +435,7 @@ const AdminManagement = () => {
                         Active
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs px-2 py-1 rounded-full">
+                      <span className="inline-flex items-center gap-1 bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 text-xs px-2 py-1 rounded-full">
                         <XCircleIcon className="h-3 w-3" />
                         Inactive
                       </span>
@@ -446,14 +446,14 @@ const AdminManagement = () => {
               <div className="flex gap-1">
                 <button
                   onClick={() => handleEdit(admin)}
-                  className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-green-600 transition-colors"
                   title="Edit admin"
                 >
                   <PencilIcon className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(admin.id)}
-                  className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-amber-600 transition-colors"
                   title="Delete admin"
                 >
                   <TrashIcon className="h-4 w-4" />
@@ -476,7 +476,7 @@ const AdminManagement = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-4">Get started by adding your first admin.</p>
           <button
             onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             Add Admin
           </button>

@@ -138,8 +138,8 @@ const ChatWidget: React.FC = () => {
         onClick={toggleChat}
         className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-lg transition-all duration-300 ${
           isOpen 
-            ? 'bg-red-600 hover:bg-red-700' 
-            : 'bg-blue-600 hover:bg-blue-700'
+            ? 'bg-amber-600 hover:bg-amber-700' 
+            : 'bg-green-600 hover:bg-green-700'
         }`}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -162,7 +162,7 @@ const ChatWidget: React.FC = () => {
             className="fixed bottom-24 right-6 z-40 w-80 h-96 bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col"
           >
             {/* Header */}
-            <div className="bg-blue-600 text-white p-4 rounded-t-lg">
+            <div className="bg-green-600 text-white p-4 rounded-t-lg">
               <h3 className="font-semibold">Chat with Falcon Security</h3>
               <p className="text-xs opacity-90">We're here to help!</p>
             </div>
@@ -171,8 +171,8 @@ const ChatWidget: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 text-sm">
-                  <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
-                    <div className="text-blue-600 text-lg mb-2">🛡️ Falcon Security Limited</div>
+                  <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-indigo-50 rounded-lg border border-green-100">
+                    <div className="text-green-600 text-lg mb-2">🛡️ Falcon Security Limited</div>
                     <div className="text-gray-700 font-medium mb-2">Professional Security Solutions</div>
                     <div className="text-xs text-gray-600">
                       Our security experts are ready to help! Start a conversation below.
@@ -191,13 +191,13 @@ const ChatWidget: React.FC = () => {
                   <div
                     className={`max-w-xs px-4 py-3 rounded-2xl text-sm shadow-sm ${
                       message.senderType === 'guest'
-                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-br-md'
+                        ? 'bg-gradient-to-r from-green-600 to-green-700 text-white rounded-br-md'
                         : 'bg-white text-gray-800 border border-gray-200 rounded-bl-md'
                     }`}
                   >
                     <div className="mb-2">{message.content}</div>
                     <div className={`text-xs flex justify-between items-center ${
-                      message.senderType === 'guest' ? 'text-blue-100' : 'text-gray-500'
+                      message.senderType === 'guest' ? 'text-green-100' : 'text-gray-500'
                     }`}>
                       <span className="font-medium">
                         {message.senderType === 'admin' ? '🛡️ Support' : '👤 You'}
@@ -212,9 +212,9 @@ const ChatWidget: React.FC = () => {
 
             {/* Name Input Section */}
             {showNameInput && messages.length === 0 && (
-              <div className="p-4 border-t border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <div className="p-4 border-t border-gray-200 bg-gradient-to-r from-green-50 to-indigo-50">
                 <div className="flex items-center space-x-2 mb-3">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm">👤</span>
                   </div>
                   <div>
@@ -227,7 +227,7 @@ const ChatWidget: React.FC = () => {
                   placeholder="Your name (optional)"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 bg-white"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 bg-white"
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
                       setShowNameInput(false);
@@ -248,13 +248,13 @@ const ChatWidget: React.FC = () => {
                     placeholder={`Type your message${userName ? `, ${userName}` : ''}...`}
                     disabled={isSending}
                     rows={2}
-                    className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 disabled:opacity-50 resize-none"
+                    className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:border-green-500 disabled:opacity-50 resize-none"
                   />
                 </div>
                 <motion.button
                   onClick={handleSendMessage}
                   disabled={isSending || !newMessage.trim()}
-                  className="p-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
+                  className="p-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -268,7 +268,7 @@ const ChatWidget: React.FC = () => {
               <div className="mt-2 text-xs text-gray-500 flex justify-between items-center">
                 <span>Press Enter to send • Shift+Enter for new line</span>
                 {userName && (
-                  <span className="text-blue-600 font-medium">Chatting as: {userName}</span>
+                  <span className="text-green-600 font-medium">Chatting as: {userName}</span>
                 )}
               </div>
             </div>

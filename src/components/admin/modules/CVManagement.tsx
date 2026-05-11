@@ -192,9 +192,9 @@ const CVManagement = () => {
   const getStatusColor = (status: string) => {
     const colors = {
       pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-      reviewed: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+      reviewed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
       shortlisted: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-      rejected: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+      rejected: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400',
       hired: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
     };
     return colors[status as keyof typeof colors] || colors.pending;
@@ -206,7 +206,7 @@ const CVManagement = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -227,7 +227,7 @@ const CVManagement = () => {
             className={clsx(
               'px-4 py-2 rounded-lg font-medium transition-all',
               viewMode === 'category'
-                ? 'bg-blue-600 text-white'
+                ? 'bg-green-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             )}
           >
@@ -239,7 +239,7 @@ const CVManagement = () => {
             className={clsx(
               'px-4 py-2 rounded-lg font-medium transition-all',
               viewMode === 'list'
-                ? 'bg-blue-600 text-white'
+                ? 'bg-green-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             )}
           >
@@ -263,8 +263,8 @@ const CVManagement = () => {
                 {applications.length}
               </p>
             </div>
-            <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
-              <DocumentTextIcon className="w-8 h-8 text-blue-600" />
+            <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+              <DocumentTextIcon className="w-8 h-8 text-green-600" />
             </div>
           </div>
         </motion.div>
@@ -341,7 +341,7 @@ const CVManagement = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by name, email, or position..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500"
               />
             </div>
           </div>
@@ -353,7 +353,7 @@ const CVManagement = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500"
             >
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -370,7 +370,7 @@ const CVManagement = () => {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500"
             >
               {statuses.map((status) => (
                 <option key={status} value={status}>
@@ -392,7 +392,7 @@ const CVManagement = () => {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden"
             >
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+              <div className="bg-gradient-to-r from-green-600 to-purple-600 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <FolderIcon className="w-6 h-6 text-white" />
@@ -445,7 +445,7 @@ const CVManagement = () => {
                         {app.resume && (
                           <button
                             onClick={() => handleDownloadCV(app.resume!)}
-                            className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
+                            className="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-lg hover:bg-green-200 transition-colors"
                             title="Download CV"
                           >
                             <DocumentArrowDownIcon className="w-5 h-5" />
@@ -463,7 +463,7 @@ const CVManagement = () => {
                         </button>
                         <button
                           onClick={() => handleDelete(app.id)}
-                          className="p-2 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
+                          className="p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-lg hover:bg-amber-200 transition-colors"
                           title="Delete"
                         >
                           <TrashIcon className="w-5 h-5" />
@@ -547,7 +547,7 @@ const CVManagement = () => {
                         {app.resume && (
                           <button
                             onClick={() => handleDownloadCV(app.resume!)}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-green-600 hover:text-green-900"
                             title="Download CV"
                           >
                             <DocumentArrowDownIcon className="w-5 h-5" />
@@ -565,7 +565,7 @@ const CVManagement = () => {
                         </button>
                         <button
                           onClick={() => handleDelete(app.id)}
-                          className="text-red-600 hover:text-red-900"
+                          className="text-amber-600 hover:text-amber-900"
                           title="Delete"
                         >
                           <TrashIcon className="w-5 h-5" />
@@ -628,14 +628,14 @@ const CVManagement = () => {
                     </div>
                     <div className="flex items-center space-x-3">
                       <EnvelopeIcon className="w-5 h-5 text-gray-400" />
-                      <a href={`mailto:${selectedApplication.email}`} className="text-blue-600 hover:underline">
+                      <a href={`mailto:${selectedApplication.email}`} className="text-green-600 hover:underline">
                         {selectedApplication.email}
                       </a>
                     </div>
                     {selectedApplication.phone && (
                       <div className="flex items-center space-x-3">
                         <PhoneIcon className="w-5 h-5 text-gray-400" />
-                        <a href={`tel:${selectedApplication.phone}`} className="text-blue-600 hover:underline">
+                        <a href={`tel:${selectedApplication.phone}`} className="text-green-600 hover:underline">
                           {selectedApplication.phone}
                         </a>
                       </div>
@@ -674,7 +674,7 @@ const CVManagement = () => {
                   {selectedApplication.resume && (
                     <button
                       onClick={() => handleDownloadCV(selectedApplication.resume!)}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
                     >
                       <DocumentArrowDownIcon className="w-5 h-5" />
                       <span>Download CV</span>

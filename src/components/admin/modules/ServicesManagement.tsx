@@ -35,7 +35,7 @@ const ServicesManagement: React.FC = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -51,7 +51,7 @@ const ServicesManagement: React.FC = () => {
         </div>
         <button
           onClick={() => toast('Add service functionality coming soon')}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
         >
           <PlusIcon className="h-5 w-5" />
           Add Service
@@ -68,7 +68,7 @@ const ServicesManagement: React.FC = () => {
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{service.shortDescription}</p>
             <div className="flex items-center gap-2">
               <span className={`inline-block w-2 h-2 rounded-full $&#123;
-                service.isActive ? 'bg-green-400' : 'bg-red-400'
+                service.isActive ? 'bg-green-400' : 'bg-amber-400'
               &#125;`}></span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {service.isActive ? 'Active' : 'Inactive'}
@@ -84,7 +84,7 @@ const ServicesManagement: React.FC = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-4">Get started by adding your first security service offering.</p>
           <button
             onClick={() => toast('Add service functionality coming soon')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
             Add Service
           </button>

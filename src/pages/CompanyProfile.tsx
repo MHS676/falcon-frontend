@@ -84,7 +84,7 @@ const PageWrapper = React.forwardRef<HTMLDivElement, {
           <h3 className="text-xs sm:text-base md:text-lg font-bold text-stone-800 tracking-wide uppercase">
             {heading}
           </h3>
-          <div className="w-12 sm:w-16 h-[2px] bg-red-600 mt-1.5 rounded-full" />
+          <div className="w-12 sm:w-16 h-[2px] bg-amber-600 mt-1.5 rounded-full" />
         </div>
       )}
 
@@ -160,13 +160,13 @@ CoverPage.displayName = 'CoverPage';
 const AboutPage = React.forwardRef<HTMLDivElement>((_, ref) => (
   <PageWrapper ref={ref} pageNum={1} heading="The Company"
     headerImage={
-      <div className="w-full h-20 sm:h-32 bg-gradient-to-r from-red-900 via-red-800 to-red-900 flex items-center justify-center">
+      <div className="w-full h-20 sm:h-32 bg-gradient-to-r from-amber-900 via-amber-800 to-amber-900 flex items-center justify-center">
         <p className="text-white/90 text-xs sm:text-sm italic px-4 text-center">"Your Security is Our Priority"</p>
       </div>
     }
   >
     <p className="mb-2 sm:mb-3 text-justify">
-      <span className="text-2xl sm:text-3xl text-red-700 float-left mr-1.5 leading-[0.85] mt-0.5 font-bold">F</span>
+      <span className="text-2xl sm:text-3xl text-amber-700 float-left mr-1.5 leading-[0.85] mt-0.5 font-bold">F</span>
       alcon® Security Limited is a security, planning, management, and services company
       enjoying the confidence of our clientele. Retired officers from Bangladesh Army having
       adequate training on security and related matters, both from home and abroad, manage
@@ -186,7 +186,7 @@ AboutPage.displayName = 'AboutPage';
 const PolicyPage = React.forwardRef<HTMLDivElement>((_, ref) => (
   <PageWrapper ref={ref} pageNum={2} heading="Our Policy & Vision"
     headerImage={
-      <div className="w-full h-20 sm:h-32 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center">
+      <div className="w-full h-20 sm:h-32 bg-gradient-to-r from-green-900 via-green-800 to-green-900 flex items-center justify-center">
         <p className="text-white/90 text-xs sm:text-sm italic px-4 text-center">"Concentrated and Quality Services"</p>
       </div>
     }
@@ -202,7 +202,7 @@ const PolicyPage = React.forwardRef<HTMLDivElement>((_, ref) => (
       industry both in the quality of provided services and customer satisfaction. We are
       continuously improving and in pursuit of excellence.
     </p>
-    <div className="mt-3 sm:mt-4 bg-stone-100 rounded-lg p-3 sm:p-4 border-l-3 border-red-600">
+    <div className="mt-3 sm:mt-4 bg-stone-100 rounded-lg p-3 sm:p-4 border-l-3 border-amber-600">
       <p className="font-bold text-stone-800 text-xs sm:text-sm mb-1">Our Commitment</p>
       <p className="text-stone-600 text-justify">
         Fully trained, highly visible uniformed security personnel who deliver services in
@@ -234,7 +234,7 @@ const FounderPage = React.forwardRef<HTMLDivElement>((_, ref) => (
     </div>
     <div className="border-t border-stone-200 pt-2 sm:pt-3 mt-auto">
       <p className="font-bold text-stone-800 text-xs sm:text-sm">Major Zulfiqar H. Choudhury (Retd)</p>
-      <p className="text-red-700 text-[10px] sm:text-xs">Managing Director & Founder</p>
+      <p className="text-amber-700 text-[10px] sm:text-xs">Managing Director & Founder</p>
     </div>
   </PageWrapper>
 ));
@@ -276,10 +276,10 @@ HistoryPage.displayName = 'HistoryPage';
 const Services1Page = React.forwardRef<HTMLDivElement>((_, ref) => (
   <PageWrapper ref={ref} pageNum={5} heading="Our Services"
     headerImage={
-      <div className="w-full h-20 sm:h-28 bg-gradient-to-r from-red-900 via-red-700 to-red-900 flex items-center justify-center">
+      <div className="w-full h-20 sm:h-28 bg-gradient-to-r from-amber-900 via-amber-700 to-amber-900 flex items-center justify-center">
         <div className="text-center px-4">
           <p className="text-sm sm:text-lg font-bold text-white">9 Core Services</p>
-          <p className="text-[10px] sm:text-xs text-red-200/80">Comprehensive Security Solutions</p>
+          <p className="text-[10px] sm:text-xs text-amber-200/80">Comprehensive Security Solutions</p>
         </div>
       </div>
     }
@@ -288,7 +288,7 @@ const Services1Page = React.forwardRef<HTMLDivElement>((_, ref) => (
       {services.slice(0, 3).map((s, i) => (
         <div key={i}>
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 rounded bg-red-600 text-white flex items-center justify-center text-[9px] sm:text-xs font-bold">{i + 1}</span>
+            <span className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 rounded bg-amber-600 text-white flex items-center justify-center text-[9px] sm:text-xs font-bold">{i + 1}</span>
             <p className="font-bold text-stone-800 text-xs sm:text-sm">{s.title}</p>
           </div>
           <p className="text-stone-600 text-justify pl-7 sm:pl-8">{s.desc}</p>
@@ -306,7 +306,7 @@ const Services2Page = React.forwardRef<HTMLDivElement>((_, ref) => (
       {services.slice(3, 6).map((s, i) => (
         <div key={i}>
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 rounded bg-red-600 text-white flex items-center justify-center text-[9px] sm:text-xs font-bold">{i + 4}</span>
+            <span className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 rounded bg-amber-600 text-white flex items-center justify-center text-[9px] sm:text-xs font-bold">{i + 4}</span>
             <p className="font-bold text-stone-800 text-xs sm:text-sm">{s.title}</p>
           </div>
           <p className="text-stone-600 text-justify pl-7 sm:pl-8">{s.desc}</p>
@@ -321,10 +321,10 @@ Services2Page.displayName = 'Services2Page';
 const Services3Page = React.forwardRef<HTMLDivElement>((_, ref) => (
   <PageWrapper ref={ref} pageNum={7} heading="Services (continued)"
     headerImage={
-      <div className="w-full h-20 sm:h-28 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 flex items-center justify-center">
+      <div className="w-full h-20 sm:h-28 bg-gradient-to-r from-green-900 via-green-700 to-green-900 flex items-center justify-center">
         <div className="text-center px-4">
           <p className="text-sm sm:text-lg font-bold text-white">Technology Solutions</p>
-          <p className="text-[10px] sm:text-xs text-blue-200/80">Digital & Integrated Security</p>
+          <p className="text-[10px] sm:text-xs text-green-200/80">Digital & Integrated Security</p>
         </div>
       </div>
     }
@@ -333,7 +333,7 @@ const Services3Page = React.forwardRef<HTMLDivElement>((_, ref) => (
       {services.slice(6).map((s, i) => (
         <div key={i}>
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 rounded bg-blue-700 text-white flex items-center justify-center text-[9px] sm:text-xs font-bold">{i + 7}</span>
+            <span className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 rounded bg-green-700 text-white flex items-center justify-center text-[9px] sm:text-xs font-bold">{i + 7}</span>
             <p className="font-bold text-stone-800 text-xs sm:text-sm">{s.title}</p>
           </div>
           <p className="text-stone-600 text-justify pl-7 sm:pl-8">{s.desc}</p>
@@ -358,12 +358,12 @@ const Team1Page = React.forwardRef<HTMLDivElement>((_, ref) => (
     <div className="space-y-1.5 sm:space-y-2">
       {team.slice(0, 6).map((m, i) => (
         <div key={i} className="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg bg-stone-50 border border-stone-100">
-          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-red-600 to-blue-800 flex items-center justify-center text-white text-[9px] sm:text-xs font-bold flex-shrink-0">
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-amber-600 to-green-800 flex items-center justify-center text-white text-[9px] sm:text-xs font-bold flex-shrink-0">
             {m.name[0]}
           </div>
           <div className="min-w-0">
             <p className="font-bold text-stone-800 text-[10px] sm:text-xs truncate">{m.name}</p>
-            <p className="text-red-700 text-[9px] sm:text-[11px]">{m.role}</p>
+            <p className="text-amber-700 text-[9px] sm:text-[11px]">{m.role}</p>
             {m.cred && <p className="text-stone-500 text-[8px] sm:text-[10px]">{m.cred}</p>}
           </div>
         </div>
@@ -379,12 +379,12 @@ const Team2Page = React.forwardRef<HTMLDivElement>((_, ref) => (
     <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
       {team.slice(6).map((m, i) => (
         <div key={i} className="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg bg-stone-50 border border-stone-100">
-          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-red-600 to-blue-800 flex items-center justify-center text-white text-[9px] sm:text-xs font-bold flex-shrink-0">
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-amber-600 to-green-800 flex items-center justify-center text-white text-[9px] sm:text-xs font-bold flex-shrink-0">
             {m.name[0]}
           </div>
           <div className="min-w-0">
             <p className="font-bold text-stone-800 text-[10px] sm:text-xs truncate">{m.name}</p>
-            <p className="text-red-700 text-[9px] sm:text-[11px]">{m.role}</p>
+            <p className="text-amber-700 text-[9px] sm:text-[11px]">{m.role}</p>
             {m.cred && <p className="text-stone-500 text-[8px] sm:text-[10px]">{m.cred}</p>}
           </div>
         </div>

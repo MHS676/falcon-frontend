@@ -150,13 +150,13 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
-                errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                errors.name ? 'border-amber-500' : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="Your full name"
             />
           </div>
-          {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+          {errors.name && <p className="mt-1 text-sm text-amber-600">{errors.name}</p>}
         </div>
 
         <div>
@@ -171,13 +171,13 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
-                errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                errors.email ? 'border-amber-500' : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="your.email@example.com"
             />
           </div>
-          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+          {errors.email && <p className="mt-1 text-sm text-amber-600">{errors.email}</p>}
         </div>
       </div>
 
@@ -194,13 +194,13 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
-                errors.phone ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+                errors.phone ? 'border-amber-500' : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="+1 (555) 123-4567"
             />
           </div>
-          {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+          {errors.phone && <p className="mt-1 text-sm text-amber-600">{errors.phone}</p>}
         </div>
 
         {showAdditionalFields && (
@@ -214,7 +214,7 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
               name="company"
               value={formData.company}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
               placeholder="Your company name"
             />
           </div>
@@ -233,7 +233,7 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
               name="serviceType"
               value={formData.serviceType}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             >
               <option value="">Select a service</option>
               <option value="web-development">Web Development</option>
@@ -254,7 +254,7 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
               name="budget"
               value={formData.budget}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             >
               <option value="">Select budget range</option>
               <option value="under-5k">Under $5,000</option>
@@ -280,13 +280,13 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
             name="subject"
             value={formData.subject}
             onChange={handleChange}
-            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
-              errors.subject ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
+              errors.subject ? 'border-amber-500' : 'border-gray-300 dark:border-gray-600'
             }`}
             placeholder="What's this about?"
           />
         </div>
-        {errors.subject && <p className="mt-1 text-sm text-red-600">{errors.subject}</p>}
+        {errors.subject && <p className="mt-1 text-sm text-amber-600">{errors.subject}</p>}
       </div>
 
       <div>
@@ -299,12 +299,12 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
           rows={6}
           value={formData.message}
           onChange={handleChange}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-vertical ${
-            errors.message ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-vertical ${
+            errors.message ? 'border-amber-500' : 'border-gray-300 dark:border-gray-600'
           }`}
           placeholder="Tell me about your project, goals, or any questions you have..."
         />
-        {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
+        {errors.message && <p className="mt-1 text-sm text-amber-600">{errors.message}</p>}
         <p className="mt-1 text-sm text-gray-500">
           {formData.message.length}/500 characters
         </p>
@@ -314,7 +314,7 @@ const ContactForm = ({ className = '', showAdditionalFields = false, onSuccess }
         <motion.button
           type="submit"
           disabled={loading}
-          className={`w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 ${
+          className={`w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-500 to-purple-600 text-white font-semibold rounded-lg hover:from-green-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-105 ${
             loading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           whileHover={{ scale: loading ? 1 : 1.02 }}
