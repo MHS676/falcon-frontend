@@ -41,6 +41,7 @@ const Careers = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expandedReqs, setExpandedReqs] = useState<Record<string, boolean>>({});
   const [isApplying, setIsApplying] = useState(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [applicationData, setApplicationData] = useState<ApplicationData>({
@@ -228,17 +229,22 @@ const Careers = () => {
 
                       {career.requirements && career.requirements.length > 0 && (
                         <div className="mb-4">
-                          <h4 className="font-semibold text-slate-900 mb-2">Requirements:</h4>
+                          <h4 className="font-semibold text-slate-900 mb-2">Requirements / যোগ্যতা:</h4>
                           <ul className="list-disc list-inside text-slate-700 space-y-1">
-                            {career.requirements.slice(0, 3).map((req, index) => (
+                            {(expandedReqs[career.id] ? career.requirements : career.requirements.slice(0, 3)).map((req, index) => (
                               <li key={index} className="text-sm">{req}</li>
                             ))}
-                            {career.requirements.length > 3 && (
-                              <li className="text-sm text-slate-500">
-                                +{career.requirements.length - 3} more requirements...
-                              </li>
-                            )}
                           </ul>
+                          {career.requirements.length > 3 && (
+                            <button
+                              onClick={() => setExpandedReqs(prev => ({ ...prev, [career.id]: !prev[career.id] }))}
+                              className="mt-2 text-sm font-medium text-green-600 hover:text-green-800 transition-colors"
+                            >
+                              {expandedReqs[career.id]
+                                ? '▲ Show less / কম দেখুন'
+                                : `▼ +${career.requirements.length - 3} more / আরও দেখুন`}
+                            </button>
+                          )}
                         </div>
                       )}
                     </div>
@@ -252,10 +258,6 @@ const Careers = () => {
                       >
                         Apply Now
                       </motion.button>
-                      
-                      <div className="text-center text-sm text-slate-500">
-                        {career._count.applications} applications
-                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -308,7 +310,7 @@ const Careers = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Full Name *
+                        Full Name / পূর্ণ নাম *
                       </label>
                       <input
                         type="text"
@@ -316,13 +318,13 @@ const Careers = () => {
                         value={applicationData.fullName}
                         onChange={(e) => setApplicationData(prev => ({ ...prev, fullName: e.target.value }))}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="Your full name"
+                        placeholder="Your full name / আপনার পূর্ণ নাম"
                       />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Email Address *
+                        Email Address / ইমেইল ঠিকানা *
                       </label>
                       <input
                         type="email"
@@ -330,27 +332,27 @@ const Careers = () => {
                         value={applicationData.email}
                         onChange={(e) => setApplicationData(prev => ({ ...prev, email: e.target.value }))}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="your.email@example.com"
+                        placeholder="your.email@example.com / আপনার ইমেইল"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Phone Number
+                      Phone Number / মোবাইল নম্বর
                     </label>
                     <input
                       type="tel"
                       value={applicationData.phone}
                       onChange={(e) => setApplicationData(prev => ({ ...prev, phone: e.target.value }))}
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="+1 (555) 123-4567"
+                      placeholder="+880 1XXX-XXXXXX / আপনার মোবাইল নম্বর"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Position Category *
+                      Position Category / পদের ধরন *
                     </label>
                     <select
                       required
@@ -358,7 +360,7 @@ const Careers = () => {
                       onChange={(e) => setApplicationData(prev => ({ ...prev, category: e.target.value }))}
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
                     >
-                      <option value="">Select a category</option>
+                      <option value="">Select a category / পদ বেছে নিন</option>
                       <option value="Security Guard">Security Guard</option>
                       <option value="Supervisor">Supervisor</option>
                       <option value="Manager">Manager</option>
@@ -372,7 +374,7 @@ const Careers = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Upload CV/Resume *
+                      Upload CV/Resume / সিভি আপলোড করুন *
                     </label>
                     <div className="relative">
                       <input
@@ -419,7 +421,7 @@ const Careers = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Cover Letter *
+                      Cover Letter / আবেদন পত্র *
                     </label>
                     <textarea
                       required
@@ -427,7 +429,7 @@ const Careers = () => {
                       value={applicationData.coverLetter}
                       onChange={(e) => setApplicationData(prev => ({ ...prev, coverLetter: e.target.value }))}
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                      placeholder="Tell us why you're interested in this position and what makes you a great fit..."
+                      placeholder="Tell us why you're interested in this position... / এই পদে আপনার আগ্রহের কারণ লিখুন..."
                     />
                   </div>
 
