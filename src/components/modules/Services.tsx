@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircleIcon, StarIcon } from '@heroicons/react/24/solid';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, StarIcon, HeartIcon, TagIcon, ShieldCheckIcon } from '@heroicons/react/24/solid';
+import { HeartIcon as HeartOutline, XMarkIcon } from '@heroicons/react/24/outline';
 import { servicesAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
@@ -55,6 +55,8 @@ const Services = ({
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [likedServices, setLikedServices] = useState<Set<string>>(new Set());
+  const [cardOrigin, setCardOrigin] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
   useEffect(() => {
     fetchServices();
@@ -161,111 +163,97 @@ const Services = ({
         </div>
       )}
 
-      {/* Services Grid/List */}
-      <div className={layout === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}>
+      {/* Services Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredServices.map((service, index) => (
           <motion.div
             key={service.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className={`bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-200 dark:border-gray-700 ${layout === 'list' ? 'flex flex-col md:flex-row' : ''
-              }`}
+            transition={{ delay: index * 0.08, duration: 0.4 }}
+            whileHover={{ y: -6, transition: { duration: 0.2 } }}
+            className="group relative bg-white dark:bg-[#1a1a1a] rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
+            style={{ minHeight: 420 }}
           >
-            {/* Service Image */}
-            {service.image && (
-              <div className={`${layout === 'list' ? 'md:w-1/3' : ''}`}>
+            {/* Card Image */}
+            <div className="relative h-52 overflow-hidden rounded-3xl m-3">
+              {service.image ? (
                 <img
                   src={service.image}
                   alt={service.title}
-                  className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 ${layout === 'list' ? 'h-48 md:h-full' : 'h-48'
-                    }`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-              </div>
-            )}
-
-            {/* Service Content */}
-            <div className={`p-6 ${layout === 'list' && service.image ? 'md:w-2/3' : ''} flex-1`}>
-              {/* Header */}
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                    {service.title}
-                  </h3>
-                  <span className="inline-block px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-sm capitalize">
-                    {service.category}
-                  </span>
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-gold-500/30 to-forest-600/30 flex items-center justify-center">
+                  <ShieldCheckIcon className="w-20 h-20 text-gold-400/40" />
                 </div>
-                {service.isFeatured && (
-                  <div className="flex items-center space-x-1 text-yellow-500">
-                    <StarIcon className="w-5 h-5" />
-                    <span className="text-xs font-medium">Featured</span>
-                  </div>
-                )}
-              </div>
+              )}
+              {/* Featured badge */}
+              {service.isFeatured && (
+                <div className="absolute top-3 left-3 bg-gradient-to-r from-gold-500 to-forest-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                  <StarIcon className="w-3 h-3" />
+                  Featured
+                </div>
+              )}
+            </div>
 
-              {/* Description */}
-              <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                {service.shortDescription || service.description}
+            {/* Card Body */}
+            <div className="px-5 pb-5 pt-2">
+              {/* Title & subtitle */}
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white leading-tight mb-1">
+                {service.title}
+              </h3>
+              <p className="text-gray-400 dark:text-gray-400 text-sm mb-4 line-clamp-1">
+                {service.shortDescription || service.category}
               </p>
 
-              {/* Features */}
-              {service.features && service.features.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Key Features:</h4>
-                  <ul className="space-y-1">
-                    {service.features.slice(0, layout === 'list' ? 6 : 4).map((feature, idx) => (
-                      <li key={idx} className="flex items-start space-x-2 text-sm">
-                        <CheckCircleIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                      </li>
-                    ))}
-                    {service.features.length > (layout === 'list' ? 6 : 4) && (
-                      <li className="text-sm text-gray-500 dark:text-gray-400">
-                        +{service.features.length - (layout === 'list' ? 6 : 4)} more features
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              )}
-
-              {/* Tags */}
-              {service.tags && service.tags.length > 0 && (
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {service.tags.slice(0, 4).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs"
-                      >
-                        {tag}
+              {/* Info row */}
+              <div className="flex items-center gap-4 mb-5 text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex items-center gap-1.5">
+                  <TagIcon className="w-4 h-4 text-gold-500" />
+                  {service.price
+                    ? <span className="font-semibold text-gray-800 dark:text-gray-200">
+                        from <span className="text-lg font-black">${service.price.min}</span>
                       </span>
-                    ))}
-                    {service.tags.length > 4 && (
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded text-xs">
-                        +{service.tags.length - 4}
-                      </span>
-                    )}
-                  </div>
+                    : <span className="font-semibold text-gray-800 dark:text-gray-200">Custom Pricing</span>
+                  }
                 </div>
-              )}
-
-              {/* Timeline */}
-              {service.timeline && (
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Timeline: {service.timeline}
-                </p>
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheckIcon className="w-4 h-4 text-forest-500" />
+                  <span className="font-semibold uppercase tracking-wider text-xs">
+                    {(service.category ?? '').slice(0, 8)}
+                  </span>
+                </div>
               </div>
-              )}
 
-              {/* CTA Button */}
-              <div className="mt-4">
+              {/* Action Row */}
+              <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setSelectedService(service)}
-                  className="w-full bg-gradient-to-r from-amber-600 to-green-600 text-white py-2 px-4 rounded-lg hover:from-amber-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105"
+                  onClick={(e) => {
+                    const rect = (e.currentTarget.closest('[data-card]') as HTMLElement)?.getBoundingClientRect();
+                    if (rect) setCardOrigin({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
+                    setSelectedService(service);
+                  }}
+                  data-card
+                  className="flex-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold py-3.5 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all duration-200 shadow-md"
                 >
                   Learn More
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLikedServices(prev => {
+                      const next = new Set(prev);
+                      next.has(service.id) ? next.delete(service.id) : next.add(service.id);
+                      return next;
+                    });
+                  }}
+                  className="w-12 h-12 rounded-2xl border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center hover:border-red-400 transition-colors"
+                >
+                  {likedServices.has(service.id)
+                    ? <HeartIcon className="w-5 h-5 text-red-500" />
+                    : <HeartOutline className="w-5 h-5 text-gray-400" />
+                  }
                 </button>
               </div>
             </div>
@@ -281,64 +269,122 @@ const Services = ({
         </div>
       )}
 
-      {/* Service Detail Modal */}
+      {/* Big Scale Modal */}
       <AnimatePresence>
         {selectedService && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedService(null)}
           >
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            {/* Backdrop */}
             <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.92, opacity: 0, y: 20 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            />
+
+            {/* Expanded Card */}
+            <motion.div
+              initial={{ scale: 0.4, opacity: 0, borderRadius: '24px' }}
+              animate={{ scale: 1, opacity: 1, borderRadius: '24px' }}
+              exit={{ scale: 0.4, opacity: 0, borderRadius: '24px' }}
+              transition={{ type: 'spring', stiffness: 280, damping: 26, mass: 0.9 }}
+              className="relative bg-white dark:bg-[#1a1a1a] rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
               onClick={e => e.stopPropagation()}
             >
-              {/* Modal Header */}
-              <div className="sticky top-0 z-10 bg-gradient-to-r from-amber-600 to-green-600 p-5 flex items-center justify-between rounded-t-2xl">
-                <div>
-                  <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">{selectedService.category}</span>
-                  <h2 className="text-xl font-bold text-white mt-0.5">{selectedService.title}</h2>
-                </div>
+              {/* Hero Image */}
+              <div className="relative h-72 overflow-hidden rounded-t-3xl">
+                {selectedService.image ? (
+                  <motion.img
+                    initial={{ scale: 1.2 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    src={selectedService.image}
+                    alt={selectedService.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-gold-500/30 to-forest-600/40 flex items-center justify-center">
+                    <ShieldCheckIcon className="w-28 h-28 text-gold-400/50" />
+                  </div>
+                )}
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                {/* Close btn */}
                 <button
                   onClick={() => setSelectedService(null)}
-                  className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center text-white transition-colors"
                 >
                   <XMarkIcon className="w-5 h-5" />
                 </button>
-              </div>
 
-              <div className="p-6 space-y-5">
-                {/* Image */}
-                {selectedService.image && (
-                  <img
-                    src={selectedService.image}
-                    alt={selectedService.title}
-                    className="w-full h-48 object-cover rounded-xl"
-                  />
+                {/* Featured badge */}
+                {selectedService.isFeatured && (
+                  <div className="absolute top-4 left-4 bg-gradient-to-r from-gold-500 to-forest-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                    <StarIcon className="w-3 h-3" /> Featured
+                  </div>
                 )}
 
-                {/* Full Description */}
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
+                {/* Title over image bottom */}
+                <div className="absolute bottom-4 left-5 right-5">
+                  <p className="text-white/70 text-sm mb-0.5">{selectedService.category}</p>
+                  <h2 className="text-3xl font-black text-white leading-tight">{selectedService.title}</h2>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-5">
+                {/* Price info row */}
+                <div className="flex items-center gap-5 text-sm py-3 px-4 bg-gray-50 dark:bg-[#111] rounded-2xl">
+                  <div className="flex items-center gap-2">
+                    <TagIcon className="w-4 h-4 text-gold-500" />
+                    {selectedService.price
+                      ? <span className="font-bold text-gray-900 dark:text-white">
+                          from <span className="text-xl">${selectedService.price.min}</span>
+                        </span>
+                      : <span className="font-bold text-gray-900 dark:text-white">Custom Pricing</span>
+                    }
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheckIcon className="w-4 h-4 text-forest-500" />
+                    <span className="font-semibold uppercase tracking-widest text-xs text-gray-500 dark:text-gray-400">
+                      {selectedService.category}
+                    </span>
+                  </div>
+                  {selectedService.timeline && (
+                    <div className="ml-auto text-xs text-gray-400 dark:text-gray-500">
+                      ⏱ {selectedService.timeline}
+                    </div>
+                  )}
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
                   {selectedService.description}
                 </p>
 
-                {/* All Features */}
+                {/* Features */}
                 {selectedService.features && selectedService.features.length > 0 && (
                   <div>
                     <h4 className="font-bold text-gray-900 dark:text-white mb-3">Key Features</h4>
                     <ul className="space-y-2">
                       {selectedService.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5 text-sm text-gray-700 dark:text-gray-300">
-                          <CheckCircleIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <motion.li
+                          key={idx}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + idx * 0.04 }}
+                          className="flex items-start gap-2.5 text-sm text-gray-700 dark:text-gray-300"
+                        >
+                          <CheckCircleIcon className="w-4 h-4 text-forest-500 mt-0.5 flex-shrink-0" />
                           {feature}
-                        </li>
+                        </motion.li>
                       ))}
                     </ul>
                   </div>
@@ -346,35 +392,38 @@ const Services = ({
 
                 {/* Tags */}
                 {selectedService.tags && selectedService.tags.length > 0 && (
-                  <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-2">Tags</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedService.tags.map(tag => (
-                        <span key={tag} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedService.tags.map(tag => (
+                      <span key={tag} className="px-3 py-1 bg-gold-500/10 text-gold-600 dark:text-gold-400 border border-gold-500/20 rounded-full text-xs font-medium">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 )}
 
-                {/* Timeline */}
-                {selectedService.timeline && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-600 pt-4">
-                    <span className="font-semibold">Timeline:</span> {selectedService.timeline}
-                  </p>
-                )}
-
-                {/* Contact CTA */}
-                <div className="bg-gradient-to-r from-amber-50 to-green-50 dark:from-amber-900/20 dark:to-green-900/20 rounded-xl p-4 border border-amber-100 dark:border-amber-800">
-                  <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Interested in this service?</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Contact us for a free consultation and security assessment.</p>
+                {/* CTA */}
+                <div className="flex gap-3 pt-2">
                   <a
                     href="/contact"
-                    className="inline-block bg-gradient-to-r from-amber-600 to-green-600 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:from-amber-700 hover:to-green-700 transition-all"
+                    className="flex-1 text-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all shadow-lg"
                   >
-                    Contact Us
+                    Get a Free Consultation
                   </a>
+                  <button
+                    onClick={() => {
+                      setLikedServices(prev => {
+                        const next = new Set(prev);
+                        next.has(selectedService.id) ? next.delete(selectedService.id) : next.add(selectedService.id);
+                        return next;
+                      });
+                    }}
+                    className="w-14 h-14 rounded-2xl border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center hover:border-red-400 transition-colors"
+                  >
+                    {likedServices.has(selectedService.id)
+                      ? <HeartIcon className="w-5 h-5 text-red-500" />
+                      : <HeartOutline className="w-5 h-5 text-gray-400" />
+                    }
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -384,5 +433,6 @@ const Services = ({
     </div>
   );
 };
+
 
 export default Services;

@@ -50,19 +50,22 @@ const Home = () => {
       <Banner />
       
       {/* Featured Services */}
-      <section className="py-16 bg-slate-50 dark:bg-gray-900">
+      <section className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-14"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <span className="inline-block px-4 py-1.5 bg-gold-500/10 text-gold-400 text-sm font-semibold rounded-full border border-gold-500/20 mb-4">
+              What We Offer
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
               Our Services
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-[#a09070] max-w-2xl mx-auto text-lg">
               Comprehensive security solutions tailored to protect what matters most to you.
             </p>
           </motion.div>
