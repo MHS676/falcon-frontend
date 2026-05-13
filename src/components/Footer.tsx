@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaLinkedin, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
-import logo from '../../upload/logo.png';
+const logo = '/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png';
+const falconEmblem = '/falcon-emblem.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,7 +13,7 @@ const Footer = () => {
           {/* About */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <img src={logo} alt="Falcon Security Logo" className="w-12 h-12 object-contain" />
+              <img src={falconEmblem} alt="Falcon Emblem" className="w-14 h-14 object-contain drop-shadow-lg" />
               <h3 className="text-xl font-heading font-bold">Falcon® Security</h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">

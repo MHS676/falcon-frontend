@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import logo from '../../upload/logo.png';
+const logo = '/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png';
+const falconEmblem = '/falcon-emblem.png';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import * as api from '../services/api';
@@ -78,8 +79,9 @@ const AdminLogin = () => {
           className="text-center"
         >
           {/* Logo */}
-          <div className="">
-            <img src={logo} alt="Falcon Logo" className=" object-contain mx-auto w-24 h-24  flex items-center justify-center mb-6  overflow-hidden" />
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <img src={falconEmblem} alt="Falcon Emblem" className="w-24 h-24 object-contain drop-shadow-2xl" />
+            <img src={logo} alt="Falcon Logo" className="w-14 h-14 object-contain opacity-90" />
           </div>
 
           <h2 className="text-3xl font-bold text-white mb-2">

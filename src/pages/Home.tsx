@@ -62,7 +62,7 @@ const Home = () => {
             <span className="inline-block px-4 py-1.5 bg-gold-500/10 text-gold-400 text-sm font-semibold rounded-full border border-gold-500/20 mb-4">
               What We Offer
             </span>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
+            <h2 className="text-4xl sm:text-5xl font-black text-black dark:text-white mb-4">
               Our Services
             </h2>
             <p className="text-[#a09070] max-w-2xl mx-auto text-lg">

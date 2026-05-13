@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+const falconEmblem = '/falcon-emblem.png';
 import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { bannerAPI } from '../../services/api';
@@ -25,6 +26,18 @@ const Banner = () => {
     fetchActiveBanners();
   }, []);
 
+  const staticBrandBanner: BannerItem = {
+    id: 'brand-static',
+    title: 'Falcon Security Limited',
+    subtitle: 'Protecting What Matters Most',
+    description: 'ISO 9001, 18788 & 27001 certified security solutions. Trusted since 1993.',
+    image: '',
+    ctaText: 'Explore Services',
+    ctaLink: '/services',
+    isActive: true,
+    order: 0,
+  };
+
   const fetchActiveBanners = async () => {
     try {
       const response = await bannerAPI.getActive();
@@ -37,12 +50,12 @@ const Banner = () => {
       }
       
       const sortedBanners = bannerData.sort((a: BannerItem, b: BannerItem) => a.order - b.order);
-      setBanners(sortedBanners);
+      setBanners([staticBrandBanner, ...sortedBanners]);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching banners:', error);
       toast.error('Failed to load banners');
-      setBanners([]); // Set empty array on error
+      setBanners([staticBrandBanner]);
       setLoading(false);
     }
   };
@@ -71,21 +84,14 @@ const Banner = () => {
   }
 
   if (banners.length === 0) {
-    return (
-      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-r from-green-600 to-purple-700 flex items-center justify-center">
-        <div className="text-center text-white">
-          <h2 className="text-3xl font-bold mb-4">Welcome to My Portfolio</h2>
-          <p className="text-lg">Discover my work and expertise</p>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   const currentBanner = banners[currentIndex];
 
   return (
     <div className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
-      {/* Banner Image */}
+      {/* Banner Image / Brand Background */}
       <motion.div
         key={currentIndex}
         initial={{ opacity: 0, scale: 1.1 }}
@@ -94,13 +100,33 @@ const Banner = () => {
         transition={{ duration: 0.7 }}
         className="absolute inset-0"
       >
+        {currentBanner.image ? (
+          <img
+            src={currentBanner.image}
+            alt={currentBanner.title}
+            className="w-full h-full object-cover object-center"
+            style={{ objectPosition: 'center center' }}
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10"></div>
+      </motion.div>
+
+      {/* Falcon Emblem — always visible on right */}
+      <motion.div
+        key={`emblem-${currentIndex}`}
+        initial={{ opacity: 0, x: 60 }}
+        animate={{ opacity: 0.18, x: 0 }}
+        transition={{ duration: 0.9 }}
+        className="absolute right-0 bottom-0 top-0 flex items-center justify-end pr-6 pointer-events-none select-none"
+      >
         <img
-          src={currentBanner.image}
-          alt={currentBanner.title}
-          className="w-full h-full object-cover object-center"
-          style={{ objectPosition: 'center center' }}
+          src={falconEmblem}
+          alt="Falcon Emblem"
+          className="h-[85%] w-auto object-contain"
+          style={{ filter: 'brightness(1.4) saturate(1.2)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/30"></div>
       </motion.div>
 
       {/* Content */}

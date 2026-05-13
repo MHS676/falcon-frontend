@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '../../upload/logo.png';
+const logo = '/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png';
+const falconEmblem = '/falcon-emblem.png';
 import { Bars3Icon, XMarkIcon, MoonIcon, SunIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
 import { useTheme } from '../contexts/ThemeContext';
@@ -54,8 +55,8 @@ const Navbar = () => {
               to="/"
               className="flex items-center space-x-2"
             >
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
-                <img src={logo} alt="Falcon Logo" className="w-full h-full object-contain" />
+              <div className="flex items-center gap-1">
+                <img src={falconEmblem} alt="Falcon Emblem" className="w-10 h-10 object-contain drop-shadow-md" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-amber-600 to-green-600 bg-clip-text text-transparent">
                 Falcon Security Limited <span></span>

@@ -169,7 +169,7 @@ export const optimizeImageLoading = () => {
   const preloadCriticalImages = () => {
     const criticalImages = [
       '/images/hero-banner.jpg',
-      '/images/falcon-security-logo.png'
+      '/images/falcon-security-Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png'
     ];
 
     criticalImages.forEach(src => {

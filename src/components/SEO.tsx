@@ -59,7 +59,7 @@ const SEO: React.FC<SEOProps> = ({
     "@type": "SecurityService",
     "name": "Falcon Security Limited",
     "url": "https://falcon-frontend-six.vercel.app",
-    "logo": "https://falcon-frontend-six.vercel.app/logo.png",
+    "logo": "https://falcon-frontend-six.vercel.app/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png",
     "description": "Professional security services company providing comprehensive protection solutions across corporate, retail, construction, and event sectors with 15+ years of expertise.",
     "telephone": "+1 (555) 123-SECURITY",
     "email": "info@falconsecurity.com",
@@ -123,7 +123,7 @@ const SEO: React.FC<SEOProps> = ({
           "name": siteName,
           "logo": {
             "@type": "ImageObject",
-            "url": "https://falcon-frontend-six.vercel.app/logo.png"
+            "url": "https://falcon-frontend-six.vercel.app/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png"
           }
         },
         "datePublished": article.publishedTime,

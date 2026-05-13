@@ -10,6 +10,7 @@ import {
 import { sendContact } from '../services/api';
 import toast from 'react-hot-toast';
 import SEO from '../components/SEO';
+const falconEmblem = '/falcon-emblem.png';
 import Breadcrumb from '../components/Breadcrumb';
 import { useSEO } from '../hooks/useSEO';
 
@@ -113,7 +114,8 @@ const Contact = () => {
         <Breadcrumb />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-amber-50 to-green-50 dark:from-gray-900 dark:to-gray-800 py-20">
+      <section className="relative bg-gradient-to-br from-amber-50 to-green-50 dark:from-gray-900 dark:to-gray-800 py-20 overflow-hidden">
+        <img src={falconEmblem} alt="" aria-hidden className="absolute right-0 bottom-0 top-0 h-full w-auto object-contain opacity-[0.07] pointer-events-none select-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: -50 }}

@@ -227,7 +227,7 @@ export const generateArticleSchema = (article: {
       name: 'Falcon Security Limited',
       logo: {
         '@type': 'ImageObject',
-        url: '/images/falcon-security-logo.png'
+        url: '/images/falcon-security-Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png'
       }
     },
     datePublished: article.publishedTime,
