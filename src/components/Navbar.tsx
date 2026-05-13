@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-const logo = '/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png';
 const falconEmblem = '/falcon-emblem.png';
 import { Bars3Icon, XMarkIcon, MoonIcon, SunIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';

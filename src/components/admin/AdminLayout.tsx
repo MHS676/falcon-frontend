@@ -17,7 +17,6 @@ import {
   PencilIcon,
 } from '@heroicons/react/24/outline';
 import { contactAPI, messagingAPI } from '../../services/api';
-const logo = '/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png';
 const falconEmblem = '/falcon-emblem.png';
 
 interface AdminLayoutProps {

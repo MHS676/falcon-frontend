@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaLinkedin, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
-const logo = '/Screenshot_2026-05-13_at_3.59.36_PM-removebg-preview.png';
 const falconEmblem = '/falcon-emblem.png';
 
 const Footer = () => {

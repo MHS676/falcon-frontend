@@ -56,7 +56,6 @@ const Services = ({
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [likedServices, setLikedServices] = useState<Set<string>>(new Set());
-  const [cardOrigin, setCardOrigin] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
   useEffect(() => {
     fetchServices();
@@ -229,11 +228,7 @@ const Services = ({
               {/* Action Row */}
               <div className="flex items-center gap-3">
                 <button
-                  onClick={(e) => {
-                    const rect = (e.currentTarget.closest('[data-card]') as HTMLElement)?.getBoundingClientRect();
-                    if (rect) setCardOrigin({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
-                    setSelectedService(service);
-                  }}
+                  onClick={() => setSelectedService(service)}
                   data-card
                   className="flex-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold py-3.5 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all duration-200 shadow-md"
                 >

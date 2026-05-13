@@ -10,7 +10,7 @@ import SEO from "../components/SEO";
 import OptimizedImage from "../components/OptimizedImage";
 import { useSEO } from "../hooks/useSEO";
 import { useWebVitals } from "../hooks/useWebVitals";
-import { ContactForm, Projects } from '../components';
+import { ContactForm } from '../components';
 
 const Home = () => {
   // Initialize SEO and performance monitoring
