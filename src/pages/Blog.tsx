@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import { getBlogPosts } from '../services/api';
 import toast from 'react-hot-toast';
 
+const API_SERVER = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api').replace('/api', '');
+const getImageUrl = (url?: string) => {
+  if (!url) return null;
+  if (url.startsWith('http')) return url;
+  return `${API_SERVER}${url}`;
+};
+
 interface BlogPost {
   id: string;
   title: string;
@@ -75,7 +82,7 @@ const Blog = () => {
                   {blog.coverImage && (
                     <div className="h-48 bg-gradient-to-br from-primary-400 to-primary-600 overflow-hidden">
                       <img
-                        src={blog.coverImage}
+                        src={getImageUrl(blog.coverImage)!}
                         alt={blog.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />

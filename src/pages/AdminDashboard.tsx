@@ -15,6 +15,7 @@ import AdminManagement from '../components/admin/modules/AdminManagement';
 import ClientsManagement from '../components/admin/modules/ClientsManagement';
 import UploadManagement from '../components/admin/modules/UploadManagement';
 import EmployeeManagement from '../components/admin/modules/EmployeeManagement';
+import TeamManagement from '../components/admin/modules/TeamManagement';
 import CVManagement from '../components/admin/modules/CVManagement';
 import AdminMessaging from './AdminMessaging';
 
@@ -70,6 +71,8 @@ const AdminDashboard = () => {
         return <CVManagement />;
       case 'employees':
         return <EmployeeManagement />;
+      case 'team':
+        return <TeamManagement />;
       case 'messaging':
         return <AdminMessaging />;
       default:

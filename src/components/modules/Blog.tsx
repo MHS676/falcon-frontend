@@ -4,6 +4,13 @@ import { CalendarIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { blogAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
+const API_SERVER = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api').replace('/api', '');
+const getImageUrl = (url?: string) => {
+  if (!url) return null;
+  if (url.startsWith('http')) return url;
+  return `${API_SERVER}${url}`;
+};
+
 interface BlogPost {
   id: string;
   title: string;
@@ -111,7 +118,7 @@ const Blog = ({ maxItems, showExcerpt = true, layout = 'grid' }: BlogProps) => {
             {post.coverImage && (
               <div className="h-48 overflow-hidden">
                 <img
-                  src={post.coverImage}
+                  src={getImageUrl(post.coverImage)!}
                   alt={post.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />

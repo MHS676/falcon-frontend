@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   MagnifyingGlassIcon,
@@ -10,31 +10,41 @@ import {
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
 import { useSEO } from '../hooks/useSEO';
+import { employeeAPI } from '../services/api';
 
 interface TeamMember {
-  name: string;
-  title: string;
-  credentials: string;
-  category: 'leadership' | 'management' | 'advisory';
+  id: string;
+  firstName: string;
+  lastName: string;
+  position: string;
+  department?: string;
+  photo?: string;
+  skills?: string[];
+  notes?: string;
+  status: string;
+  active: boolean;
 }
 
-const teamMembers: TeamMember[] = [
-  { name: 'Mrs. Mayeeda Choudhury', title: 'Chairperson', credentials: '', category: 'leadership' },
-  { name: 'Major Zulfiqar H. Choudhury (Retd)', title: 'Managing Director', credentials: '', category: 'leadership' },
-  { name: 'Major Md. Nazmul Haque (Retd)', title: 'Executive Director', credentials: 'MBA, PGDHRM', category: 'leadership' },
-  { name: 'Major Kazi Ashfaq (Retd)', title: 'Director Marketing', credentials: '', category: 'management' },
-  { name: 'Mohammad Ali Yusuf Hossain', title: 'Director of Finance & Digital Surveillance Solutions', credentials: 'MCom, MBA, DCS, CSP, Certified Lead Auditor ISO/IEC 27001:2022', category: 'management' },
-  { name: 'Lt. Mizanur Rahman BN (Retd)', title: 'General Manager (Admin & Ops)', credentials: 'Certified Lead Auditor ISO 9001:2015', category: 'management' },
-  { name: 'Md. Mostafizur Rahman', title: 'Deputy General Manager (Operations)', credentials: '', category: 'management' },
-  { name: 'Md. Jalal Ahmed', title: 'Manager Chittagong Region', credentials: '', category: 'management' },
-  { name: 'Engr. Sumon Parvez', title: 'Manager Digital Surveillance Solutions', credentials: 'BSc (EEE)', category: 'management' },
-  { name: 'Advocate Syed Mehedi Hasan', title: 'Advisor Legal Affairs', credentials: '', category: 'advisory' },
-  { name: 'DK Associates', title: 'Advisor Corporate Affairs', credentials: '', category: 'advisory' },
+const STATIC_TEAM: TeamMember[] = [
+  { id: 's1', firstName: 'Mrs. Mayeeda', lastName: 'Choudhury', position: 'Chairperson', department: 'Leadership', status: 'active', active: true },
+  { id: 's2', firstName: 'Major Zulfiqar H.', lastName: 'Choudhury (Retd)', position: 'Managing Director', department: 'Leadership', status: 'active', active: true },
+  { id: 's3', firstName: 'Major Md. Nazmul', lastName: 'Haque (Retd)', position: 'Executive Director', department: 'Leadership', notes: 'MBA, PGDHRM', status: 'active', active: true },
+  { id: 's4', firstName: 'Major Kazi', lastName: 'Ashfaq (Retd)', position: 'Director Marketing', department: 'Management', status: 'active', active: true },
+  { id: 's5', firstName: 'Mohammad Ali Yusuf', lastName: 'Hossain', position: 'Director of Finance & Digital Surveillance Solutions', department: 'Management', notes: 'MCom, MBA, DCS, CSP, Certified Lead Auditor ISO/IEC 27001:2022', status: 'active', active: true },
+  { id: 's6', firstName: 'Lt. Mizanur', lastName: 'Rahman BN (Retd)', position: 'General Manager (Admin & Ops)', department: 'Management', notes: 'Certified Lead Auditor ISO 9001:2015', status: 'active', active: true },
+  { id: 's7', firstName: 'Md. Mostafizur', lastName: 'Rahman', position: 'Deputy General Manager (Operations)', department: 'Management', status: 'active', active: true },
+  { id: 's8', firstName: 'Md. Jalal', lastName: 'Ahmed', position: 'Manager Chittagong Region', department: 'Management', status: 'active', active: true },
+  { id: 's9', firstName: 'Engr. Sumon', lastName: 'Parvez', position: 'Manager Digital Surveillance Solutions', department: 'Management', notes: 'BSc (EEE)', status: 'active', active: true },
+  { id: 's10', firstName: 'Advocate Syed Mehedi', lastName: 'Hasan', position: 'Advisor Legal Affairs', department: 'Advisory', status: 'active', active: true },
+  { id: 's11', firstName: 'DK', lastName: 'Associates', position: 'Advisor Corporate Affairs', department: 'Advisory', status: 'active', active: true },
 ];
 
 const Team = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState<'all' | 'leadership' | 'management' | 'advisory'>('all');
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [departments, setDepartments] = useState<string[]>([]);
 
   const seoData = useSEO({
     title: 'Our Team - Falcon® Security Limited Management',
@@ -55,70 +65,70 @@ const Team = () => {
     keywords: seoData.keywords?.join(', '),
   };
 
+  const applyOrder = (data: TeamMember[]) => {
+    const saved: string[] = JSON.parse(localStorage.getItem('falcon_team_order') || '[]');
+    if (saved.length === 0) return data;
+    const mapped = new Map(data.map(m => [m.id, m]));
+    const ordered = saved.map(id => mapped.get(id)).filter(Boolean) as TeamMember[];
+    // Append any members not in saved order at the end
+    data.forEach(m => { if (!saved.includes(m.id)) ordered.push(m); });
+    return ordered;
+  };
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const res = await employeeAPI.getActive();
+        const apiData: TeamMember[] = Array.isArray(res.data) ? res.data : [];
+        const data = apiData.length > 0 ? apiData : STATIC_TEAM;
+        const ordered = applyOrder(data);
+        setTeamMembers(ordered);
+        const depts = [...new Set(ordered.map(m => m.department).filter(Boolean))] as string[];
+        setDepartments(depts);
+      } catch {
+        setTeamMembers(STATIC_TEAM);
+        const depts = [...new Set(STATIC_TEAM.map(m => m.department).filter(Boolean))] as string[];
+        setDepartments(depts);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTeam();
+  }, []);
+
   const filteredMembers = teamMembers.filter((member) => {
-    const matchesSearch = member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      member.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = activeFilter === 'all' || member.category === activeFilter;
+    const fullName = `${member.firstName} ${member.lastName}`;
+    const matchesSearch = fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      member.position.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter = activeFilter === 'all' || member.department?.toLowerCase() === activeFilter.toLowerCase();
     return matchesSearch && matchesFilter;
   });
 
   const filters = [
-    { key: 'all' as const, label: 'All' },
-    { key: 'leadership' as const, label: 'Leadership' },
-    { key: 'management' as const, label: 'Management' },
-    { key: 'advisory' as const, label: 'Advisory' },
+    { key: 'all', label: 'All' },
+    ...departments.map(d => ({ key: d, label: d })),
   ];
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'leadership':
-        return ShieldCheckIcon;
-      case 'management':
-        return BuildingOfficeIcon;
-      case 'advisory':
-        return AcademicCapIcon;
-      default:
-        return UserGroupIcon;
-    }
+  const getDeptIcon = (dept?: string) => {
+    const d = (dept || '').toLowerCase();
+    if (d.includes('lead') || d.includes('director') || d.includes('chair')) return ShieldCheckIcon;
+    if (d.includes('advis')) return AcademicCapIcon;
+    return BuildingOfficeIcon;
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'leadership':
-        return 'from-amber-500 to-amber-700';
-      case 'management':
-        return 'from-green-500 to-green-700';
-      case 'advisory':
-        return 'from-green-500 to-green-700';
-      default:
-        return 'from-amber-500 to-green-600';
-    }
+  const getDeptColor = (dept?: string) => {
+    const d = (dept || '').toLowerCase();
+    if (d.includes('lead')) return 'from-amber-500 to-amber-700';
+    if (d.includes('advis')) return 'from-green-500 to-green-700';
+    return 'from-green-500 to-green-700';
   };
 
-  const getCategoryBadgeColor = (category: string) => {
-    switch (category) {
-      case 'leadership':
-        return 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300';
-      case 'management':
-        return 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300';
-      case 'advisory':
-        return 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300';
-      default:
-        return 'bg-gray-100 text-gray-700';
-    }
-  };
+  const apiBase = import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || 'http://localhost:3001';
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.08 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
+  const getPhotoUrl = (photo?: string) => {
+    if (!photo) return null;
+    if (photo.startsWith('http')) return photo;
+    return `${apiBase}${photo}`;
   };
 
   return (
@@ -161,7 +171,7 @@ const Team = () => {
               <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search by name or title..."
+                placeholder="Search by name or position..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
@@ -169,33 +179,41 @@ const Team = () => {
             </motion.div>
 
             {/* Filters */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-wrap gap-3 justify-center"
-            >
-              {filters.map((filter) => (
-                <button
-                  key={filter.key}
-                  onClick={() => setActiveFilter(filter.key)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeFilter === filter.key
-                      ? 'bg-amber-600 text-white shadow-lg'
-                      : 'bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
-                  }`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </motion.div>
+            {filters.length > 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex flex-wrap gap-3 justify-center"
+              >
+                {filters.map((filter) => (
+                  <button
+                    key={filter.key}
+                    onClick={() => setActiveFilter(filter.key)}
+                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      activeFilter === filter.key
+                        ? 'bg-amber-600 text-white shadow-lg'
+                        : 'bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
+                    }`}
+                  >
+                    {filter.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
           </div>
         </section>
 
         {/* Team Grid */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {filteredMembers.length === 0 ? (
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className="bg-gray-200 dark:bg-gray-700 rounded-xl h-64 animate-pulse" />
+                ))}
+              </div>
+            ) : filteredMembers.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -203,57 +221,72 @@ const Team = () => {
               >
                 <UserGroupIcon className="w-16 h-16 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
                 <p className="text-lg text-slate-600 dark:text-slate-400">
-                  No team members found matching your search
+                  No team members found
                 </p>
               </motion.div>
             ) : (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredMembers.map((member, index) => {
-                  const IconComponent = getCategoryIcon(member.category);
+                  const IconComponent = getDeptIcon(member.department);
+                  const photoUrl = getPhotoUrl(member.photo);
+                  const initials = `${member.firstName.charAt(0)}${member.lastName.charAt(0)}`;
                   return (
                     <motion.div
-                      key={index}
-                      variants={itemVariants}
+                      key={member.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.06 }}
                       whileHover={{ y: -5 }}
                       className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-slate-200 dark:border-gray-700 hover:shadow-xl transition-shadow"
                     >
                       <div className="p-6 text-center">
-                        {/* Avatar */}
-                        <div className={`w-20 h-20 bg-gradient-to-br ${getCategoryColor(member.category)} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                          <IconComponent className="w-10 h-10 text-white" />
+                        {/* Avatar / Photo */}
+                        <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden">
+                          {photoUrl ? (
+                            <img
+                              src={photoUrl}
+                              alt={`${member.firstName} ${member.lastName}`}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className={`w-full h-full bg-gradient-to-br ${getDeptColor(member.department)} flex items-center justify-center`}>
+                              {member.photo === undefined ? (
+                                <span className="text-white font-bold text-xl">{initials}</span>
+                              ) : (
+                                <IconComponent className="w-10 h-10 text-white" />
+                              )}
+                            </div>
+                          )}
                         </div>
 
                         {/* Name */}
                         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
-                          {member.name}
+                          {member.firstName} {member.lastName}
                         </h3>
 
-                        {/* Title */}
+                        {/* Position */}
                         <p className="text-amber-600 dark:text-amber-400 font-semibold text-sm mb-2">
-                          {member.title}
+                          {member.position}
                         </p>
 
                         {/* Credentials */}
-                        {member.credentials && (
-                          <p className="text-slate-500 dark:text-gray-400 text-xs mb-3">
-                            {member.credentials}
+                        {member.notes && (
+                          <p className="text-slate-500 dark:text-gray-400 text-xs mb-3 leading-relaxed">
+                            {member.notes}
                           </p>
                         )}
 
-                        {/* Category Badge */}
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium capitalize ${getCategoryBadgeColor(member.category)}`}>
-                          {member.category}
-                        </span>
+                        {/* Department Badge */}
+                        {member.department && (
+                          <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 capitalize">
+                            {member.department}
+                          </span>
+                        )}
                       </div>
                     </motion.div>
                   );
                 })}
-              </motion.div>
+              </div>
             )}
           </div>
         </section>

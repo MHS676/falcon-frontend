@@ -10,6 +10,13 @@ import {
 } from '@heroicons/react/24/outline';
 import SEO from '../components/SEO';
 
+const API_SERVER = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api').replace('/api', '');
+const getImageUrl = (url?: string) => {
+  if (!url) return null;
+  if (url.startsWith('http')) return url;
+  return `${API_SERVER}${url}`;
+};
+
 interface BlogPost {
   id: string;
   title: string;
@@ -100,7 +107,7 @@ const BlogPostDetail = () => {
       <SEO
         title={`${post.title} — Falcon® Security Blog`}
         description={post.excerpt || post.content.substring(0, 160)}
-        image={post.coverImage}
+        image={getImageUrl(post.coverImage) || undefined}
         type="article"
       />
 
@@ -109,7 +116,7 @@ const BlogPostDetail = () => {
         {post.coverImage ? (
           <div className="relative h-72 sm:h-96 w-full overflow-hidden">
             <img
-              src={post.coverImage}
+              src={getImageUrl(post.coverImage)!}
               alt={post.title}
               className="w-full h-full object-cover"
             />

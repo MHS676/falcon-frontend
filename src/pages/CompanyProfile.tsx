@@ -1,4 +1,5 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { employeeAPI } from '../services/api';
 import HTMLFlipBook from 'react-pageflip';
 import { motion } from 'framer-motion';
 import {
@@ -25,7 +26,13 @@ const services = [
   { title: 'Access Control', desc: 'Physical, logical, and administrative access control. Biometric identification, access cards, security tokens, and other authentication mechanisms to prevent unauthorized access and protect sensitive resources.' },
 ];
 
-const team = [
+interface TeamMemberData {
+  name: string;
+  role: string;
+  cred: string;
+}
+
+const STATIC_TEAM: TeamMemberData[] = [
   { name: 'Mrs. Mayeeda Choudhury', role: 'Chairperson', cred: '' },
   { name: 'Major Zulfiqar H. Choudhury (Retd)', role: 'Managing Director', cred: '' },
   { name: 'Major Md. Nazmul Haque (Retd)', role: 'Executive Director', cred: 'MBA, PGDHRM' },
@@ -345,7 +352,7 @@ const Services3Page = React.forwardRef<HTMLDivElement>((_, ref) => (
 Services3Page.displayName = 'Services3Page';
 
 /* Team page 1 */
-const Team1Page = React.forwardRef<HTMLDivElement>((_, ref) => (
+const Team1Page = React.forwardRef<HTMLDivElement, { team: TeamMemberData[] }>(({ team }, ref) => (
   <PageWrapper ref={ref} pageNum={8} heading="Management Team"
     headerImage={
       <div className="w-full h-20 sm:h-28 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 flex items-center justify-center px-4">
@@ -374,7 +381,7 @@ const Team1Page = React.forwardRef<HTMLDivElement>((_, ref) => (
 Team1Page.displayName = 'Team1Page';
 
 /* Team page 2 */
-const Team2Page = React.forwardRef<HTMLDivElement>((_, ref) => (
+const Team2Page = React.forwardRef<HTMLDivElement, { team: TeamMemberData[] }>(({ team }, ref) => (
   <PageWrapper ref={ref} pageNum={9} heading="Management (continued)">
     <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
       {team.slice(6).map((m, i) => (
@@ -530,7 +537,32 @@ export default function CompanyProfile() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bookRef = useRef<any>(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [team, setTeam] = useState<TeamMemberData[]>(STATIC_TEAM);
   const totalPages = 14;
+
+  useEffect(() => {
+    employeeAPI.getActive().then((res) => {
+      const apiData = Array.isArray(res.data) ? res.data : [];
+      if (apiData.length > 0) {
+        // Apply saved order from localStorage
+        const saved: string[] = JSON.parse(localStorage.getItem('falcon_team_order') || '[]');
+        let ordered = apiData;
+        if (saved.length > 0) {
+          const mapped = new Map(apiData.map((m: { id: string }) => [m.id, m]));
+          const o = saved.map(id => mapped.get(id)).filter(Boolean) as typeof apiData;
+          apiData.forEach((m: { id: string }) => { if (!saved.includes(m.id)) o.push(m); });
+          ordered = o;
+        }
+        setTeam(
+          ordered.map((m: { firstName: string; lastName: string; position: string; notes?: string }) => ({
+            name: `${m.firstName} ${m.lastName}`.trim(),
+            role: m.position || '',
+            cred: m.notes || '',
+          }))
+        );
+      }
+    }).catch(() => {/* use static fallback */});
+  }, []);
 
   const seoData = useSEO({
     title: 'Company Profile - Falcon® Security Limited',
@@ -649,8 +681,8 @@ export default function CompanyProfile() {
             <Services1Page />
             <Services2Page />
             <Services3Page />
-            <Team1Page />
-            <Team2Page />
+            <Team1Page team={team} />
+            <Team2Page team={team} />
             <CertsPage />
             <WhyPage />
             <LocationsPage />

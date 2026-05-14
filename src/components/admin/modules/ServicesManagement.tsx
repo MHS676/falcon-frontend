@@ -25,12 +25,18 @@ interface Service {
   features: string[];
   price?: { min: number; max?: number; currency: string; type: string } | null;
   category: string;
-  isActive: boolean;
-  isFeatured: boolean;
+  // API returns 'active'/'featured' but we also support isActive/isFeatured
+  active?: boolean;
+  isActive?: boolean;
+  featured?: boolean;
+  isFeatured?: boolean;
   tags?: string[];
   deliverables?: string[];
   timeline?: string;
 }
+
+const isServiceActive = (s: Service) => s.active ?? s.isActive ?? false;
+const isServiceFeatured = (s: Service) => s.featured ?? s.isFeatured ?? false;
 
 const emptyForm = {
   title: '',
@@ -101,8 +107,8 @@ const ServicesManagement = () => {
       priceMax: service.price?.max?.toString() || '',
       priceCurrency: service.price?.currency || 'BDT',
       priceType: service.price?.type || 'fixed',
-      isActive: service.isActive,
-      isFeatured: service.isFeatured,
+      isActive: isServiceActive(service),
+      isFeatured: isServiceFeatured(service),
       image: null,
     });
     setImagePreview(service.image || null);
@@ -190,11 +196,12 @@ const ServicesManagement = () => {
 
   const toggleActive = async (service: Service) => {
     try {
+      const cur = isServiceActive(service);
       const fd = new FormData();
-      fd.append('isActive', String(!service.isActive));
+      fd.append('active', String(!cur));
       await servicesAPI.update(service.id, fd);
-      setServices(prev => prev.map(s => s.id === service.id ? { ...s, isActive: !s.isActive } : s));
-      toast.success(`Service ${!service.isActive ? 'activated' : 'deactivated'}`);
+      setServices(prev => prev.map(s => s.id === service.id ? { ...s, active: !cur, isActive: !cur } : s));
+      toast.success(`Service ${!cur ? 'activated' : 'deactivated'}`);
     } catch {
       toast.error('Failed to update status');
     }
@@ -203,7 +210,7 @@ const ServicesManagement = () => {
   const filtered = services.filter(s => {
     const matchSearch = s.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (s.category ?? '').toLowerCase().includes(searchQuery.toLowerCase());
-    const matchFilter = filterActive === 'all' || (filterActive === 'active' ? s.isActive : !s.isActive);
+    const matchFilter = filterActive === 'all' || (filterActive === 'active' ? isServiceActive(s) : !isServiceActive(s));
     return matchSearch && matchFilter;
   });
 
@@ -253,8 +260,8 @@ const ServicesManagement = () => {
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Total', value: services.length, color: 'text-gray-700 dark:text-gray-200' },
-          { label: 'Active', value: services.filter(s => s.isActive).length, color: 'text-green-600' },
-          { label: 'Featured', value: services.filter(s => s.isFeatured).length, color: 'text-amber-500' },
+          { label: 'Active', value: services.filter(s => isServiceActive(s)).length, color: 'text-green-600' },
+          { label: 'Featured', value: services.filter(s => isServiceFeatured(s)).length, color: 'text-amber-500' },
         ].map(stat => (
           <div key={stat.label} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center shadow-sm">
             <p className={`text-2xl font-black ${stat.color}`}>{stat.value}</p>
@@ -295,13 +302,13 @@ const ServicesManagement = () => {
                     <ShieldCheckIcon className="w-14 h-14 text-gray-300 dark:text-gray-500" />
                   </div>
                 )}
-                {service.isFeatured && (
+                {isServiceFeatured(service) && (
                   <span className="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
                     <StarIcon className="w-2.5 h-2.5" /> Featured
                   </span>
                 )}
-                <span className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${service.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>
-                  {service.isActive ? 'Active' : 'Inactive'}
+                <span className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${isServiceActive(service) ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>
+                  {isServiceActive(service) ? 'Active' : 'Inactive'}
                 </span>
               </div>
 
@@ -330,12 +337,12 @@ const ServicesManagement = () => {
                   <button
                     onClick={() => toggleActive(service)}
                     className={`flex-1 text-xs py-1.5 rounded-lg font-medium transition-colors ${
-                      service.isActive
+                      isServiceActive(service)
                         ? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                         : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200'
                     }`}
                   >
-                    {service.isActive ? 'Deactivate' : 'Activate'}
+                    {isServiceActive(service) ? 'Deactivate' : 'Activate'}
                   </button>
                   <button
                     onClick={() => openEditModal(service)}

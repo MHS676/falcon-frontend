@@ -102,6 +102,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
     { id: 'blog', name: 'Blog', icon: PencilIcon, count: null },
     { id: 'contact', name: 'Contact', icon: EnvelopeIcon, count: contactUnreadCount > 0 ? contactUnreadCount : null },
     { id: 'employees', name: 'Employees', icon: UserGroupIcon, count: null },
+    { id: 'team', name: 'Team', icon: UserGroupIcon, count: null },
     { id: 'social', name: 'Social Links', icon: UserGroupIcon, count: null },
     { id: 'settings', name: 'Settings', icon: Cog6ToothIcon, count: null },
     { id: 'admins', name: 'Admin Users', icon: UserGroupIcon, count: null },
