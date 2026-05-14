@@ -17,7 +17,7 @@ import {
   PencilIcon,
 } from '@heroicons/react/24/outline';
 import { contactAPI, messagingAPI } from '../../services/api';
-const falconEmblem = '/falcon-emblem.png';
+const logo = '/logo.png';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -161,7 +161,7 @@ const AdminLayout = ({ children, currentModule, onModuleChange }: AdminLayoutPro
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              <img src={falconEmblem} alt="Falcon Emblem" className="w-11 h-11 object-contain drop-shadow-xl" />
+              <img src={logo} alt="Falcon Logo" className="w-11 h-11 object-contain" />
             </motion.div>
             {sidebarOpen && (
               <motion.div

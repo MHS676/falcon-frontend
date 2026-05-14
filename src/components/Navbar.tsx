@@ -55,7 +55,7 @@ const Navbar = () => {
               className="flex items-center space-x-2"
             >
               <div className="flex items-center gap-1">
-                <img src={falconEmblem} alt="Falcon Emblem" className="w-10 h-10 object-contain drop-shadow-md" />
+                <img src={falconEmblem} alt="Falcon Emblem" className="w-10 h-10 object-contain" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-amber-600 to-green-600 bg-clip-text text-transparent">
                 Falcon Security Limited <span></span>

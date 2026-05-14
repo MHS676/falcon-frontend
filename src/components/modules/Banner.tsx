@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-const falconEmblem = '/falcon-emblem.png';
 import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { bannerAPI } from '../../services/api';
@@ -111,22 +110,6 @@ const Banner = () => {
           <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10"></div>
-      </motion.div>
-
-      {/* Falcon Emblem — always visible on right */}
-      <motion.div
-        key={`emblem-${currentIndex}`}
-        initial={{ opacity: 0, x: 60 }}
-        animate={{ opacity: 0.18, x: 0 }}
-        transition={{ duration: 0.9 }}
-        className="absolute right-0 bottom-0 top-0 flex items-center justify-end pr-6 pointer-events-none select-none"
-      >
-        <img
-          src={falconEmblem}
-          alt="Falcon Emblem"
-          className="h-[85%] w-auto object-contain"
-          style={{ filter: 'brightness(1.4) saturate(1.2)' }}
-        />
       </motion.div>
 
       {/* Content */}

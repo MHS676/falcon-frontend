@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircleIcon, StarIcon, HeartIcon, TagIcon, ShieldCheckIcon } from '@heroicons/react/24/solid';
-import { HeartIcon as HeartOutline, XMarkIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, StarIcon, TagIcon, ShieldCheckIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { servicesAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
@@ -55,7 +55,6 @@ const Services = ({
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [likedServices, setLikedServices] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchServices();
@@ -163,7 +162,7 @@ const Services = ({
       )}
 
       {/* Services Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {filteredServices.map((service, index) => (
           <motion.div
             key={service.id}
@@ -229,26 +228,9 @@ const Services = ({
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setSelectedService(service)}
-                  data-card
-                  className="flex-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold py-3.5 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all duration-200 shadow-md"
+                  className="w-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold py-3.5 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all duration-200 shadow-md"
                 >
                   Learn More
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setLikedServices(prev => {
-                      const next = new Set(prev);
-                      next.has(service.id) ? next.delete(service.id) : next.add(service.id);
-                      return next;
-                    });
-                  }}
-                  className="w-12 h-12 rounded-2xl border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center hover:border-red-400 transition-colors"
-                >
-                  {likedServices.has(service.id)
-                    ? <HeartIcon className="w-5 h-5 text-red-500" />
-                    : <HeartOutline className="w-5 h-5 text-gray-400" />
-                  }
                 </button>
               </div>
             </div>
@@ -397,28 +379,13 @@ const Services = ({
                 )}
 
                 {/* CTA */}
-                <div className="flex gap-3 pt-2">
+                <div className="pt-2">
                   <a
                     href="/contact"
-                    className="flex-1 text-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all shadow-lg"
+                    className="block w-full text-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 rounded-2xl text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-all shadow-lg"
                   >
                     Get a Free Consultation
                   </a>
-                  <button
-                    onClick={() => {
-                      setLikedServices(prev => {
-                        const next = new Set(prev);
-                        next.has(selectedService.id) ? next.delete(selectedService.id) : next.add(selectedService.id);
-                        return next;
-                      });
-                    }}
-                    className="w-14 h-14 rounded-2xl border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center hover:border-red-400 transition-colors"
-                  >
-                    {likedServices.has(selectedService.id)
-                      ? <HeartIcon className="w-5 h-5 text-red-500" />
-                      : <HeartOutline className="w-5 h-5 text-gray-400" />
-                    }
-                  </button>
                 </div>
               </div>
             </motion.div>

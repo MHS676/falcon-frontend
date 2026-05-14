@@ -12,7 +12,7 @@ const Footer = () => {
           {/* About */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <img src={falconEmblem} alt="Falcon Emblem" className="w-14 h-14 object-contain drop-shadow-lg" />
+              <img src={falconEmblem} alt="Falcon Emblem" className="w-14 h-14 object-contain" />
               <h3 className="text-xl font-heading font-bold">Falcon® Security</h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
