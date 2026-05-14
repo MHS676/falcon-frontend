@@ -81,7 +81,6 @@ const AdminLogin = () => {
           {/* Logo */}
           <div className="flex items-center justify-center gap-3 mb-2">
             <img src={falconEmblem} alt="Falcon Emblem" className="w-24 h-24 object-contain drop-shadow-2xl" />
-            <img src={logo} alt="Falcon Logo" className="w-14 h-14 object-contain opacity-90" />
           </div>
 
           <h2 className="text-3xl font-bold text-white mb-2">
