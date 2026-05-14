@@ -25,18 +25,6 @@ const Banner = () => {
     fetchActiveBanners();
   }, []);
 
-  const staticBrandBanner: BannerItem = {
-    id: 'brand-static',
-    title: 'Falcon Security Limited',
-    subtitle: 'Protecting What Matters Most',
-    description: 'ISO 9001, 18788 & 27001 certified security solutions. Trusted since 1993.',
-    image: '',
-    ctaText: 'Explore Services',
-    ctaLink: '/services',
-    isActive: true,
-    order: 0,
-  };
-
   const fetchActiveBanners = async () => {
     try {
       const response = await bannerAPI.getActive();
@@ -49,12 +37,12 @@ const Banner = () => {
       }
       
       const sortedBanners = bannerData.sort((a: BannerItem, b: BannerItem) => a.order - b.order);
-      setBanners([staticBrandBanner, ...sortedBanners]);
+      setBanners(sortedBanners);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching banners:', error);
       toast.error('Failed to load banners');
-      setBanners([staticBrandBanner]);
+      setBanners([]);
       setLoading(false);
     }
   };
